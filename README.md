@@ -56,4 +56,3 @@ This project is deployed on Vercel and can be accessed at [human-capacities.verc
 For more deployment options:
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-

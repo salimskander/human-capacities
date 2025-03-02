@@ -1,0 +1,94 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.stats {
+  display: flex;
+  gap: 2rem;
+  font-size: 1.2rem;
+}
+
+.grid {
+  display: grid;
+  gap: 0.5rem;
+  width: min(90vw, 500px);
+  aspect-ratio: 1;
+}
+
+.tile {
+  background-color: #2a2a2a;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.tile:hover {
+  background-color: #3a3a3a;
+}
+
+.tile.active {
+  background-color: #2196F3;
+}
+
+.tile.correct {
+  background-color: #4CAF50;
+}
+
+.tile.error {
+  background-color: #f44336;
+}
+
+.startScreen {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.startScreen h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.startScreen p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.startScreen button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background-color: #2196F3;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.startScreen button:hover {
+  background-color: #1976D2;
+}
+
+.gameOver {
+  text-align: center;
+}
+
+.gameOver button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #2a2a2a;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+
+.gameOver button:hover {
+  background-color: #3a3a3a;
+}
