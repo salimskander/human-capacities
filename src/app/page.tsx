@@ -68,7 +68,16 @@ export default function Home() {
   const testsRef = useRef<HTMLDivElement>(null);
 
   const scrollToTests = () => {
-    testsRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (testsRef.current) {
+      // Ajuster pour tenir compte de la hauteur de la barre supérieure
+      const yOffset = -64; // hauteur de la topbar (16 * 4 = 64px)
+      const y = testsRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth'
+      });
+    }
   };
 
   return (
