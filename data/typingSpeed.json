@@ -1,0 +1,7338 @@
+[
+  {
+    "timestamp": 1736265504405,
+    "score": 89
+  },
+  {
+    "timestamp": 1736267073377,
+    "score": 47
+  },
+  {
+    "timestamp": 1736267249567,
+    "score": 54
+  },
+  {
+    "timestamp": 1737971640399,
+    "score": 47
+  },
+  {
+    "timestamp": 1737971767175,
+    "score": 36
+  },
+  {
+    "timestamp": 1737971889773,
+    "score": 10
+  },
+  {
+    "timestamp": 1745515133139,
+    "score": 40
+  },
+  {
+    "timestamp": 1745515213159,
+    "score": 0
+  },
+  {
+    "timestamp": 1745585495967,
+    "score": 37
+  },
+  {
+    "timestamp": 1745593475311,
+    "score": 38
+  },
+  {
+    "timestamp": 1745593769283,
+    "score": 44
+  },
+  {
+    "timestamp": 1745593991303,
+    "score": 0
+  },
+  {
+    "timestamp": 1745594133834,
+    "score": 0
+  },
+  {
+    "timestamp": 1745594250638,
+    "score": 1
+  },
+  {
+    "timestamp": 1745594493695,
+    "score": 0
+  },
+  {
+    "timestamp": 1745594669987,
+    "score": 16
+  },
+  {
+    "timestamp": 1745594842642,
+    "score": 0
+  },
+  {
+    "timestamp": 1745595418815,
+    "score": 0
+  },
+  {
+    "timestamp": 1745596290338,
+    "score": 0
+  },
+  {
+    "timestamp": 1745596689667,
+    "score": 0
+  },
+  {
+    "timestamp": 1745598363049,
+    "score": 0
+  },
+  {
+    "timestamp": 1745598428841,
+    "score": 0
+  },
+  {
+    "timestamp": 1745598576685,
+    "score": 0
+  },
+  {
+    "timestamp": 1745615498264,
+    "score": 31
+  },
+  {
+    "timestamp": 1746309269314,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309269343,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309270001,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309270047,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309270776,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309270809,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309271509,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309271610,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309272127,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309272323,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309272853,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309272995,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309273520,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309273657,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309274345,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309274641,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309275346,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309275989,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309276739,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309276893,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309278011,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309278054,
+    "score": 40
+  },
+  {
+    "timestamp": 1746309344999,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309345021,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309345929,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309345951,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309346860,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309346999,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309347808,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309347991,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309348497,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309348666,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309349254,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309349419,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309350113,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309350513,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309351309,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309353155,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309353593,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309354477,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309354991,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309356048,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309356705,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309358025,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309358531,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309358978,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309359539,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309360204,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309361483,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309361961,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309363095,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309363684,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309364304,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309364532,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309364550,
+    "score": 3
+  },
+  {
+    "timestamp": 1746309549639,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309549622,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309550457,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309550490,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309551575,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309552196,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309552502,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309553169,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309553434,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309555465,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309555825,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309556269,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309556660,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309557034,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309557588,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309558205,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309558883,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309559254,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309559609,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309559966,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309560323,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309560687,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309561177,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309561637,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309562141,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309562536,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309562893,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309563416,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309563793,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309564175,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309564822,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309565411,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309565870,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309566277,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309566636,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309567000,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309567362,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309567725,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309568361,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309569057,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309569453,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309569809,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309570168,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309570621,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309571052,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309571450,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309572070,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309572545,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309572974,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309573359,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309573842,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309574390,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309574790,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309575387,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309576009,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309576571,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309577073,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309577452,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309577952,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309578414,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309579591,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309580053,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309580412,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309581790,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309583202,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309584052,
+    "score": 0
+  },
+  {
+    "timestamp": 1746309703283,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309703307,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309703914,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309703880,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309704531,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309705333,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309705316,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309706192,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309706235,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309706827,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309706847,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309707525,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309707517,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309708358,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309708323,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309709237,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309709219,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309709899,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309709887,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309710435,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309710932,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309711224,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309711869,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309712273,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309712899,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309713215,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309713567,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309713868,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309714121,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309714429,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309714722,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309715109,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309715832,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309716032,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309716752,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309716898,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309717560,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309717694,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309718219,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309718409,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309719100,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309719295,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309720112,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309720082,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309720703,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309721081,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309721431,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309721721,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309722165,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309722517,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309722932,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309723543,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309723898,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309724333,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309724798,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309725027,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309725454,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309725841,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309726387,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309726877,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309727222,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309727578,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309727973,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309728340,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309728645,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309728926,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309729393,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309729675,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309730757,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309730810,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309731626,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309731805,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309732409,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309732483,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309733018,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309733207,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309733832,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309733954,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309734721,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309734778,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309735369,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309735561,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309735949,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309736250,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309736651,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309737062,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309737733,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309738113,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309738757,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309738914,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309739465,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309739770,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309740403,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309740554,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309741182,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309741348,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309742024,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309742204,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309742679,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309742907,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309743396,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309743561,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309744012,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309744228,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309744821,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309745071,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309745711,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309746225,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309746879,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309747023,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309747597,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309747790,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309748310,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309748500,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309749077,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309749370,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309750074,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309750299,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309751048,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309751212,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309751924,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309752011,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309752597,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309752703,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309753288,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309753325,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309754038,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309754154,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309755076,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309755287,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309756235,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309756453,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309757010,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309757131,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309757643,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309757817,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309758410,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309758495,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309759580,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309759741,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309760556,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309760591,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309761423,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309761393,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309762824,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309762814,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309763575,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309763908,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309764428,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309764593,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309765089,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309765261,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309765877,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309766030,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309766876,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309767228,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309767544,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309767939,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309768266,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309768583,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309768957,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309769391,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309770368,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309770723,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309771040,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309771438,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309771719,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309772147,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309772445,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309772936,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309773452,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309773898,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309774132,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309774694,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309774824,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309775401,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309775486,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309776027,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309776233,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309776959,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309777159,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309777923,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309778077,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309778768,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309778969,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309779508,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309779642,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309780425,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309780641,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309781513,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309781648,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309782362,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309782440,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309783143,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309783056,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309783956,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309784097,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309784928,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309785107,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309785678,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309785838,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309786328,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309786518,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309787056,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309787242,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309787919,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309788184,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309788854,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309789314,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309789847,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309790047,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309790404,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309790783,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309791331,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309791615,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309792379,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309792621,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309793282,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309793429,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309793994,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309794256,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309795643,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309795687,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309796572,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309796618,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309797199,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309797470,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309797932,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309798196,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309798840,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309799039,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309799681,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309799862,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309800405,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309800589,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309801151,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309801453,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309802207,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309802486,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309803706,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309803759,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309804544,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309804565,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309805303,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309805410,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309806284,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309806496,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309807449,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309807971,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309808378,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309808552,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309808864,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309809105,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309809558,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309809820,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309810418,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309810695,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309811355,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309811490,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309812211,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309812334,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309812873,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309813062,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309814466,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309814455,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309815356,
+    "score": 5
+  },
+  {
+    "timestamp": 1746309815384,
+    "score": 5
+  },
+  {
+    "timestamp": 1746311498094,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311498101,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311498517,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311498539,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311498911,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311499123,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311499333,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311499700,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311499943,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311500283,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311500634,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311500924,
+    "score": 6
+  },
+  {
+    "timestamp": 1746311501191,
+    "score": 6
+  },
+  {
+    "timestamp": 1747675145897,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675145933,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675146408,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675146424,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675146961,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675146942,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675147516,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675147556,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675148163,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675148139,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675148868,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675148967,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675149694,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675149810,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675150274,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675150439,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675150926,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675151108,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675151777,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675151900,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675151967,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675151880,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153021,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153006,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153044,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153286,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153354,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153689,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153708,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153881,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675153857,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675154097,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675154117,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675154292,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675154313,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675154544,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675154583,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675155202,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675155365,
+    "score": 34
+  },
+  {
+    "timestamp": 1747675280145,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675280170,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675280625,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675280663,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675281157,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675281767,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675281695,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675282245,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675282293,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675282836,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675282880,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675283367,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675283350,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675283757,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675283996,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675284206,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675284590,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675284850,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675285225,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675285452,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675285894,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675286038,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675286357,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675286508,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675286817,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675287021,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675287329,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675287525,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675287817,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675288053,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675288510,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675288703,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675289106,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675289384,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675289741,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675290069,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675290336,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675290704,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675290820,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675290843,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675291201,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675291493,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675291689,
+    "score": 49
+  },
+  {
+    "timestamp": 1747675415005,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675415035,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675415468,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675415534,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675416093,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675416042,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675416644,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675416721,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675417347,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675417480,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675417524,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675417328,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675418694,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675418774,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675418801,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675418811,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675419973,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675420063,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675420161,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675420223,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675421191,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675421251,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675421790,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675421634,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675422917,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675423158,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675423285,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675423317,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675424003,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675424251,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675424369,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675424969,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675424920,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675425404,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675425365,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675426014,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675426101,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675426490,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675426562,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675427466,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675427531,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675427708,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675427784,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675428643,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675428789,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675429051,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675429040,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675429694,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675429839,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675430101,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675430119,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675430650,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675430798,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675431000,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675431087,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675431767,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675432113,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675432172,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675432275,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675433037,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675433263,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675433156,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675433462,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675434133,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675434415,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675434326,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675434829,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675435386,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675435528,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675435660,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675435677,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675436407,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675436620,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675436710,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675436728,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675437666,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675437864,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675437944,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675438003,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675438974,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675439237,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675439336,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675439285,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675440100,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675440245,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675440446,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675440487,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675441017,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675441223,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675441488,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675441520,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675441889,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675442218,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675442373,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675442472,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675442967,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675443373,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675443414,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675443708,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675444100,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675444502,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675444531,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675444891,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675445370,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675445440,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675445632,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675445879,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675446407,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675446503,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675446692,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675446952,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675447363,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675447543,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675447533,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675447856,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675448356,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675448451,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675448786,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675448919,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675449635,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675450151,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675450218,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675450453,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675450690,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675451992,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675452021,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675452051,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675451998,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675453788,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675453796,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675453872,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675453722,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675455375,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675455423,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675455555,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675455712,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675457007,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675457015,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675457172,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675457630,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675458259,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675458160,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675458478,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675458721,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675459071,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675459372,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675459631,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675459671,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675460206,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675460499,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675460577,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675460820,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675461511,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675462123,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675462512,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675463332,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675464355,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675464699,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675464760,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675465077,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675465917,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675466148,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675466474,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675466750,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675467137,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675467756,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675467993,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675468136,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675468364,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675468757,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675468899,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675469410,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675469323,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675469954,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675469937,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675470273,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675470521,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675471045,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675471124,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675471525,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675471881,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675472502,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675472520,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675473056,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675473519,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675474075,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675474212,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675474569,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675475174,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675475307,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675475343,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675475890,
+    "score": 28
+  },
+  {
+    "timestamp": 1747675537424,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675537396,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675537950,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675537936,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675538459,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675538473,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675539080,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675539101,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675539466,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675539537,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675539732,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675539749,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675540350,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675540455,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675540478,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675540865,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541031,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541009,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675540848,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675540713,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541164,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541224,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541185,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541269,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541284,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541314,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541336,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541590,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541463,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541611,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541484,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541742,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675541766,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675543435,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675544236,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675544960,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675545166,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675545031,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675545319,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675545474,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675545927,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675545957,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675545985,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675546110,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675546396,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675546403,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675546430,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675551028,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675551183,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675551591,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675556555,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675556715,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675556771,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675557277,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675557739,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675558482,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675559103,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675559299,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675559656,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675559843,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675560321,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675560386,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675560853,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675560918,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675561431,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675561892,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675562670,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675563119,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675730688,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675730703,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675731168,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675731211,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675731623,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675731901,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675732316,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675732584,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675733226,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675733155,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675733865,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675733910,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675734405,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675734451,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675734985,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675735006,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675735601,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675735653,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675736265,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675736381,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675736857,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675736979,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675737535,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675737663,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675738067,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675738163,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675738617,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675738716,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675739258,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675739435,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675739820,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675739999,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675740587,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675740855,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675741429,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675741724,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675742220,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675742414,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675742956,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675743526,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675744250,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675744489,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675745021,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675745184,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675745695,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675745851,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675746505,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675746732,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675747225,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675747439,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675747819,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675748173,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675748462,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675748785,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675748971,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675749321,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675749606,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675749899,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675750351,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675750644,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675751023,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675751308,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675751760,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675752034,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675752498,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675752840,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675753249,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675753417,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675753997,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675874272,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675874296,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675874728,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675875088,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675875496,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675875852,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675876307,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675876600,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675876898,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675877177,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675877453,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675877736,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675878012,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675878294,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675878745,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675879119,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675879568,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675879851,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675880133,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675880406,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675880683,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675880953,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675881234,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675881505,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675881795,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675882206,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675882561,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675882995,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675883325,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675883603,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675883885,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675884190,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675884488,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675884766,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675885064,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675885412,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675885906,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675886328,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675886687,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675886961,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675887234,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675887509,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675887779,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675888235,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675888540,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675888824,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675889217,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675889549,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675889910,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675890235,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675890516,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675890782,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675891061,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675891330,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675891604,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675891877,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675892152,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675892439,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675892853,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675893197,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675893660,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675893999,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675894293,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675894569,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675894855,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675895140,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675895435,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675895736,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675896044,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675896500,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675896806,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675897215,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675897507,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675897800,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675898084,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675898357,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675898626,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675898925,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675899229,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675899545,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675899988,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675900313,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675900759,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675901055,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675901344,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675901645,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675901957,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675902232,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675902548,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675902830,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675903178,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675903615,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675903933,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675904318,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675904617,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675904889,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675905159,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675905429,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675905701,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675905989,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675906288,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675906941,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675907264,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675907641,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675907965,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675908246,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675908524,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675908797,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675909070,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675909343,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675909700,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675910009,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675910447,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675910785,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675911161,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675912161,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675912486,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675912835,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675913125,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675913418,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675913693,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675914114,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675914412,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675914759,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675915077,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675915340,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675915613,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675915885,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675916158,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675916459,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675916759,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675917115,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675917735,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675918447,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675918756,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675919050,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675919343,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675919634,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675919900,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675920180,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675920457,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675920744,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675921189,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675921570,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675921948,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675922260,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675922547,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675922820,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675923094,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675923359,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675923637,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675923907,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675924192,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675924536,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675924868,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675925193,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675925536,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675925819,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675926088,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675926374,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675926665,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675926955,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675927241,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675927519,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675927819,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675928224,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675928518,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675928853,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675929203,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675929463,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675929745,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675930030,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675930305,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675930603,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675930913,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675931193,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675931521,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675931864,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675932172,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675932505,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675932806,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675933088,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675933370,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675933665,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675933945,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675934223,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675934691,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675936124,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675936553,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675936892,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675937358,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675937694,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675938007,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675938318,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675939733,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675940349,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675940820,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675941159,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675941495,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675941872,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675942240,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675942848,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675943678,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675944466,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675945031,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675945430,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675945979,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675946427,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675946866,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675947663,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675948679,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675949130,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675949709,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675950559,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675952149,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675952378,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675953442,
+    "score": 0
+  },
+  {
+    "timestamp": 1747675953453,
+    "score": 0
+  },
+  {
+    "timestamp": 1747676021526,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676021490,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676022000,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676021979,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676022417,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676022766,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676023114,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676023398,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676023712,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676023975,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676024268,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676024495,
+    "score": 19
+  },
+  {
+    "timestamp": 1747676128296,
+    "score": 0
+  },
+  {
+    "timestamp": 1747676128315,
+    "score": 0
+  },
+  {
+    "timestamp": 1747676128975,
+    "score": 0
+  },
+  {
+    "timestamp": 1747676128948,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677633937,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677633966,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677634426,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677634449,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677634955,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677634907,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677635430,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677635720,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677636061,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677636337,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677636660,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677636946,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677637209,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677637457,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677637688,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677637886,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677638137,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677638384,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677638858,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677639148,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677639353,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677639697,
+    "score": 18
+  },
+  {
+    "timestamp": 1747677704385,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677704366,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677704845,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677704869,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677705346,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677705423,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677706000,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677706118,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677706692,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677706821,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677707263,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677707372,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677707747,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677707874,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677708341,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677708399,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677708855,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677708911,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677709453,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677709783,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677710140,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677710436,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677710682,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677711045,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677711211,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677711539,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677711737,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677712064,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677712296,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677712610,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677712907,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677713613,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677713927,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677714226,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677714468,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677714736,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677714982,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677715234,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677715474,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677715758,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677715990,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677716331,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677716664,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677716924,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677717200,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677717506,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677717740,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677718010,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677718381,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677718584,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677718857,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677719092,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677719363,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677719685,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677720124,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677720379,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677720720,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677721040,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677721256,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677721581,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677721857,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677722100,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677722409,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677722703,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677722961,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677723278,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677723530,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677723841,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677724217,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677724379,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677724854,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677724957,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677725354,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677725491,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677725946,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677726032,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677726563,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677726582,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677727427,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677727506,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677728111,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677728200,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677728768,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677728740,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677729265,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677729244,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677729658,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677729878,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677730147,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677730379,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677730605,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677731107,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677731445,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677731689,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677732092,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677732427,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677732718,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677733192,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677733455,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677733782,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677734041,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677734316,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677734557,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677734814,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677735054,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677735609,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677735742,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677736317,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677736432,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677737048,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677737134,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677737725,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677737749,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677738195,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677738229,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677738709,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677738684,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677739109,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677739439,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677739725,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677740144,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677740401,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677740730,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677741075,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677741380,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677741719,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677741870,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677742348,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677742399,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677742888,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677742920,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677743383,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677743515,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677744062,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677744053,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677744747,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677744719,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677745315,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677745818,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677745796,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677746263,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677746280,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677746663,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677746894,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677747292,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677747592,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677747930,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677748177,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677748493,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677748761,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677749073,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677749322,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677749601,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677749811,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677750092,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677750314,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677750607,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677750896,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677751299,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677751610,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677751910,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677752246,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677752454,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677752773,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677752979,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677753307,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677753489,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677753852,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677753968,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677754460,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677754708,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677755086,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677755420,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677756052,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677756447,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677756717,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677756998,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677757291,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677757518,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677757740,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677758044,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677758243,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677758669,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677758831,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677759442,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677759572,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677760076,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677760106,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677760576,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677760665,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677761097,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677761218,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677761618,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677761798,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677762314,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677762411,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677763016,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677763096,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677763658,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677763798,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677764226,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677764347,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677764739,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677764832,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677765244,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677765317,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677765803,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677765879,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677766381,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677766655,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677767235,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677767209,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677767868,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677767853,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677768399,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677768440,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677768981,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677769034,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677769551,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677769611,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677770148,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677770136,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677770622,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677770808,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677771192,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677771526,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677771696,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677772171,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677772285,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677772768,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677772877,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677773285,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677773415,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677773824,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677774048,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677774548,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677774749,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677775191,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677775409,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677775855,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677776000,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677776348,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677776506,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677777188,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677777208,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677777593,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677777937,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677778290,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677778573,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677778983,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677779137,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677779665,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677779785,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677780247,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677780407,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677780981,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677781123,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677781501,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677781558,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677781984,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677782208,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677782449,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677782772,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677783036,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677783474,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677783722,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677784199,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677784438,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677784774,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677784927,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677785250,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677785398,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677785831,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677785976,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677786370,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677786552,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677787165,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677787208,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677787798,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677787828,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677788346,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677788336,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677788818,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677788893,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677789363,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677789400,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677789877,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677789855,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677790396,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677790824,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677791183,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677791474,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677791825,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677792187,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677792487,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677792687,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677792973,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677793160,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677793448,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677793641,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677793993,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677794294,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677794585,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677795002,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677795302,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677795625,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677795900,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677796128,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677796541,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677796995,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677797276,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677797606,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677797954,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677798287,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677798560,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677798821,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677799175,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677799365,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677799697,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677799873,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677800195,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677800401,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677800672,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677800971,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677801262,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677801639,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677802056,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677802304,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677802919,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677802943,
+    "score": 3
+  },
+  {
+    "timestamp": 1747677909262,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677909296,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677909706,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677909733,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677910174,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677910188,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677910948,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677911058,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677912034,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677912388,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677912771,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677913103,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677913535,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677913971,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677914386,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677914804,
+    "score": 0
+  },
+  {
+    "timestamp": 1747677915739,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678076286,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678076261,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678077047,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678077035,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678077668,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678078293,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678078618,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678078996,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678079353,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678079699,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678080041,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678080373,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678080744,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678080977,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678081439,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678082032,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678082603,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678082849,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678083800,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678083821,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678084515,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678085198,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678085726,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678086110,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678086460,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678086817,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678087207,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678087816,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678088212,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678088650,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678089148,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678089550,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678090083,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678090385,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678090710,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678091065,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678091424,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678092024,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678092444,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678092845,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678093148,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678093429,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678093718,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678093999,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678094313,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678094697,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678095076,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678095705,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678096213,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678096607,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678096930,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678097234,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678097632,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678097959,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678098310,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678098670,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678099137,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678099587,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678099968,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678100260,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678100534,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678100817,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678101093,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678101372,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678101664,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678102213,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678103112,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678103577,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678103929,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678104253,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678104664,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678105121,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678105552,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678106178,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678107208,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678107565,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678108757,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678109149,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678109744,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678110972,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678112176,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678113491,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678115262,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678116388,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678116573,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678117166,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678117189,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678117903,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678118889,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678119286,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678119765,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678120215,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678120569,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678120975,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678121363,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678121702,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678122029,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678122420,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678122802,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678123205,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678123578,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678123879,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678124163,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678124461,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678124759,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678125064,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678125367,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678125666,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678126080,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678126450,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678126846,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678127181,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678127488,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678127775,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678128065,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678128360,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678128674,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678128977,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678129367,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678129717,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678130048,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678130481,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678130773,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678131056,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678131348,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678132159,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678132461,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678132761,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678133217,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678133556,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678134020,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678134323,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678134623,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678135157,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678135539,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678136004,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678137558,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678138915,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678140065,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678140799,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678141170,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678141906,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678142566,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678143104,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678143449,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678143915,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678144387,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678144866,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678145899,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678147100,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678147898,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678148743,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678149126,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678149671,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678150132,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678150680,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678151057,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678151342,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678151711,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678152067,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678152368,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678152652,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678152962,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678153494,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678154000,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678154358,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678154771,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678155093,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678155386,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678155701,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678156092,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678156457,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678156746,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678157059,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678157468,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678157813,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678158230,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678158609,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678159004,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678159345,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678159654,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678159964,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678160266,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678160593,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678161279,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678161814,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678162179,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678162559,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678163008,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678163345,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678163659,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678163971,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678164370,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678164815,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678165546,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678166128,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678166424,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678166715,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678167011,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678167301,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678167604,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678168180,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678168733,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678169149,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678169528,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678169807,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678170089,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678170373,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678170646,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678170936,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678171229,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678171524,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678171963,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678172349,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678172806,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678173623,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678174024,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678174414,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678174770,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678175174,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678175734,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678176906,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678177549,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678177748,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678178285,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678178465,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678179885,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678180750,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678181294,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678181921,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678182981,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678183761,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678184133,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678184497,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678184882,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678185224,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678185535,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678186817,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678188112,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678188306,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678188923,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678189163,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678191234,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678191251,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678192354,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678192817,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678193138,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678193489,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678193916,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678194240,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678194670,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678195085,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678195423,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678195717,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678196070,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678196405,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678196719,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678197100,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678197683,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678198167,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678198723,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678199178,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678199617,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678200145,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678200550,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678201072,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678270914,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678270940,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678271559,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678271578,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678272142,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678272111,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678272720,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678272982,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678273475,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678273820,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678274318,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678274794,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678275029,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678275694,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678275970,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678276848,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678276972,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678277554,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678277686,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678278282,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678278317,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678278886,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678278954,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678279579,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678279709,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678280380,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678280639,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678280988,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678281281,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678281531,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678281913,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678282188,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678282537,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678282881,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678283422,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678283810,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678284580,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678285099,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678285914,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678286134,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678286883,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678287060,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678287532,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678287706,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678288378,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678288545,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678289652,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678289743,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678290367,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678290556,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678291072,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678291272,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678291847,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678292105,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678292967,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678292670,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678293710,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678293742,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678294535,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678294347,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678295178,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678295210,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678295786,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678296124,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678296643,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678296985,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678297636,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678297984,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678298271,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678298756,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678299056,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678299440,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678299612,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678300059,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678300274,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678301076,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678301321,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678302071,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678302327,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678303087,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678303221,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678303895,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678303918,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678304655,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678305124,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678305257,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678305831,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678306048,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678307408,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678307862,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678308266,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678308764,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678309203,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678309853,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678310235,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678310831,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678312042,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678311809,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678312856,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678313606,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678313752,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678314594,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678315032,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678315393,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678316804,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678317369,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678317456,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678317798,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678318376,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678318284,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678319286,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678319718,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678320146,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678320761,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678321356,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678321500,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678321859,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678322581,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678322594,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678322975,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678323698,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678323768,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678324099,
+    "score": 0
+  },
+  {
+    "timestamp": 1747678752047,
+    "score": 4
+  },
+  {
+    "timestamp": 1747678752078,
+    "score": 4
+  },
+  {
+    "timestamp": 1747678752838,
+    "score": 4
+  },
+  {
+    "timestamp": 1747678753040,
+    "score": 4
+  },
+  {
+    "timestamp": 1747678754230,
+    "score": 4
+  },
+  {
+    "timestamp": 1747678754294,
+    "score": 4
+  }
+]
