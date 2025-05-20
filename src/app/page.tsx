@@ -3,6 +3,7 @@
 import TestCard from "@/components/TestCard";
 import { useRef } from "react";
 import AdBanner from '@/components/AdBanner';
+import Image from 'next/image';
 
 const capacityTests = [
   {
@@ -87,9 +88,11 @@ export default function Home() {
                 <div key={i} className="carousel-item-wheel" style={{ 
                   transform: `rotateY(${i * (360 / (capacityTests.length * 2))}deg) translateZ(min(350px, 45vw))` 
                 }}>
-                  <img 
+                  <Image 
                     src={test.image} 
-                    alt={test.title} 
+                    alt={test.title}
+                    width={96}
+                    height={96}
                     className="w-12 h-12 md:w-24 md:h-24 opacity-80 drop-shadow-md" 
                   />
                 </div>

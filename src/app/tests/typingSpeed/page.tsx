@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -101,21 +101,18 @@ export default function TypingSpeed() {
     }
   }
 
-  const saveResult = async (score: number) => {
+  const saveResult = useCallback(async (wpm: number, accuracy: number) => {
     try {
       await fetch('/api/typingSpeed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          timestamp: Date.now(),
-          score: score
-        })
-      })
-      await fetchResults()
+        body: JSON.stringify({ wpm, accuracy })
+      });
+      fetchResults();
     } catch (error) {
-      console.error('Failed to save result:', error)
+      console.error('Erreur lors de la sauvegarde:', error);
     }
-  }
+  }, [fetchResults]);
 
   // Modifier l'effet pour le timer
   useEffect(() => {
@@ -137,7 +134,7 @@ export default function TypingSpeed() {
     if (timeLeft === 0) {
       setIsFinished(true)
       setIsStarted(false)
-      saveResult(wordCount)
+      saveResult(wordCount, 0)
     }
   }, [timeLeft, wordCount, saveResult])
 
