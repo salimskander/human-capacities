@@ -18,22 +18,22 @@ export default function LoginForm() {
     try {
       await signInWithEmail(email, password);
       // Redirection gérée par le composant parent
-    } catch (err: any) {
-      console.error("Erreur de connexion:", err.code, err.message);
+    } catch (err) {
+      const error = err as { code?: string; message?: string };
+      console.error("Erreur de connexion:", error.code, error.message);
       
-      // Messages d'erreur plus détaillés selon le code d'erreur
-      if (err.code === 'auth/invalid-credential') {
+      if (error.code === 'auth/invalid-credential') {
         setError("Email ou mot de passe incorrect. Veuillez réessayer.");
-      } else if (err.code === 'auth/user-not-found') {
+      } else if (error.code === 'auth/user-not-found') {
         setError("Aucun compte n'existe avec cet email. Veuillez vous inscrire.");
-      } else if (err.code === 'auth/wrong-password') {
+      } else if (error.code === 'auth/wrong-password') {
         setError("Mot de passe incorrect. Veuillez réessayer.");
-      } else if (err.code === 'auth/too-many-requests') {
+      } else if (error.code === 'auth/too-many-requests') {
         setError("Trop de tentatives incorrectes. Veuillez réessayer plus tard.");
-      } else if (err.code === 'auth/user-disabled') {
+      } else if (error.code === 'auth/user-disabled') {
         setError("Ce compte a été désactivé. Veuillez contacter le support.");
       } else {
-        setError(err.message || "Une erreur est survenue lors de la connexion");
+        setError(error.message || "Une erreur est survenue lors de la connexion");
       }
     } finally {
       setLoading(false);
@@ -47,15 +47,16 @@ export default function LoginForm() {
     try {
       await signInWithGoogle();
       // Redirection gérée par le composant parent
-    } catch (err: any) {
-      console.error("Erreur de connexion Google:", err.code, err.message);
+    } catch (err) {
+      const error = err as { code?: string; message?: string };
+      console.error("Erreur de connexion Google:", error.code, error.message);
       
-      if (err.code === 'auth/popup-closed-by-user') {
+      if (error.code === 'auth/popup-closed-by-user') {
         setError("La fenêtre de connexion a été fermée. Veuillez réessayer.");
-      } else if (err.code === 'auth/popup-blocked') {
+      } else if (error.code === 'auth/popup-blocked') {
         setError("La fenêtre pop-up a été bloquée par votre navigateur. Veuillez autoriser les pop-ups pour ce site.");
       } else {
-        setError(err.message || "Une erreur est survenue lors de la connexion avec Google");
+        setError(error.message || "Une erreur est survenue lors de la connexion avec Google");
       }
     } finally {
       setLoading(false);

@@ -35,7 +35,7 @@ export default function LoginPage() {
       <LoginForm />
       
       <p className="mt-4 text-center text-gray-600 dark:text-gray-400">
-        Vous n'avez pas de compte ?{' '}
+        Vous n&apos;avez pas de compte ?{' '}
         <Link href="/signup" className="text-blue-600 hover:underline dark:text-blue-400">
           Créer un compte
         </Link>

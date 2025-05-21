@@ -91,7 +91,7 @@ export default function TypingSpeed() {
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
   const [showStartModal, setShowStartModal] = useState(true);
 
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
     try {
       const response = await fetch('/api/typingSpeed')
       const data = await response.json()
@@ -99,7 +99,7 @@ export default function TypingSpeed() {
     } catch (error) {
       console.error('Failed to fetch results:', error)
     }
-  }
+  }, [])
 
   const saveResult = useCallback(async (wpm: number /* ou score */) => {
     try {
@@ -150,7 +150,7 @@ export default function TypingSpeed() {
 
   useEffect(() => {
     fetchResults()
-  }, [])
+  }, [fetchResults])
 
   const shuffleWords = (): WordStatus[] => {
     return WORD_LIST.sort(() => Math.random() - 0.5).map(word => ({

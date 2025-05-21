@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from 'firebase/auth';
-import {subscribeToAuthChanges } from '../firebase';
+import { subscribeToAuthChanges } from '../firebase';
 
 // Type pour le contexte d'authentification
 type AuthContextType = {

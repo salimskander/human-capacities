@@ -57,7 +57,7 @@ export const createUserAccount = async (email: string, password: string, pseudo:
     }
     
     return userCredential;
-  } catch (error: any) {
+  } catch (error) {
     console.error("Erreur lors de la création du compte :", error);
     throw error;
   }

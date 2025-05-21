@@ -15,7 +15,7 @@ export default function UserProfile() {
   if (!currentUser) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center">
-        <p className="dark:text-gray-200">Vous n'êtes pas connecté</p>
+        <p className="dark:text-gray-200">Vous n&apos;êtes pas connecté</p>
       </div>
     );
   }
