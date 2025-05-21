@@ -49,7 +49,7 @@ export default function SignupPage() {
       await createUserAccount(email, password, pseudo);
       router.push('/');
     } catch (err) {
-      const error = err as any;
+      const error = err as { code?: string; message?: string };
       // Gestion améliorée des erreurs Firebase
       if (error.code === 'auth/email-already-in-use') {
         setError("Cette adresse email est déjà utilisée par un autre compte");
@@ -58,7 +58,7 @@ export default function SignupPage() {
       } else if (error.code === 'auth/weak-password') {
         setError("Ce mot de passe est trop faible. Choisissez un mot de passe plus sécurisé");
       } else {
-        setError("Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard");
+        setError(error.message || "Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard");
       }
     } finally {
       setLoading(false);

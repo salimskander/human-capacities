@@ -36,6 +36,12 @@ export default function TopBar() {
     };
   }, [showMobileMenu]);
   
+  useEffect(() => {
+    if (currentUser) {
+      console.log("L'utilisateur est connecté:", currentUser.email);
+    }
+  }, [currentUser]);
+  
   return (
     <>
       <div className="fixed top-0 left-0 right-0 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm z-50 border-b border-gray-200 dark:border-gray-800">
