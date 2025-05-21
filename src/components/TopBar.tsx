@@ -18,11 +18,6 @@ export default function TopBar() {
     setShowMobileMenu(false);
   }, [pathname]);
   
-  // Masquer la TopBar sur les pages de jeu
-  if (pathname && pathname.startsWith('/tests/') && pathname !== '/tests') {
-    return null;
-  }
-  
   // Empêcher le défilement du body quand le menu mobile est ouvert
   useEffect(() => {
     if (showMobileMenu) {
@@ -36,11 +31,17 @@ export default function TopBar() {
     };
   }, [showMobileMenu]);
   
+  // Log utilisateur connecté
   useEffect(() => {
     if (currentUser) {
       console.log("L'utilisateur est connecté:", currentUser.email);
     }
   }, [currentUser]);
+  
+  // Masquer la TopBar sur les pages de jeu
+  if (pathname && pathname.startsWith('/tests/') && pathname !== '/tests') {
+    return null;
+  }
   
   return (
     <>
