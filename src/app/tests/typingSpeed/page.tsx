@@ -101,12 +101,16 @@ export default function TypingSpeed() {
     }
   }
 
-  const saveResult = useCallback(async (wpm: number, accuracy: number) => {
+  const saveResult = useCallback(async (wpm: number /* ou score */) => {
     try {
+      const resultToSave = {
+        timestamp: Date.now(),
+        score: wpm // ou le score approprié que vous voulez sauvegarder
+      };
       await fetch('/api/typingSpeed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wpm, accuracy })
+        body: JSON.stringify(resultToSave)
       });
       fetchResults();
     } catch (error) {
@@ -134,7 +138,7 @@ export default function TypingSpeed() {
     if (timeLeft === 0) {
       setIsFinished(true)
       setIsStarted(false)
-      saveResult(wordCount, 0)
+      saveResult(wordCount)
     }
   }, [timeLeft, wordCount, saveResult])
 

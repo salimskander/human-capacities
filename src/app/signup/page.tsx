@@ -48,13 +48,14 @@ export default function SignupPage() {
     try {
       await createUserAccount(email, password, pseudo);
       router.push('/');
-    } catch (err: any) {
+    } catch (err) {
+      const error = err as any;
       // Gestion améliorée des erreurs Firebase
-      if (err.code === 'auth/email-already-in-use') {
+      if (error.code === 'auth/email-already-in-use') {
         setError("Cette adresse email est déjà utilisée par un autre compte");
-      } else if (err.code === 'auth/invalid-email') {
+      } else if (error.code === 'auth/invalid-email') {
         setError("Format d'adresse email invalide");
-      } else if (err.code === 'auth/weak-password') {
+      } else if (error.code === 'auth/weak-password') {
         setError("Ce mot de passe est trop faible. Choisissez un mot de passe plus sécurisé");
       } else {
         setError("Une erreur est survenue lors de l'inscription. Veuillez réessayer plus tard");

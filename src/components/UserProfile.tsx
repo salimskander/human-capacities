@@ -1,6 +1,5 @@
 import { useAuth } from '../contexts/AuthContext';
 import { logoutUser } from '../firebase';
-import Image from 'next/image';
 
 export default function UserProfile() {
   const { currentUser, userLoading } = useAuth();
