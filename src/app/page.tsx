@@ -69,8 +69,8 @@ export default function Home() {
 
   const scrollToTests = () => {
     if (testsRef.current) {
-      // Ajuster pour tenir compte de la hauteur de la barre supérieure
-      const yOffset = -64; // hauteur de la topbar (16 * 4 = 64px)
+      
+      const yOffset = -20; 
       const y = testsRef.current.getBoundingClientRect().top + window.pageYOffset + yOffset;
       
       window.scrollTo({
@@ -127,14 +127,14 @@ export default function Home() {
       {/* Bannière publicitaire entre les sections */}
       <div className="w-full flex justify-center py-4 bg-white dark:bg-gray-900">
         <AdBanner 
-          slot="1234567890" // Remplacez par votre ID de slot
+          slot="ca-pub-8659475682678440"
           format="horizontal"
           className="mx-auto"
         />
       </div>
 
       {/* Section des tests */}
-      <div ref={testsRef} className="min-h-screen p-4 pt-24 sm:p-8 sm:pt-28 bg-gray-50 dark:bg-gray-900" id="tests-section">
+      <div ref={testsRef} className="min-h-screen p-4 pt-16 sm:p-8 sm:pt-20 bg-gray-50 dark:bg-gray-900" id="tests-section">
         <main className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-12 text-gray-800 dark:text-white">
             Explorez notre gamme de tests cognitifs
