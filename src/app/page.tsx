@@ -134,7 +134,7 @@ export default function Home() {
       </div>
 
       {/* Section des tests */}
-      <div ref={testsRef} className="min-h-screen p-4 sm:p-8 bg-gray-50 dark:bg-gray-900" id="tests-section">
+      <div ref={testsRef} className="min-h-screen p-4 pt-24 sm:p-8 sm:pt-28 bg-gray-50 dark:bg-gray-900" id="tests-section">
         <main className="max-w-6xl mx-auto">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-12 text-gray-800 dark:text-white">
             Explorez notre gamme de tests cognitifs
