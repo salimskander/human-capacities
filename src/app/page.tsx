@@ -127,7 +127,7 @@ export default function Home() {
       {/* Bannière publicitaire entre les sections */}
       <div className="w-full flex justify-center py-4 bg-white dark:bg-gray-900">
         <AdBanner 
-          slot="ca-pub-8659475682678440"
+          slot="1234567890"
           format="horizontal"
           className="mx-auto"
         />
