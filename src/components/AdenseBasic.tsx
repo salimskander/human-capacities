@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useRef } from 'react'
-import Script from 'next/script'
 
 export default function AdenseBasic() {
   const adRef = useRef<HTMLDivElement>(null);

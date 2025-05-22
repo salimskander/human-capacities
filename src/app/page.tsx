@@ -2,7 +2,6 @@
 
 import TestCard from "@/components/TestCard";
 import { useRef } from "react";
-import AdBanner from '@/components/AdBanner';
 import Image from 'next/image';
 import AdenseBasic from '@/components/AdenseBasic';
 
@@ -127,12 +126,7 @@ export default function Home() {
 
       {/* Bannière publicitaire entre les sections */}
       <div className="w-full flex justify-center py-4 bg-white dark:bg-gray-900">
-        <AdBanner 
-          slot="8959083451"
-          isFluid={true}
-          layoutKey="-f9+57+79-bj-2p"
-          className="mx-auto w-full max-w-3xl"
-        />
+        <AdenseBasic />
       </div>
 
       {/* Section des tests */}
