@@ -71,6 +71,6 @@ export default function AdBanner({
 // Ajoutez cette déclaration pour TypeScript
 declare global {
   interface Window {
-    adsbygoogle: any[];
+    adsbygoogle: unknown[];
   }
 } 
