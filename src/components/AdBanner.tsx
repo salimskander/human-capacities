@@ -21,26 +21,13 @@ export default function AdBanner({
   const adRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    try {
-      // Vérifiez si window et adsbygoogle existent (client-side seulement)
-      if (typeof window !== 'undefined' && adRef.current) {
-        // Attendez que AdSense soit chargé
-        const interval = setInterval(() => {
-          if (window.adsbygoogle) {
-            clearInterval(interval);
-            
-            // Insérez l'annonce
-            (window.adsbygoogle = window.adsbygoogle || []).push({});
-          }
-        }, 300);
-        
-        // Nettoyage
-        return () => {
-          clearInterval(interval);
-        };
+    if (typeof window !== 'undefined' && window.adsbygoogle && adRef.current) {
+      try {
+        // Insérez l'annonce directement sans setInterval
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      } catch (error) {
+        console.error('Erreur lors du chargement de l\'annonce:', error);
       }
-    } catch (error) {
-      console.error('Erreur lors du chargement de l\'annonce:', error);
     }
   }, []);
 
@@ -70,10 +57,10 @@ export default function AdBanner({
     >
       <ins
         className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: 'block', width: '100%', height: '100%' }}
         data-ad-client="ca-pub-8659475682678440"
         data-ad-slot={slot}
-        data-ad-format={isFluid ? "fluid" : format === 'auto' ? 'auto' : ''}
+        data-ad-format={isFluid ? "fluid" : format === 'auto' ? 'auto' : undefined}
         data-full-width-responsive="true"
         {...(layoutKey && { 'data-ad-layout-key': layoutKey })}
       />
@@ -84,6 +71,6 @@ export default function AdBanner({
 // Ajoutez cette déclaration pour TypeScript
 declare global {
   interface Window {
-    adsbygoogle: unknown[];
+    adsbygoogle: any[];
   }
 } 
