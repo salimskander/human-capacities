@@ -4,6 +4,7 @@ import TestCard from "@/components/TestCard";
 import { useRef } from "react";
 import AdBanner from '@/components/AdBanner';
 import Image from 'next/image';
+import AdenseBasic from '@/components/AdenseBasic';
 
 const capacityTests = [
   {
