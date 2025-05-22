@@ -1,18 +1,22 @@
 'use client'
 import { useEffect, useRef } from 'react'
 
-type AdBannerProps = {
+interface AdBannerProps {
   slot: string;
   format?: 'auto' | 'rectangle' | 'horizontal' | 'vertical';
   style?: React.CSSProperties;
   className?: string;
+  layoutKey?: string | null;
+  isFluid?: boolean;
 }
 
 export default function AdBanner({ 
   slot, 
   format = 'auto', 
   style, 
-  className = '' 
+  className = '',
+  layoutKey = null,
+  isFluid = false
 }: AdBannerProps) {
   const adRef = useRef<HTMLDivElement>(null);
 
@@ -42,18 +46,20 @@ export default function AdBanner({
 
   let formatClasses = '';
   
-  switch(format) {
-    case 'rectangle':
-      formatClasses = 'min-h-[250px] min-w-[300px]';
-      break;
-    case 'horizontal':
-      formatClasses = 'min-h-[90px] min-w-[728px] max-w-full';
-      break;
-    case 'vertical':
-      formatClasses = 'min-h-[600px] min-w-[160px]';
-      break;
-    default:
-      formatClasses = 'min-h-[100px]';
+  if (!isFluid) {
+    switch(format) {
+      case 'rectangle':
+        formatClasses = 'min-h-[250px] min-w-[300px]';
+        break;
+      case 'horizontal':
+        formatClasses = 'min-h-[90px] min-w-[728px] max-w-full';
+        break;
+      case 'vertical':
+        formatClasses = 'min-h-[600px] min-w-[160px]';
+        break;
+      default:
+        formatClasses = 'min-h-[100px]';
+    }
   }
 
   return (
@@ -67,8 +73,9 @@ export default function AdBanner({
         style={{ display: 'block' }}
         data-ad-client="ca-pub-8659475682678440"
         data-ad-slot={slot}
-        data-ad-format={format === 'auto' ? 'auto' : ''}
+        data-ad-format={isFluid ? "fluid" : format === 'auto' ? 'auto' : ''}
         data-full-width-responsive="true"
+        {...(layoutKey && { 'data-ad-layout-key': layoutKey })}
       />
     </div>
   );
