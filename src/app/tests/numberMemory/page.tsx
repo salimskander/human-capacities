@@ -44,10 +44,6 @@ export default function NumberMemoryTest() {
     const inputRef = useRef<HTMLInputElement>(null);
     const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
 
-    useEffect(() => {
-        fetchResults();
-    }, [fetchResults]);
-
     const fetchResults = async () => {
         try {
             // Données globales
@@ -58,6 +54,10 @@ export default function NumberMemoryTest() {
             console.error('Error fetching results:', error);
         }
     };
+
+    useEffect(() => {
+        fetchResults();
+    }, []);
 
     const prepareChartData = () => {
         const intervals = Array.from({ length: 10 }, (_, i) => i + 1);
