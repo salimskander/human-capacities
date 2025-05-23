@@ -10,11 +10,14 @@ interface GameResult {
 
 interface GameStatsCardProps {
   title: string;
-  data: GameResult[];
+  data: unknown[];
+  getScore: (item: unknown) => number;
+  getDate: (item: unknown) => string;
+  unit?: string;
+  color?: string;
   scoreLabel: string;
   icon: ReactNode;
   link: string;
-  color: string;
   prepareChartData: (data: Record<string, unknown>[], valueKey?: string) => any;
   lowerIsBetter?: boolean;
 }
@@ -22,10 +25,13 @@ interface GameStatsCardProps {
 export default function GameStatsCard({ 
   title, 
   data, 
-  scoreLabel, 
-  icon, 
-  link, 
+  getScore,
+  getDate,
+  unit,
   color,
+  scoreLabel,
+  icon,
+  link,
   prepareChartData,
   lowerIsBetter = false
 }: GameStatsCardProps) {
@@ -33,7 +39,7 @@ export default function GameStatsCard({
   if (!data || data.length === 0) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
-        <div className={`bg-gradient-to-r ${color} p-4 text-white`}>
+        <div className={`bg-gradient-to-r ${color || '#3B82F6'} p-4 text-white`}>
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">{title}</h3>
             <div className="w-8 h-8 flex items-center justify-center">{icon}</div>
@@ -46,7 +52,7 @@ export default function GameStatsCard({
           </p>
           <Link 
             href={link} 
-            className={`px-4 py-2 bg-gradient-to-r ${color} text-white rounded-lg hover:opacity-90 transition-opacity`}
+            className={`px-4 py-2 bg-gradient-to-r ${color || '#3B82F6'} text-white rounded-lg hover:opacity-90 transition-opacity`}
           >
             Jouer maintenant
           </Link>
@@ -56,13 +62,14 @@ export default function GameStatsCard({
   }
   
   // ✅ Trier les données par timestamp (plus récent en premier)
-  const sortedData = [...data].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  const sortedData = [...data].sort((a, b) => new Date(getDate(b)).getTime() - new Date(getDate(a)).getTime());
   
   // Calcul des statistiques
   const scores: number[] = sortedData
     .map(item => {
-      if (item.reactionTime !== undefined) return Number(item.reactionTime);
-      return Number(item.score);
+      const typedItem = item as { reactionTime?: number };
+      if (typedItem.reactionTime !== undefined) return Number(typedItem.reactionTime);
+      return Number(getScore(item));
     })
     .filter((score): score is number => 
       typeof score === 'number' && !isNaN(score)
@@ -71,7 +78,7 @@ export default function GameStatsCard({
   if (scores.length === 0) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
-        <div className={`bg-gradient-to-r ${color} p-4 text-white`}>
+        <div className={`bg-gradient-to-r ${color || '#3B82F6'} p-4 text-white`}>
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">{title}</h3>
             <div className="w-8 h-8 flex items-center justify-center">{icon}</div>
@@ -84,7 +91,7 @@ export default function GameStatsCard({
           </p>
           <Link 
             href={link} 
-            className={`px-4 py-2 bg-gradient-to-r ${color} text-white rounded-lg hover:opacity-90 transition-opacity`}
+            className={`px-4 py-2 bg-gradient-to-r ${color || '#3B82F6'} text-white rounded-lg hover:opacity-90 transition-opacity`}
           >
             Jouer maintenant
           </Link>
@@ -100,7 +107,7 @@ export default function GameStatsCard({
   const lastScore: number = scores[0]; // ✅ Le plus récent (premier après tri)
   
   // ✅ Passer les données triées au graphique
-  const chartData = prepareChartData(sortedData);
+  const chartData = prepareChartData(sortedData as Record<string, unknown>[]);
   
   // Obtenir des couleurs adaptées au thème du jeu
   let borderColor, backgroundColor;
@@ -175,7 +182,8 @@ export default function GameStatsCard({
             return `Partie ${actualIndex}`;
           },
           label: (item: any) => {
-            return `${scoreLabel}: ${item.raw}`;
+            const value = item.raw;
+            return `${scoreLabel}: ${value}${unit || ''}`;
           }
         }
       },
@@ -272,7 +280,7 @@ export default function GameStatsCard({
   
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-full transition-transform hover:scale-[1.02] duration-300">
-      <div className={`bg-gradient-to-r ${color} p-4 text-white`}>
+      <div className={`bg-gradient-to-r ${color || '#3B82F6'} p-4 text-white`}>
         <div className="flex justify-between items-center">
           <h3 className="text-lg font-semibold">{title}</h3>
           <div className="w-8 h-8 flex items-center justify-center">{icon}</div>

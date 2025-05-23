@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import UserProfileHeader from '@/components/UserProfileHeader';
 import GameStatsCard from '@/components/GameStatsCard';
 import Image from 'next/image';
@@ -64,81 +64,23 @@ export default function ProfilePage() {
   }, [currentUser, userLoading, router]);
   
   // Charger les données de tous les jeux
-  useEffect(() => {
-    if (currentUser) {
-      fetchAllGameData();
-    }
-  }, [currentUser]);
-  
-  const fetchAllGameData = async () => {
-    if (!currentUser) {
-      console.log('❌ Pas d\'utilisateur connecté');
-      return;
-    }
-    
-    console.log('👤 Utilisateur connecté:', currentUser.uid);
-    setIsLoading(true);
+  const fetchAllGameData = useCallback(async () => {
+    if (!currentUser) return;
     
     try {
-      const endpoints = [
-        'chimpTest', 'typingSpeed', 'visualMemory', 'numberMemory', 
-        'verbalMemory', 'sequenceMemory', 'symbolMemory', 'reflex'
-      ];
-      
-      // Récupérer les données utilisateur
-      const userResults = await Promise.all(
-        endpoints.map(async endpoint => {
-          const url = `/api/${endpoint}?userId=${currentUser.uid}&type=user`;
-          console.log(`🔍 Récupération de ${endpoint}:`, url);
-          
-          try {
-            const response = await fetch(url);
-            if (!response.ok) {
-              console.error(`❌ Erreur HTTP ${response.status} pour ${endpoint}`);
-              return [];
-            }
-            const data = await response.json();
-            
-            console.log(`📊 Données ${endpoint}:`, data);
-            if (endpoint === 'typingSpeed') {
-              console.log('⌨️ DONNÉES TYPING SPEED DÉTAILLÉES:', JSON.stringify(data, null, 2));
-            }
-            return data;
-          } catch (error) {
-            console.error(`💥 ERREUR CATCH pour ${endpoint}:`, error);
-            return [];
-          }
-        })
-      );
-      
-      setGamesData({
-        chimpTest: userResults[0],
-        typingSpeed: userResults[1],
-        visualMemory: userResults[2],
-        numberMemory: userResults[3],
-        verbalMemory: userResults[4],
-        sequenceMemory: userResults[5],
-        symbolMemory: userResults[6],
-        reflex: userResults[7]
-      });
-      
-      // ✅ AJOUTEZ CE DEBUG TEMPORAIRE
-      console.log('🔥 DONNÉES FINALES DANS setGamesData:');
-      console.log('typingSpeed userResults[1]:', userResults[1]);
-      console.log('Longueur typingSpeed:', userResults[1]?.length);
-      console.log('Premier élément typingSpeed:', userResults[1]?.[0]);
-      console.log('Dernier élément typingSpeed:', userResults[1]?.[userResults[1]?.length - 1]);
-
-      // ✅ VÉRIFIEZ AUSSI LE STATE
-      setTimeout(() => {
-        console.log('🎮 STATE gamesData.typingSpeed après setState:', gamesData.typingSpeed);
-      }, 100);
+      const response = await fetch('/api/user/all-game-data');
+      if (response.ok) {
+        const data = await response.json();
+        setGamesData(data);
+      }
     } catch (error) {
-      console.error('❌ Erreur lors du chargement des données de jeu:', error);
-    } finally {
-      setIsLoading(false);
+      console.error('Erreur lors de la récupération des données:', error);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    fetchAllGameData();
+  }, [fetchAllGameData]);
   
   // Fonctions de préparation des données pour les graphiques
   const prepareProgressionData = (data: unknown, valueKey: string = 'score', limit: number = 10) => {

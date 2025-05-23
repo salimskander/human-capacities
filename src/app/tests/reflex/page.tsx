@@ -41,6 +41,7 @@ export default function ReflexTest() {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const animationFrameRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
+  const [results, setResults] = useState<TestResult[]>([]);
 
   const resetTest = () => {
     if (timeoutRef.current) {

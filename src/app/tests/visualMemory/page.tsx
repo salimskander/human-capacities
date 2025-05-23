@@ -115,16 +115,23 @@ export default function VisualMemoryTest() {
     }
   }
 
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
+    if (!currentUser) return;
+    
     try {
-      // Données globales
-      const globalResponse = await fetch('/api/visualMemory?type=global');
-      const globalData = await globalResponse.json();
-      setGlobalResults(globalData);
+      const response = await fetch('/api/visual-memory/results');
+      if (response.ok) {
+        const data = await response.json();
+        setGlobalResults(data);
+      }
     } catch (error) {
-      console.error('Error fetching results:', error);
+      console.error('Erreur lors de la récupération des résultats:', error);
     }
-  }
+  }, [currentUser]);
+
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]);
 
   const saveResult = async (finalScore: number) => {
     try {
@@ -198,10 +205,6 @@ export default function VisualMemoryTest() {
       }
     }
   };
-
-  useEffect(() => {
-    fetchResults();
-  }, [fetchResults]);
 
   const calculateGridSize = useCallback(() => {
     if (typeof window === 'undefined') return 400;

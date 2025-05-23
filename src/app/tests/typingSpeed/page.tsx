@@ -118,44 +118,18 @@ export default function TypingSpeed() {
   }, [currentUser?.uid]);
 
   const saveResult = useCallback(async (wpm: number, accuracy: number) => {
-    console.log('🎯 saveResult appelé avec WPM:', wpm);
-    console.log('👤 currentUser:', currentUser);
-    console.log('🆔 userId:', currentUser?.uid);
+    if (!currentUser) return;
     
-    if (wpm === 0) {
-      console.log('⚠️ Score de 0, pas de sauvegarde');
-      return;
-    }
-    
-    console.log('💾 Sauvegarde du score:', wpm);
     try {
-      const resultToSave = {
-        timestamp: Date.now(),
-        score: wpm,
-        userId: currentUser?.uid
-      };
-      console.log('📦 Données à sauvegarder:', resultToSave);
-      
-      const response = await fetch('/api/typingSpeed', {
+      await fetch('/api/typing-speed/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(resultToSave)
+        body: JSON.stringify({ wpm, accuracy }),
       });
-      
-      console.log('📡 Réponse API:', response.status);
-      const responseData = await response.json();
-      console.log('📄 Données de réponse:', responseData);
-      
-      if (response.ok) {
-        console.log('✅ Score sauvegardé avec succès');
-        await fetchResults();
-      } else {
-        console.error('❌ Erreur HTTP:', response.status);
-      }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
     }
-  }, [currentUser?.uid, fetchResults]);
+  }, [currentUser]);
 
   useEffect(() => {
     if (timeLeft === 0 && !isFinished) {

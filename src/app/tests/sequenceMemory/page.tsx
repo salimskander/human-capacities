@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Chart as ChartJS,
@@ -46,6 +46,7 @@ export default function SequenceMemoryTest() {
   const [errorTile, setErrorTile] = useState<number | null>(null);
   const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   const [isProcessingError, setIsProcessingError] = useState(false);
+  const [results, setResults] = useState<TestResult[]>([]);
 
   const generateSequence = (currentLevel: number) => {
     if (currentLevel === 1) {
@@ -149,22 +150,23 @@ export default function SequenceMemoryTest() {
     }
   };
 
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
+    if (!currentUser) return;
+    
     try {
-      // Données utilisateur
-      if (currentUser) {
-        const userResponse = await fetch(`/api/sequenceMemory?userId=${currentUser.uid}&type=user`);
-        const userData = await userResponse.json();
+      const response = await fetch('/api/sequence-memory/results');
+      if (response.ok) {
+        const data = await response.json();
+        setResults(data);
       }
-      
-      // Données globales
-      const globalResponse = await fetch('/api/sequenceMemory?type=global');
-      const globalData = await globalResponse.json();
-      setGlobalResults(globalData);
     } catch (error) {
-      console.error('Error fetching results:', error);
+      console.error('Erreur lors de la récupération des résultats:', error);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]);
 
   const saveResult = async (score: number) => {
     try {
@@ -183,10 +185,6 @@ export default function SequenceMemoryTest() {
       console.error('Failed to save result:', error);
     }
   };
-
-  useEffect(() => {
-    fetchResults();
-  }, [fetchResults]);
 
   const prepareChartData = () => {
     const intervals = Array.from({ length: 15 }, (_, i) => i + 1);

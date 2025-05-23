@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Line } from 'react-chartjs-2';
 import {
@@ -99,6 +99,7 @@ export default function SymbolMemoryTest() {
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'showing' | 'gameover'>('waiting');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
+  const [results, setResults] = useState<TestResult[]>([]);
 
   const initializeCards = (level: number) => {
     const numberOfPairs = level + 2; // Commence avec 3 paires au niveau 1
@@ -194,16 +195,23 @@ export default function SymbolMemoryTest() {
     }, showDuration);
   };
 
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
+    if (!currentUser) return;
+    
     try {
-      // Données globales
-      const globalResponse = await fetch('/api/symbolMemory?type=global');
-      const globalData = await globalResponse.json();
-      setGlobalResults(globalData);
+      const response = await fetch('/api/symbol-memory/results');
+      if (response.ok) {
+        const data = await response.json();
+        setResults(data);
+      }
     } catch (error) {
-      console.error('Error fetching results:', error);
+      console.error('Erreur lors de la récupération des résultats:', error);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]);
 
   const saveResult = async (score: number) => {
     try {
@@ -239,10 +247,6 @@ export default function SymbolMemoryTest() {
   const handleBackToRules = () => {
     setGameStatus('waiting');
   };
-
-  useEffect(() => {
-    fetchResults();
-  }, [fetchResults]);
 
   return (
     <>
