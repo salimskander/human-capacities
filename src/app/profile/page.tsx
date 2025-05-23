@@ -5,9 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import UserProfileHeader from '@/components/UserProfileHeader';
 import GameStatsCard from '@/components/GameStatsCard';
-import { Line } from 'react-chartjs-2';
 import Image from 'next/image';
-import Link from 'next/link';
 import { logoutUser } from '@/firebase';
 import {
   Chart as ChartJS,
@@ -46,19 +44,8 @@ export default function ProfilePage() {
     symbolMemory: [],
     reflex: []
   });
-  const [globalData, setGlobalData] = useState({
-    chimpTest: [],
-    typingSpeed: [],
-    visualMemory: [],
-    numberMemory: [],
-    verbalMemory: [],
-    sequenceMemory: [],
-    symbolMemory: [],
-    reflex: []
-  });
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('performances');
-  const [showComparison, setShowComparison] = useState(false);
   const [isResetting, setIsResetting] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   
@@ -152,16 +139,16 @@ export default function ProfilePage() {
         console.log('🎮 STATE gamesData.typingSpeed après setState:', gamesData.typingSpeed);
       }, 100);
       
-      setGlobalData({
-        chimpTest: globalResults[0],
-        typingSpeed: globalResults[1],
-        visualMemory: globalResults[2],
-        numberMemory: globalResults[3],
-        verbalMemory: globalResults[4],
-        sequenceMemory: globalResults[5],
-        symbolMemory: globalResults[6],
-        reflex: globalResults[7]
-      });
+      // setGlobalData({
+      //   chimpTest: globalResults[0],
+      //   typingSpeed: globalResults[1],
+      //   visualMemory: globalResults[2],
+      //   numberMemory: globalResults[3],
+      //   verbalMemory: globalResults[4],
+      //   sequenceMemory: globalResults[5],
+      //   symbolMemory: globalResults[6],
+      //   reflex: globalResults[7]
+      // });
     } catch (error) {
       console.error('❌ Erreur lors du chargement des données de jeu:', error);
     } finally {
@@ -170,7 +157,7 @@ export default function ProfilePage() {
   };
   
   // Fonctions de préparation des données pour les graphiques
-  const prepareProgressionData = (data: any[], valueKey: string = 'score', limit: number = 10) => {
+  const prepareProgressionData = (data: unknown, valueKey: string = 'score', limit: number = 10) => {
     if (!data || data.length === 0) return null;
     
     // ✅ Trier par timestamp et prendre les plus récents
