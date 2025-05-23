@@ -15,7 +15,7 @@ interface GameStatsCardProps {
   icon: ReactNode;
   link: string;
   color: string;
-  prepareChartData: (data: GameResult[], valueKey?: string) => any;
+  prepareChartData: (data: Record<string, unknown>[], valueKey?: string) => any;
   lowerIsBetter?: boolean;
 }
 

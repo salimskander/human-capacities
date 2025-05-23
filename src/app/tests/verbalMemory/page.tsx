@@ -53,14 +53,13 @@ export default function VerbalMemoryTest() {
   const [seenWords, setSeenWords] = useState<Set<string>>(new Set());
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(2);
-  const [results, setResults] = useState<TestResult[]>([]);
   const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   const [showErrorAnimation, setShowErrorAnimation] = useState<boolean>(false);
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     fetchResults();
-  }, [currentUser]);
+  }, [fetchResults]);
 
   const fetchResults = async () => {
     try {
@@ -68,7 +67,6 @@ export default function VerbalMemoryTest() {
       if (currentUser) {
         const userResponse = await fetch(`/api/verbalMemory?userId=${currentUser.uid}&type=user`);
         const userData = await userResponse.json();
-        setResults(userData);
       }
       
       // Données globales

@@ -44,7 +44,6 @@ export default function VisualMemoryTest() {
   const [correctTiles, setCorrectTiles] = useState<number[]>([])
   const [errorTiles, setErrorTiles] = useState<number[]>([])
   const [isStarted, setIsStarted] = useState(false)
-  const [results, setResults] = useState<TestResult[]>([])
   const [globalResults, setGlobalResults] = useState<TestResult[]>([])
   const [isProcessingError, setIsProcessingError] = useState(false)
 
@@ -118,13 +117,6 @@ export default function VisualMemoryTest() {
 
   const fetchResults = async () => {
     try {
-      // Données utilisateur
-      if (currentUser) {
-        const userResponse = await fetch(`/api/visualMemory?userId=${currentUser.uid}&type=user`);
-        const userData = await userResponse.json();
-        setResults(userData);
-      }
-      
       // Données globales
       const globalResponse = await fetch('/api/visualMemory?type=global');
       const globalData = await globalResponse.json();
@@ -209,7 +201,7 @@ export default function VisualMemoryTest() {
 
   useEffect(() => {
     fetchResults();
-  }, [currentUser]);
+  }, [fetchResults]);
 
   const calculateGridSize = useCallback(() => {
     if (typeof window === 'undefined') return 400;

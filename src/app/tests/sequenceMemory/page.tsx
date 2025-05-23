@@ -44,7 +44,6 @@ export default function SequenceMemoryTest() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [correctTiles, setCorrectTiles] = useState<number[]>([]);
   const [errorTile, setErrorTile] = useState<number | null>(null);
-  const [results, setResults] = useState<TestResult[]>([]);
   const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   const [isProcessingError, setIsProcessingError] = useState(false);
 
@@ -156,7 +155,6 @@ export default function SequenceMemoryTest() {
       if (currentUser) {
         const userResponse = await fetch(`/api/sequenceMemory?userId=${currentUser.uid}&type=user`);
         const userData = await userResponse.json();
-        setResults(userData);
       }
       
       // Données globales
@@ -188,7 +186,7 @@ export default function SequenceMemoryTest() {
 
   useEffect(() => {
     fetchResults();
-  }, [currentUser]);
+  }, [fetchResults]);
 
   const prepareChartData = () => {
     const intervals = Array.from({ length: 15 }, (_, i) => i + 1);

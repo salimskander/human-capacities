@@ -89,7 +89,6 @@ export default function TypingSpeed() {
   const [currentLine, setCurrentLine] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null);
-  const [results, setResults] = useState<Result[]>([])
   const [globalResults, setGlobalResults] = useState<Result[]>([])
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
   const [showStartModal, setShowStartModal] = useState(true);
@@ -107,7 +106,7 @@ export default function TypingSpeed() {
       const userResponse = await fetch(userUrl);
       const userData = await userResponse.json();
       console.log('📊 Données utilisateur récupérées:', userData);
-      setResults(userData);
+      setGlobalResults(userData);
 
       const globalResponse = await fetch('/api/typingSpeed?type=global');
       const globalData = await globalResponse.json();
@@ -118,7 +117,7 @@ export default function TypingSpeed() {
     }
   }, [currentUser?.uid]);
 
-  const saveResult = useCallback(async (wpm: number) => {
+  const saveResult = useCallback(async (wpm: number, accuracy: number) => {
     console.log('🎯 saveResult appelé avec WPM:', wpm);
     console.log('👤 currentUser:', currentUser);
     console.log('🆔 userId:', currentUser?.uid);
@@ -162,7 +161,7 @@ export default function TypingSpeed() {
     if (timeLeft === 0 && !isFinished) {
       setIsFinished(true)
       setIsStarted(false)
-      saveResult(wordCount)
+      saveResult(wordCount, 0)
     }
   }, [timeLeft, wordCount, isFinished, saveResult])
 
@@ -352,7 +351,7 @@ export default function TypingSpeed() {
             title="Test de Vitesse de Frappe"
             description={
               <p className="mb-4">
-                Tapez les mots qui apparaissent à l'écran aussi vite et précisément que possible.
+                Tapez le texte ci-dessous aussi rapidement et précisément que possible.
                 Vous avez 60 secondes pour taper le maximum de mots.
                 Votre score final sera le nombre de mots correctement tapés par minute.
               </p>

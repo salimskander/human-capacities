@@ -237,7 +237,6 @@ export default function ChimpTest() {
   const [gameKey, setGameKey] = useState(Date.now());
   const [gameStatus, setGameStatus] = useState<GameStatus>('waiting');
   const [finalScore, setFinalScore] = useState(0);
-  const [results, setResults] = useState<TestResult[]>([]);
   const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   
   useEffect(() => {
@@ -250,7 +249,7 @@ export default function ChimpTest() {
       if (currentUser) {
         const userResponse = await fetch(`/api/chimpTest?userId=${currentUser.uid}&type=user`);
         const userData = await userResponse.json();
-        setResults(userData);
+        setGlobalResults(userData);
       }
       
       // Données globales

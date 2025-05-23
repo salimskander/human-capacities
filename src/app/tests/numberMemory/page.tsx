@@ -42,22 +42,14 @@ export default function NumberMemoryTest() {
     const [userInput, setUserInput] = useState('');
     const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'lost' | 'gameover'>('waiting');
     const inputRef = useRef<HTMLInputElement>(null);
-    const [results, setResults] = useState<TestResult[]>([]);
     const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
 
     useEffect(() => {
         fetchResults();
-    }, [currentUser]);
+    }, [fetchResults]);
 
     const fetchResults = async () => {
         try {
-            // Données utilisateur
-            if (currentUser) {
-                const userResponse = await fetch(`/api/numberMemory?userId=${currentUser.uid}&type=user`);
-                const userData = await userResponse.json();
-                setResults(userData);
-            }
-            
             // Données globales
             const globalResponse = await fetch('/api/numberMemory?type=global');
             const globalData = await globalResponse.json();

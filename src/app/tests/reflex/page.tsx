@@ -28,7 +28,6 @@ ChartJS.register(
 
 export default function ReflexTest() {
   const { currentUser } = useAuth();
-  const [results, setResults] = useState<number[]>([]);
   const [globalResults, setGlobalResults] = useState<number[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>('transparent');
   const [, setStartTime] = useState<number | null>(null);
@@ -147,7 +146,7 @@ export default function ReflexTest() {
 
   useEffect(() => {
     fetchResults();
-  }, [currentUser]);
+  }, [fetchResults]);
 
   const fetchResults = async () => {
     try {
@@ -156,7 +155,6 @@ export default function ReflexTest() {
         const userResponse = await fetch(`/api/reflex?userId=${currentUser.uid}&type=user`);
         const userData = await userResponse.json();
         const userTimes = userData.map((r: { reactionTime: number }) => r.reactionTime);
-        setResults(userTimes);
       }
       
       // Récupérer les résultats globaux pour comparaison
