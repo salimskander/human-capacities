@@ -141,7 +141,7 @@ export default function GameStatsCard({
     maintainAspectRatio: false,
     animation: {
       duration: 1000,
-      easing: 'easeOutQuart'
+      easing: 'easeOutQuart' as const
     },
     interaction: {
       mode: 'index' as const,

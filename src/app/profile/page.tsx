@@ -170,7 +170,7 @@ export default function ProfilePage() {
   };
   
   // Fonctions de préparation des données pour les graphiques
-  const prepareProgressionData = (data, valueKey = 'score', limit = 10) => {
+  const prepareProgressionData = (data: any[], valueKey: string = 'score', limit: number = 10) => {
     if (!data || data.length === 0) return null;
     
     // ✅ Trier par timestamp et prendre les plus récents
