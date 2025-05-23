@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { Line } from 'react-chartjs-2';
 import {
@@ -11,7 +11,8 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 } from 'chart.js';
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
@@ -24,7 +25,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 // Liste de mots français courants
@@ -42,8 +44,10 @@ const MOTS_FRANCAIS = [
 
 // ✅ Ajouter l'interface TestResult
 interface TestResult {
+  id: string;
   score: number;
   timestamp: string;
+  userId?: string;
 }
 
 export default function VerbalMemoryTest() {
@@ -57,11 +61,7 @@ export default function VerbalMemoryTest() {
   const [showErrorAnimation, setShowErrorAnimation] = useState<boolean>(false);
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
 
-  useEffect(() => {
-    fetchResults();
-  }, [fetchResults]);
-
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
     try {
       // Données utilisateur
       if (currentUser) {
@@ -76,7 +76,11 @@ export default function VerbalMemoryTest() {
     } catch (error) {
       console.error('Error fetching results:', error);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]);
 
   const saveScore = async () => {
     try {
