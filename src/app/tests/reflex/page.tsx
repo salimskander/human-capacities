@@ -14,6 +14,7 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 ChartJS.register(
   CategoryScale,
@@ -26,7 +27,9 @@ ChartJS.register(
 );
 
 export default function ReflexTest() {
+  const { currentUser } = useAuth();
   const [results, setResults] = useState<number[]>([]);
+  const [globalResults, setGlobalResults] = useState<number[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>('transparent');
   const [, setStartTime] = useState<number | null>(null);
   const [reactionTime, setReactionTime] = useState<number | null>(null);
@@ -113,16 +116,32 @@ export default function ReflexTest() {
       setBackgroundColor('transparent'); // Au lieu de 'white'
       setIsWaiting(false);
 
-      // Sauvegarder le résultat et mettre à jour le graphique
-      fetch('/api/reflex', {
+      // Sauvegarder le résultat avec l'ID utilisateur
+      saveResult(finalTime);
+    }
+  };
+
+  const saveResult = async (reactionTime: number) => {
+    try {
+      console.log('🎯 Envoi du résultat:', { reactionTime, userId: currentUser?.uid });
+      
+      const response = await fetch('/api/reflex', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ reactionTime: finalTime }),
-      })
-        .then(() => fetchResults())  // Recharger les résultats après la sauvegarde
-        .catch(error => console.error('Erreur lors de la sauvegarde:', error));
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          reactionTime,
+          userId: currentUser?.uid || null
+        }),
+      });
+      
+      const result = await response.json();
+      console.log('📨 Réponse de l\'API:', result);
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Erreur lors de la sauvegarde');
+      }
+    } catch (error) {
+      console.error('❌ Erreur lors de la sauvegarde du score:', error);
     }
   };
 
@@ -132,10 +151,19 @@ export default function ReflexTest() {
 
   const fetchResults = async () => {
     try {
-      const response = await fetch('/api/reflex');
-      const data = await response.json();
-      const times = data.map((r: { reactionTime: number }) => r.reactionTime);
-      setResults(times);
+      // Récupérer les résultats de l'utilisateur
+      if (currentUser) {
+        const userResponse = await fetch(`/api/reflex?userId=${currentUser.uid}&type=user`);
+        const userData = await userResponse.json();
+        const userTimes = userData.map((r: { reactionTime: number }) => r.reactionTime);
+        setResults(userTimes);
+      }
+      
+      // Récupérer les résultats globaux pour comparaison
+      const globalResponse = await fetch('/api/reflex?type=global');
+      const globalData = await globalResponse.json();
+      const globalTimes = globalData.map((r: { reactionTime: number }) => r.reactionTime);
+      setGlobalResults(globalTimes);
     } catch (error) {
       console.error('Erreur lors de la récupération des résultats:', error);
     }

@@ -1,0 +1,27 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model TestResult {
+  id           String   @id @default(cuid())
+  userId       String? // Optionnel pour les utilisateurs non connectés
+  testType     String // 'reflex', 'chimpTest', 'numberMemory', etc.
+  score        Float? // Score général (pour la plupart des tests)
+  wpm          Float? // Spécifique au typing speed
+  accuracy     Float? // Spécifique au typing speed
+  reactionTime Float? // Spécifique au reflex test
+  timestamp    DateTime @default(now())
+
+  @@index([userId])
+  @@index([testType])
+  @@index([timestamp])
+}

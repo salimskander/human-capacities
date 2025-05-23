@@ -15,6 +15,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +28,7 @@ ChartJS.register(
 );
 
 export default function SequenceMemoryTest() {
+  const { currentUser } = useAuth();
   const [level, setLevel] = useState(1);
   const [lives, setLives] = useState(2);
   const [sequence, setSequence] = useState<number[]>([]);
@@ -36,7 +38,7 @@ export default function SequenceMemoryTest() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [correctTiles, setCorrectTiles] = useState<number[]>([]);
   const [errorTile, setErrorTile] = useState<number | null>(null);
-  const [results, setResults] = useState<Array<{ timestamp: number; score: number }>>([]);
+  const [results, setResults] = useState<Array<{ timestamp: number, score: number }>>([]);
   const [isProcessingError, setIsProcessingError] = useState(false);
 
   const generateSequence = (currentLevel: number) => {
@@ -143,9 +145,13 @@ export default function SequenceMemoryTest() {
 
   const fetchResults = async () => {
     try {
-      const response = await fetch('/api/sequenceMemory');
-      const data = await response.json();
-      setResults(Array.isArray(data) ? data : []);
+      if (currentUser) {
+        const response = await fetch(`/api/sequenceMemory?userId=${currentUser.uid}&type=user`);
+        const data = await response.json();
+        setResults(Array.isArray(data) ? data : []);
+      } else {
+        setResults([]);
+      }
     } catch (error) {
       console.error('Failed to fetch results:', error);
       setResults([]);
@@ -159,7 +165,10 @@ export default function SequenceMemoryTest() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ score }),
+        body: JSON.stringify({ 
+          score,
+          userId: currentUser?.uid || null
+        }),
       });
       fetchResults();
     } catch (error) {
@@ -169,7 +178,7 @@ export default function SequenceMemoryTest() {
 
   useEffect(() => {
     fetchResults();
-  }, []);
+  }, [currentUser]);
 
   const prepareChartData = (results: Array<{ score: number }>) => {
     // Créer un tableau de 12 niveaux (1-12)

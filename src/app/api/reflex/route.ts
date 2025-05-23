@@ -1,60 +1,75 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 
-const DATA_FILE = path.join(process.cwd(), 'data', 'reflex-results.json');
-
-interface ReflexResult {
-  timestamp: number;
-  reactionTime: number;
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('userId');
+    const type = searchParams.get('type') || 'user';
+    
+    const where = type === 'global' 
+      ? { testType: 'reflex' }
+      : { testType: 'reflex', userId: userId || undefined };
+    
+    const results = await prisma.testResult.findMany({
+      where,
+      orderBy: { timestamp: 'desc' },
+      select: {
+        id: true,
+        reactionTime: true,
+        timestamp: true,
+        userId: true
+      }
+    });
+    
+    return NextResponse.json(results);
+  } catch (error) {
+    console.error('Erreur lors de la récupération:', error);
+    return NextResponse.json({ error: 'Erreur lors de la récupération' }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
   try {
-    const { reactionTime } = await request.json();
+    const { reactionTime, userId } = await request.json();
     
-    // Créer le dossier data s'il n'existe pas
-    await fs.mkdir(path.join(process.cwd(), 'data'), { recursive: true });
+    console.log('📝 Données reçues:', { reactionTime, userId });
     
-    // Lire les données existantes ou initialiser un tableau vide
-    let results: ReflexResult[] = [];
-    try {
-      const data = await fs.readFile(DATA_FILE, 'utf-8');
-      results = JSON.parse(data);
-    } catch (error) {
-      NextResponse.json({ error }, { status: 500 });
-    }
-
-    // Ajouter le nouveau résultat
-    results.push({
-      timestamp: Date.now(),
-      reactionTime
+    const result = await prisma.testResult.create({
+      data: {
+        testType: 'reflex',
+        reactionTime,
+        userId: userId || null
+      }
     });
-
-    // Sauvegarder les résultats
-    await fs.writeFile(DATA_FILE, JSON.stringify(results, null, 2));
-
-    return NextResponse.json({ success: true });
+    
+    console.log('✅ Résultat créé:', result);
+    
+    return NextResponse.json({ success: true, id: result.id });
   } catch (error) {
-    console.error('Erreur lors de la sauvegarde:', error);
-    return NextResponse.json(
-      { error: 'Erreur lors de la sauvegarde' },
-      { status: 500 }
-    );
+    console.error('❌ Erreur lors de la sauvegarde:', error);
+    return NextResponse.json({ error: 'Erreur lors de la sauvegarde' }, { status: 500 });
   }
 }
 
-export async function GET() {
+export async function DELETE(request: Request) {
   try {
-    let results: ReflexResult[] = [];
-    try {
-      const data = await fs.readFile(DATA_FILE, 'utf-8');
-      results = JSON.parse(data);
-    } catch (error) {
-      NextResponse.json({ error }, { status: 500 });
+    const { userId } = await request.json();
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 });
     }
-    return NextResponse.json(results);
+    
+    await prisma.testResult.deleteMany({
+      where: {
+        testType: 'reflex',
+        userId
+      }
+    });
+    
+    return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    console.error('Erreur lors de la suppression:', error);
+    return NextResponse.json({ error: 'Erreur lors de la suppression' }, { status: 500 });
   }
 }

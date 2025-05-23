@@ -1,44 +1,71 @@
-import { promises as fs } from 'fs'
 import { NextResponse } from 'next/server'
-import path from 'path'
+import { prisma } from '@/lib/prisma'
 
-const dataFilePath = path.join(process.cwd(), 'data', 'visualMemory.json')
-
-async function ensureDirectoryExists() {
-  const dir = path.dirname(dataFilePath)
+export async function GET(request: Request) {
   try {
-    await fs.access(dir)
-  } catch {
-    await fs.mkdir(dir, { recursive: true })
-  }
-}
-
-export async function GET() {
-  try {
-    await ensureDirectoryExists()
-    const data = await fs.readFile(dataFilePath, 'utf8').catch(() => '[]')
-    return NextResponse.json(JSON.parse(data))
+    const { searchParams } = new URL(request.url)
+    const userId = searchParams.get('userId')
+    const type = searchParams.get('type') || 'user'
+    
+    const where = type === 'global' 
+      ? { testType: 'visualMemory' }
+      : { testType: 'visualMemory', userId: userId || undefined }
+    
+    const results = await prisma.testResult.findMany({
+      where,
+      orderBy: { timestamp: 'desc' },
+      select: {
+        id: true,
+        score: true,
+        timestamp: true,
+        userId: true
+      }
+    })
+    
+    return NextResponse.json(results)
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 })
+    console.error('Erreur lors de la récupération:', error)
+    return NextResponse.json({ error: 'Erreur lors de la récupération' }, { status: 500 })
   }
 }
 
 export async function POST(request: Request) {
   try {
-    const { score } = await request.json()
-    await ensureDirectoryExists()
+    const { score, userId } = await request.json()
     
-    const data = await fs.readFile(dataFilePath, 'utf8').catch(() => '[]')
-    const results = JSON.parse(data)
-    
-    results.push({
-      timestamp: Date.now(),
-      score: score
+    const result = await prisma.testResult.create({
+      data: {
+        testType: 'visualMemory',
+        score,
+        userId: userId || null
+      }
     })
     
-    await fs.writeFile(dataFilePath, JSON.stringify(results))
+    return NextResponse.json({ success: true, id: result.id })
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde:', error)
+    return NextResponse.json({ error: 'Erreur lors de la sauvegarde' }, { status: 500 })
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { userId } = await request.json()
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 })
+    }
+    
+    await prisma.testResult.deleteMany({
+      where: {
+        testType: 'visualMemory',
+        userId
+      }
+    })
+    
     return NextResponse.json({ success: true })
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 })
+    console.error('Erreur lors de la suppression:', error)
+    return NextResponse.json({ error: 'Erreur lors de la suppression' }, { status: 500 })
   }
 }

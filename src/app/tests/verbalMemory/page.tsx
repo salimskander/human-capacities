@@ -15,6 +15,7 @@ import {
 } from 'chart.js';
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 ChartJS.register(
   CategoryScale,
@@ -40,24 +41,29 @@ const MOTS_FRANCAIS = [
 ];
 
 export default function VerbalMemoryTest() {
+  const { currentUser } = useAuth();
   const [motsDejaProposes, setMotsDejaProposes] = useState<Set<string>>(new Set());
   const [motCourant, setMotCourant] = useState<string>('');
   const [score, setScore] = useState<number>(0);
   const [vies, setVies] = useState<number>(2);
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'gameover'>('waiting');
-  const [results, setResults] = useState<Array<{ timestamp: number; score: number }>>([]);
+  const [results, setResults] = useState<Array<{ timestamp: number, score: number }>>([]);
   const [showErrorAnimation, setShowErrorAnimation] = useState<boolean>(false);
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     fetchResults();
-  }, []);
+  }, [currentUser]);
 
   const fetchResults = async () => {
     try {
-      const response = await fetch('/api/verbalMemory');
-      const data = await response.json();
-      setResults(data);
+      if (currentUser) {
+        const response = await fetch(`/api/verbalMemory?userId=${currentUser.uid}&type=user`);
+        const data = await response.json();
+        setResults(data);
+      } else {
+        setResults([]);
+      }
     } catch (error) {
       console.error('Erreur lors du chargement des résultats:', error);
     }
@@ -70,7 +76,10 @@ export default function VerbalMemoryTest() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ score }),
+        body: JSON.stringify({ 
+          score,
+          userId: currentUser?.uid || null
+        }),
       });
       fetchResults();
     } catch (error) {

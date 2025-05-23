@@ -1,42 +1,79 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 
-const dataFilePath = path.join(process.cwd(), 'data', 'symbolMemory.json');
-
-async function ensureFileExists() {
+export async function GET(request: Request) {
   try {
-    await fs.access(dataFilePath);
-  } catch {
-    await fs.mkdir(path.dirname(dataFilePath), { recursive: true });
-    await fs.writeFile(dataFilePath, '[]');
-  }
-}
-
-export async function GET() {
-  try {
-    await ensureFileExists();
-    const data = await fs.readFile(dataFilePath, 'utf-8');
-    const results = JSON.parse(data);
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('userId');
+    const type = searchParams.get('type') || 'user';
+    
+    console.log(`🔍 API symbolMemory - userId: ${userId}, type: ${type}`);
+    
+    const where = type === 'global' 
+      ? { testType: 'symbolMemory' }
+      : { testType: 'symbolMemory', userId: userId || undefined };
+    
+    const results = await prisma.testResult.findMany({
+      where,
+      orderBy: { timestamp: 'desc' },
+      select: {
+        id: true,
+        score: true,
+        timestamp: true,
+        userId: true
+      }
+    });
+    
+    console.log(`📊 Résultats symbolMemory trouvés: ${results.length}`);
+    
     return NextResponse.json(results);
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    console.error('Erreur lors de la récupération symbolMemory:', error);
+    return NextResponse.json({ error: 'Erreur lors de la récupération' }, { status: 500 });
   }
 }
 
 export async function POST(request: Request) {
   try {
-    await ensureFileExists();
-    const { score } = await request.json();
-    const timestamp = Date.now();
+    const { score, userId } = await request.json();
     
-    const data = await fs.readFile(dataFilePath, 'utf-8');
-    const results = JSON.parse(data);
-    results.push({ timestamp, score });
-    await fs.writeFile(dataFilePath, JSON.stringify(results, null, 2));
+    if (typeof score !== 'number') {
+      return NextResponse.json({ error: 'Score invalide' }, { status: 400 });
+    }
+    
+    const result = await prisma.testResult.create({
+      data: {
+        testType: 'symbolMemory',
+        score,
+        userId: userId || null
+      }
+    });
+    
+    return NextResponse.json({ success: true, id: result.id });
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde symbolMemory:', error);
+    return NextResponse.json({ error: 'Erreur lors de la sauvegarde' }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { userId } = await request.json();
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'UserId requis' }, { status: 400 });
+    }
+    
+    await prisma.testResult.deleteMany({
+      where: {
+        testType: 'symbolMemory',
+        userId: userId
+      }
+    });
     
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error }, { status: 500 });
+    console.error('Erreur lors de la suppression symbolMemory:', error);
+    return NextResponse.json({ error: 'Erreur lors de la suppression' }, { status: 500 });
   }
 }

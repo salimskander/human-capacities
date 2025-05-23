@@ -15,6 +15,7 @@ import { Line } from 'react-chartjs-2'
 import StartModal from '@/components/StartModal'
 import ProgressBar from "@/components/ProgressBar";
 import GameOverModal from '@/components/GameOverModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +28,7 @@ ChartJS.register(
 )
 
 export default function VisualMemoryTest() {
+  const { currentUser } = useAuth();
   const [lives, setLives] = useState(2)
   const [level, setLevel] = useState(1)
   const [sequence, setSequence] = useState<number[]>([])
@@ -109,11 +111,15 @@ export default function VisualMemoryTest() {
 
   const fetchResults = async () => {
     try {
-      const response = await fetch('/api/visualMemory')
-      const data = await response.json()
-      setResults(data)
+      if (currentUser) {
+        const response = await fetch(`/api/visualMemory?userId=${currentUser.uid}&type=user`);
+        const data = await response.json();
+        setResults(data);
+      } else {
+        setResults([]);
+      }
     } catch (error) {
-      console.error('Failed to fetch results:', error)
+      console.error('Failed to fetch results:', error);
     }
   }
 
@@ -122,11 +128,14 @@ export default function VisualMemoryTest() {
       await fetch('/api/visualMemory', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ score: finalScore })
-      })
-      await fetchResults()
+        body: JSON.stringify({ 
+          score: finalScore,
+          userId: currentUser?.uid || null
+        })
+      });
+      await fetchResults();
     } catch (error) {
-      console.error('Failed to save result:', error)
+      console.error('Failed to save result:', error);
     }
   }
 
@@ -179,8 +188,8 @@ export default function VisualMemoryTest() {
   }
 
   useEffect(() => {
-    fetchResults()
-  }, [])
+    fetchResults();
+  }, [currentUser]);
 
   const calculateGridSize = useCallback(() => {
     if (typeof window === 'undefined') return 400;

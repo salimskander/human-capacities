@@ -16,6 +16,7 @@ import {
 import StartModal from '@/components/StartModal';
 import ProgressBar from "@/components/ProgressBar";
 import GameOverModal from '@/components/GameOverModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 ChartJS.register(
   CategoryScale,
@@ -85,6 +86,7 @@ const chartOptions = {
 };
 
 export default function SymbolMemoryTest() {
+  const { currentUser } = useAuth();
   const [level, setLevel] = useState(1);
   const [lives, setLives] = useState(2);
   const [cards, setCards] = useState<Array<{ id: number; symbol: string; isFlipped: boolean; isMatched: boolean }>>([]);
@@ -188,7 +190,10 @@ export default function SymbolMemoryTest() {
 
   const fetchResults = async () => {
     try {
-      const response = await fetch('/api/symbolMemory');
+      const url = currentUser?.uid 
+        ? `/api/symbolMemory?userId=${currentUser.uid}&type=user`
+        : '/api/symbolMemory';
+      const response = await fetch(url);
       const data = await response.json();
       setResults(data);
     } catch (error) {
@@ -203,11 +208,14 @@ export default function SymbolMemoryTest() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ score }),
+        body: JSON.stringify({ 
+          score,
+          userId: currentUser?.uid || null
+        }),
       });
       fetchResults();
     } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
+      console.error('Erreur lors de la sauvegarde du score:', error);
     }
   };
 

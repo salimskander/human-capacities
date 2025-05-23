@@ -1,37 +1,71 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs/promises';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 
-const dataFile = path.join(process.cwd(), 'data', 'numberMemory.json');
-
-// Assure que le fichier existe
-async function ensureFile() {
-    try {
-        await fs.access(dataFile);
-    } catch {
-        await fs.mkdir(path.dirname(dataFile), { recursive: true });
-        await fs.writeFile(dataFile, '[]');
-    }
-}
-
-export async function GET() {
-    await ensureFile();
-    const data = await fs.readFile(dataFile, 'utf-8');
-    return NextResponse.json(JSON.parse(data));
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('userId');
+    const type = searchParams.get('type') || 'user';
+    
+    const where = type === 'global' 
+      ? { testType: 'numberMemory' }
+      : { testType: 'numberMemory', userId: userId || undefined };
+    
+    const results = await prisma.testResult.findMany({
+      where,
+      orderBy: { timestamp: 'desc' },
+      select: {
+        id: true,
+        score: true,
+        timestamp: true,
+        userId: true
+      }
+    });
+    
+    return NextResponse.json(results);
+  } catch (error) {
+    console.error('Erreur lors de la récupération:', error);
+    return NextResponse.json({ error: 'Erreur lors de la récupération' }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
-    const { score } = await request.json();
-    await ensureFile();
+  try {
+    const { score, userId } = await request.json();
     
-    const newResult = {
-        timestamp: Date.now(),
-        score: score
-    };
+    const result = await prisma.testResult.create({
+      data: {
+        testType: 'numberMemory',
+        score,
+        userId: userId || null
+      }
+    });
+    
+    return NextResponse.json({ success: true, id: result.id });
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde:', error);
+    return NextResponse.json({ error: 'Erreur lors de la sauvegarde' }, { status: 500 });
+  }
+}
 
-    const data = JSON.parse(await fs.readFile(dataFile, 'utf-8'));
-    data.push(newResult);
-    await fs.writeFile(dataFile, JSON.stringify(data));
-
-    return NextResponse.json(newResult);
+export async function DELETE(request: Request) {
+  try {
+    const { userId } = await request.json();
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 });
+    }
+    
+    await prisma.testResult.deleteMany({
+      where: {
+        testType: 'numberMemory',
+        userId
+      }
+    });
+    
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Erreur lors de la suppression:', error);
+    return NextResponse.json({ error: 'Erreur lors de la suppression' }, { status: 500 });
+  }
 }

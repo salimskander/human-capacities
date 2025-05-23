@@ -16,6 +16,7 @@ import StartModal from '@/components/StartModal'
 import ProgressBar from "@/components/ProgressBar"
 import GameOverModal from "@/components/GameOverModal"
 import AdBanner from '@/components/AdBanner'
+import { useAuth } from '@/contexts/AuthContext'
 
 ChartJS.register(
   CategoryScale,
@@ -77,6 +78,7 @@ type Result = {
 }
 
 export default function TypingSpeed() {
+  const { currentUser } = useAuth()
   const [isStarted, setIsStarted] = useState(false)
   const [timeLeft, setTimeLeft] = useState(60)
   const [currentInput, setCurrentInput] = useState('')
@@ -92,31 +94,74 @@ export default function TypingSpeed() {
   const [showStartModal, setShowStartModal] = useState(true);
 
   const fetchResults = useCallback(async () => {
+    console.log('🔄 fetchResults appelé');
+    console.log('👤 currentUser dans fetchResults:', currentUser?.uid);
+    
     try {
-      const response = await fetch('/api/typingSpeed')
-      const data = await response.json()
-      setResults(data)
+      const url = currentUser?.uid 
+        ? `/api/typingSpeed?userId=${currentUser.uid}&type=user`
+        : '/api/typingSpeed';
+      console.log('🌐 URL de récupération:', url);
+      
+      const response = await fetch(url);
+      const data = await response.json();
+      console.log('📊 Données récupérées:', data);
+      console.log('📈 Nombre de résultats:', data.length);
+      
+      setResults(data);
     } catch (error) {
-      console.error('Failed to fetch results:', error)
+      console.error('Failed to fetch results:', error);
     }
-  }, [])
+  }, [currentUser?.uid]);
 
-  const saveResult = useCallback(async (wpm: number /* ou score */) => {
+  const saveResult = useCallback(async (wpm: number) => {
+    console.log('🎯 saveResult appelé avec WPM:', wpm);
+    console.log('👤 currentUser:', currentUser);
+    console.log('🆔 userId:', currentUser?.uid);
+    
+    if (wpm === 0) {
+      console.log('⚠️ Score de 0, pas de sauvegarde');
+      return;
+    }
+    
+    console.log('💾 Sauvegarde du score:', wpm);
     try {
       const resultToSave = {
         timestamp: Date.now(),
-        score: wpm // ou le score approprié que vous voulez sauvegarder
+        score: wpm,
+        userId: currentUser?.uid
       };
-      await fetch('/api/typingSpeed', {
+      console.log('📦 Données à sauvegarder:', resultToSave);
+      
+      const response = await fetch('/api/typingSpeed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(resultToSave)
       });
-      fetchResults();
+      
+      console.log('📡 Réponse API:', response.status);
+      const responseData = await response.json();
+      console.log('📄 Données de réponse:', responseData);
+      
+      if (response.ok) {
+        console.log('✅ Score sauvegardé avec succès');
+        await fetchResults();
+      } else {
+        console.error('❌ Erreur HTTP:', response.status);
+      }
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
     }
-  }, [fetchResults]);
+  }, [currentUser?.uid, fetchResults]);
+
+  // Nouvel effet pour gérer la fin du jeu
+  useEffect(() => {
+    if (timeLeft === 0 && !isFinished) {
+      setIsFinished(true)
+      setIsStarted(false)
+      saveResult(wordCount)
+    }
+  }, [timeLeft, wordCount, isFinished, saveResult])
 
   // Modifier l'effet pour le timer
   useEffect(() => {
@@ -132,15 +177,6 @@ export default function TypingSpeed() {
       if (timer) clearInterval(timer)
     }
   }, [isStarted, timeLeft, hasStartedTyping])
-
-  // Nouvel effet pour gérer la fin du jeu
-  useEffect(() => {
-    if (timeLeft === 0) {
-      setIsFinished(true)
-      setIsStarted(false)
-      saveResult(wordCount)
-    }
-  }, [timeLeft, wordCount, saveResult])
 
   useEffect(() => {
     if (isStarted && inputRef.current) {

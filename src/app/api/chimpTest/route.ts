@@ -1,49 +1,79 @@
 import { NextResponse } from 'next/server';
-import { promises as fs } from 'fs';
-import path from 'path';
+import { prisma } from '@/lib/prisma';
 
-const dataFilePath = path.join(process.cwd(), 'data', 'chimpTest.json');
-
-// Type pour la structure des données
-type TestResult = {
-    timestamp: number;
-    score: number;
-};
-
-// Assure que le fichier existe
-async function ensureFile() {
-    try {
-        await fs.access(dataFilePath);
-    } catch {
-        await fs.mkdir(path.dirname(dataFilePath), { recursive: true });
-        await fs.writeFile(dataFilePath, '[]');
-    }
-}
-
-export async function GET() {
-    await ensureFile();
-    const data = await fs.readFile(dataFilePath, 'utf-8');
-    return NextResponse.json(JSON.parse(data));
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get('userId');
+    const type = searchParams.get('type') || 'user';
+    
+    console.log(`🔍 API chimpTest - userId: ${userId}, type: ${type}`);
+    
+    const where = type === 'global' 
+      ? { testType: 'chimpTest' }
+      : { testType: 'chimpTest', userId: userId || undefined };
+    
+    const results = await prisma.testResult.findMany({
+      where,
+      orderBy: { timestamp: 'desc' },
+      select: {
+        id: true,
+        score: true,
+        timestamp: true,
+        userId: true
+      }
+    });
+    
+    console.log(`📊 Résultats trouvés: ${results.length}`);
+    
+    return NextResponse.json(results);
+  } catch (error) {
+    console.error('Erreur lors de la récupération:', error);
+    return NextResponse.json({ error: 'Erreur lors de la récupération' }, { status: 500 });
+  }
 }
 
 export async function POST(request: Request) {
-    await ensureFile();
+  try {
+    const { score, userId } = await request.json();
     
-    const result: TestResult = await request.json();
-    
-    // Validation basique
-    if (!result.timestamp || typeof result.score !== 'number') {
-        return NextResponse.json({ error: 'Invalid data' }, { status: 400 });
+    if (typeof score !== 'number') {
+      return NextResponse.json({ error: 'Score invalide' }, { status: 400 });
     }
+    
+    const result = await prisma.testResult.create({
+      data: {
+        testType: 'chimpTest',
+        score,
+        userId: userId || null
+      }
+    });
+    
+    return NextResponse.json({ success: true, id: result.id });
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde:', error);
+    return NextResponse.json({ error: 'Erreur lors de la sauvegarde' }, { status: 500 });
+  }
+}
 
-    // Lire les données existantes
-    const data = JSON.parse(await fs.readFile(dataFilePath, 'utf-8'));
+export async function DELETE(request: Request) {
+  try {
+    const { userId } = await request.json();
     
-    // Ajouter le nouveau résultat
-    data.push(result);
+    if (!userId) {
+      return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 });
+    }
     
-    // Sauvegarder les données
-    await fs.writeFile(dataFilePath, JSON.stringify(data, null, 2));
+    await prisma.testResult.deleteMany({
+      where: {
+        testType: 'chimpTest',
+        userId
+      }
+    });
     
     return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error('Erreur lors de la suppression:', error);
+    return NextResponse.json({ error: 'Erreur lors de la suppression' }, { status: 500 });
+  }
 }

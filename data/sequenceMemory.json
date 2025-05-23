@@ -1,5 +1,5 @@
 {
-  "results": [
+  "global": [
     {
       "timestamp": 1736281365240,
       "score": 1
@@ -88,5 +88,6 @@
       "timestamp": 1747674483190,
       "score": 8
     }
-  ]
+  ],
+  "users": {}
 }

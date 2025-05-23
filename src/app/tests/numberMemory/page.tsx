@@ -15,6 +15,7 @@ import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import ProgressBar from "@/components/ProgressBar";
 import GameOverModal from '@/components/GameOverModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 ChartJS.register(
     CategoryScale,
@@ -27,6 +28,7 @@ ChartJS.register(
 );
 
 export default function NumberMemoryTest() {
+    const { currentUser } = useAuth();
     const [level, setLevel] = useState(1);
     const [lives, setLives] = useState(2);
     const [numbers, setNumbers] = useState<string>('');
@@ -38,13 +40,17 @@ export default function NumberMemoryTest() {
 
     useEffect(() => {
         fetchResults();
-    }, []);
+    }, [currentUser]);
 
     const fetchResults = async () => {
         try {
-            const response = await fetch('/api/numberMemory');
-            const data = await response.json();
-            setResults(data);
+            if (currentUser) {
+                const response = await fetch(`/api/numberMemory?userId=${currentUser.uid}&type=user`);
+                const data = await response.json();
+                setResults(data);
+            } else {
+                setResults([]);
+            }
         } catch (error) {
             console.error('Erreur lors du chargement des résultats:', error);
         }
@@ -55,7 +61,10 @@ export default function NumberMemoryTest() {
             await fetch('/api/numberMemory', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ score })
+                body: JSON.stringify({ 
+                    score,
+                    userId: currentUser?.uid || null
+                })
             });
             await fetchResults();
         } catch (error) {

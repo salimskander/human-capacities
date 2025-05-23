@@ -1,1 +1,121 @@
-[{"timestamp":1736171440342,"score":28},{"timestamp":1736174143076,"score":6},{"timestamp":1736196393568,"score":28},{"timestamp":1736357248034,"score":1},{"timestamp":1736357859259,"score":6},{"timestamp":1736357997379,"score":6},{"timestamp":1736358321863,"score":0},{"timestamp":1736504593845,"score":1},{"timestamp":1736504601588,"score":0},{"timestamp":1736504609724,"score":0},{"timestamp":1736505904892,"score":0},{"timestamp":1736507240609,"score":1},{"timestamp":1736510228907,"score":1},{"timestamp":1736510238179,"score":0},{"timestamp":1736510628436,"score":0},{"timestamp":1736510991931,"score":0},{"timestamp":1736514367790,"score":1},{"timestamp":1736518037520,"score":1},{"timestamp":1736518050504,"score":0},{"timestamp":1737972248762,"score":0},{"timestamp":1737976447633,"score":6},{"timestamp":1745591414303,"score":6},{"timestamp":1745591453559,"score":1},{"timestamp":1745591954767,"score":1},{"timestamp":1745591962765,"score":1},{"timestamp":1745591976343,"score":1},{"timestamp":1745592185044,"score":1},{"timestamp":1745614822253,"score":2},{"timestamp":1747675210592,"score":4}]
+{
+  "global": [
+    {
+      "timestamp": 1736171440342,
+      "score": 28
+    },
+    {
+      "timestamp": 1736174143076,
+      "score": 6
+    },
+    {
+      "timestamp": 1736196393568,
+      "score": 28
+    },
+    {
+      "timestamp": 1736357248034,
+      "score": 1
+    },
+    {
+      "timestamp": 1736357859259,
+      "score": 6
+    },
+    {
+      "timestamp": 1736357997379,
+      "score": 6
+    },
+    {
+      "timestamp": 1736358321863,
+      "score": 0
+    },
+    {
+      "timestamp": 1736504593845,
+      "score": 1
+    },
+    {
+      "timestamp": 1736504601588,
+      "score": 0
+    },
+    {
+      "timestamp": 1736504609724,
+      "score": 0
+    },
+    {
+      "timestamp": 1736505904892,
+      "score": 0
+    },
+    {
+      "timestamp": 1736507240609,
+      "score": 1
+    },
+    {
+      "timestamp": 1736510228907,
+      "score": 1
+    },
+    {
+      "timestamp": 1736510238179,
+      "score": 0
+    },
+    {
+      "timestamp": 1736510628436,
+      "score": 0
+    },
+    {
+      "timestamp": 1736510991931,
+      "score": 0
+    },
+    {
+      "timestamp": 1736514367790,
+      "score": 1
+    },
+    {
+      "timestamp": 1736518037520,
+      "score": 1
+    },
+    {
+      "timestamp": 1736518050504,
+      "score": 0
+    },
+    {
+      "timestamp": 1737972248762,
+      "score": 0
+    },
+    {
+      "timestamp": 1737976447633,
+      "score": 6
+    },
+    {
+      "timestamp": 1745591414303,
+      "score": 6
+    },
+    {
+      "timestamp": 1745591453559,
+      "score": 1
+    },
+    {
+      "timestamp": 1745591954767,
+      "score": 1
+    },
+    {
+      "timestamp": 1745591962765,
+      "score": 1
+    },
+    {
+      "timestamp": 1745591976343,
+      "score": 1
+    },
+    {
+      "timestamp": 1745592185044,
+      "score": 1
+    },
+    {
+      "timestamp": 1745614822253,
+      "score": 2
+    },
+    {
+      "timestamp": 1747675210592,
+      "score": 4
+    }
+  ],
+  "users": {}
+}

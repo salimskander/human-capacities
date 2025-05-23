@@ -1,44 +1,76 @@
 import { NextResponse } from 'next/server'
-import { promises as fs } from 'fs'
-import path from 'path'
+import { prisma } from '@/lib/prisma'
 
-const dataFilePath = path.join(process.cwd(), 'data', 'typingSpeed.json')
-
-type Result = {
-    timestamp: number;
-    score: number;
-}
-
-async function ensureFileExists() {
+export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url)
+    const userId = searchParams.get('userId')
+    const type = searchParams.get('type') || 'user'
+    
+    console.log('🔍 API typingSpeed - userId:', userId, ', type:', type)
+    
     try {
-        await fs.access(dataFilePath)
-    } catch {
-        await fs.writeFile(dataFilePath, '[]')
-    }
-}
-
-export async function GET() {
-    try {
-        await ensureFileExists()
-        const data = await fs.readFile(dataFilePath, 'utf-8')
-        return NextResponse.json(JSON.parse(data))
+        const where = type === 'global' 
+            ? { testType: 'typingSpeed' }
+            : { testType: 'typingSpeed', userId: userId || undefined }
+        
+        const results = await prisma.testResult.findMany({
+            where,
+            orderBy: { timestamp: 'desc' },
+            select: {
+                id: true,
+                score: true,
+                timestamp: true,
+                userId: true
+            }
+        })
+        
+        console.log('📊 Résultats typingSpeed trouvés:', results.length)
+        console.log('📄 Données typingSpeed:', results)
+        
+        return NextResponse.json(results)
     } catch (error) {
-        return NextResponse.json({ error }, { status: 500 })
+        console.error('Erreur lors de la récupération:', error)
+        return NextResponse.json({ error: 'Erreur lors de la récupération' }, { status: 500 })
     }
 }
 
 export async function POST(request: Request) {
     try {
-        await ensureFileExists()
-        const newResult: Result = await request.json()
+        const { score, userId } = await request.json()
         
-        const data = await fs.readFile(dataFilePath, 'utf-8')
-        const results: Result[] = JSON.parse(data)
-        results.push(newResult)
+        const result = await prisma.testResult.create({
+            data: {
+                testType: 'typingSpeed',
+                score,
+                userId: userId || null
+            }
+        })
         
-        await fs.writeFile(dataFilePath, JSON.stringify(results, null, 2))
+        return NextResponse.json({ success: true, id: result.id })
+    } catch (error) {
+        console.error('Erreur lors de la sauvegarde:', error)
+        return NextResponse.json({ error: 'Erreur lors de la sauvegarde' }, { status: 500 })
+    }
+}
+
+export async function DELETE(request: Request) {
+    try {
+        const { userId } = await request.json()
+        
+        if (!userId) {
+            return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 })
+        }
+        
+        await prisma.testResult.deleteMany({
+            where: {
+                testType: 'typingSpeed',
+                userId
+            }
+        })
+        
         return NextResponse.json({ success: true })
     } catch (error) {
-        return NextResponse.json({ error }, { status: 500 })
+        console.error('Erreur lors de la suppression:', error)
+        return NextResponse.json({ error: 'Erreur lors de la suppression' }, { status: 500 })
     }
 }

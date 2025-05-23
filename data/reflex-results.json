@@ -1,466 +1,474 @@
-[
-  {
-    "timestamp": 1736168551017,
-    "reactionTime": 256
-  },
-  {
-    "timestamp": 1736168879528,
-    "reactionTime": 548
-  },
-  {
-    "timestamp": 1736168924028,
-    "reactionTime": 297
-  },
-  {
-    "timestamp": 1736168928159,
-    "reactionTime": 271
-  },
-  {
-    "timestamp": 1736168931687,
-    "reactionTime": 270
-  },
-  {
-    "timestamp": 1736168945732,
-    "reactionTime": 1127
-  },
-  {
-    "timestamp": 1736168949323,
-    "reactionTime": 207
-  },
-  {
-    "timestamp": 1736168987970,
-    "reactionTime": 263
-  },
-  {
-    "timestamp": 1736169192806,
-    "reactionTime": 236
-  },
-  {
-    "timestamp": 1736169196720,
-    "reactionTime": 227
-  },
-  {
-    "timestamp": 1736169199624,
-    "reactionTime": 220
-  },
-  {
-    "timestamp": 1736169203377,
-    "reactionTime": 25
-  },
-  {
-    "timestamp": 1736169218792,
-    "reactionTime": 746
-  },
-  {
-    "timestamp": 1736169237364,
-    "reactionTime": 224
-  },
-  {
-    "timestamp": 1736169241782,
-    "reactionTime": 610
-  },
-  {
-    "timestamp": 1736169252085,
-    "reactionTime": 249
-  },
-  {
-    "timestamp": 1736169261445,
-    "reactionTime": 556
-  },
-  {
-    "timestamp": 1736169266346,
-    "reactionTime": 557
-  },
-  {
-    "timestamp": 1736169270657,
-    "reactionTime": 553
-  },
-  {
-    "timestamp": 1736169278378,
-    "reactionTime": 3605
-  },
-  {
-    "timestamp": 1736169288226,
-    "reactionTime": 424
-  },
-  {
-    "timestamp": 1736169324398,
-    "reactionTime": 223
-  },
-  {
-    "timestamp": 1736169328306,
-    "reactionTime": 217
-  },
-  {
-    "timestamp": 1736169358944,
-    "reactionTime": 3430
-  },
-  {
-    "timestamp": 1736169368527,
-    "reactionTime": 256
-  },
-  {
-    "timestamp": 1736169377445,
-    "reactionTime": 187
-  },
-  {
-    "timestamp": 1736169469598,
-    "reactionTime": 230
-  },
-  {
-    "timestamp": 1736169475141,
-    "reactionTime": 256
-  },
-  {
-    "timestamp": 1736169479293,
-    "reactionTime": 195
-  },
-  {
-    "timestamp": 1736169493911,
-    "reactionTime": 262
-  },
-  {
-    "timestamp": 1736169497308,
-    "reactionTime": 266
-  },
-  {
-    "timestamp": 1736169512445,
-    "reactionTime": 219
-  },
-  {
-    "timestamp": 1736169541762,
-    "reactionTime": 222
-  },
-  {
-    "timestamp": 1736174095931,
-    "reactionTime": 591
-  },
-  {
-    "timestamp": 1736174430358,
-    "reactionTime": 315
-  },
-  {
-    "timestamp": 1736178948470,
-    "reactionTime": 466
-  },
-  {
-    "timestamp": 1736179870222,
-    "reactionTime": 265
-  },
-  {
-    "timestamp": 1736189991709,
-    "reactionTime": 8455
-  },
-  {
-    "timestamp": 1736190006061,
-    "reactionTime": 318
-  },
-  {
-    "timestamp": 1736190014879,
-    "reactionTime": 204
-  },
-  {
-    "timestamp": 1736196047768,
-    "reactionTime": 502
-  },
-  {
-    "timestamp": 1736196056849,
-    "reactionTime": 294
-  },
-  {
-    "timestamp": 1736196065785,
-    "reactionTime": 236
-  },
-  {
-    "timestamp": 1736196086479,
-    "reactionTime": 859
-  },
-  {
-    "timestamp": 1736196097229,
-    "reactionTime": 300
-  },
-  {
-    "timestamp": 1736196103531,
-    "reactionTime": 340
-  },
-  {
-    "timestamp": 1736196108615,
-    "reactionTime": 213
-  },
-  {
-    "timestamp": 1736196126007,
-    "reactionTime": 379
-  },
-  {
-    "timestamp": 1736196130129,
-    "reactionTime": 468
-  },
-  {
-    "timestamp": 1736355834299,
-    "reactionTime": 221
-  },
-  {
-    "timestamp": 1736355841456,
-    "reactionTime": 253
-  },
-  {
-    "timestamp": 1736355850979,
-    "reactionTime": 281
-  },
-  {
-    "timestamp": 1736420764038,
-    "reactionTime": 62324698
-  },
-  {
-    "timestamp": 1737975287147,
-    "reactionTime": 428
-  },
-  {
-    "timestamp": 1737975397852,
-    "reactionTime": 312
-  },
-  {
-    "timestamp": 1737975445370,
-    "reactionTime": 262
-  },
-  {
-    "timestamp": 1737975459077,
-    "reactionTime": 354
-  },
-  {
-    "timestamp": 1737978480152,
-    "reactionTime": 380
-  },
-  {
-    "timestamp": 1737978525325,
-    "reactionTime": 312
-  },
-  {
-    "timestamp": 1737978537686,
-    "reactionTime": 3468
-  },
-  {
-    "timestamp": 1737978717876,
-    "reactionTime": 255
-  },
-  {
-    "timestamp": 1737978724106,
-    "reactionTime": 230
-  },
-  {
-    "timestamp": 1745513106515,
-    "reactionTime": 321
-  },
-  {
-    "timestamp": 1745586226239,
-    "reactionTime": 178
-  },
-  {
-    "timestamp": 1745586239942,
-    "reactionTime": 392
-  },
-  {
-    "timestamp": 1745586246933,
-    "reactionTime": 312
-  },
-  {
-    "timestamp": 1745586668433,
-    "reactionTime": 415
-  },
-  {
-    "timestamp": 1745586686090,
-    "reactionTime": 359
-  },
-  {
-    "timestamp": 1745586708332,
-    "reactionTime": 804
-  },
-  {
-    "timestamp": 1745586719026,
-    "reactionTime": 427
-  },
-  {
-    "timestamp": 1745586752491,
-    "reactionTime": 450
-  },
-  {
-    "timestamp": 1745586762889,
-    "reactionTime": 640
-  },
-  {
-    "timestamp": 1745586774235,
-    "reactionTime": 623
-  },
-  {
-    "timestamp": 1745586791050,
-    "reactionTime": 339
-  },
-  {
-    "timestamp": 1745587006595,
-    "reactionTime": 33718
-  },
-  {
-    "timestamp": 1745587180281,
-    "reactionTime": 2246
-  },
-  {
-    "timestamp": 1745587186275,
-    "reactionTime": 843
-  },
-  {
-    "timestamp": 1745587190788,
-    "reactionTime": 521
-  },
-  {
-    "timestamp": 1745587193033,
-    "reactionTime": 285
-  },
-  {
-    "timestamp": 1745587196926,
-    "reactionTime": 257
-  },
-  {
-    "timestamp": 1745587201658,
-    "reactionTime": 281
-  },
-  {
-    "timestamp": 1745587204572,
-    "reactionTime": 282
-  },
-  {
-    "timestamp": 1745587210567,
-    "reactionTime": 334
-  },
-  {
-    "timestamp": 1745587212621,
-    "reactionTime": 373
-  },
-  {
-    "timestamp": 1745587217511,
-    "reactionTime": 285
-  },
-  {
-    "timestamp": 1745587262976,
-    "reactionTime": 1677
-  },
-  {
-    "timestamp": 1745587332520,
-    "reactionTime": 578
-  },
-  {
-    "timestamp": 1745587862410,
-    "reactionTime": 424
-  },
-  {
-    "timestamp": 1745587878734,
-    "reactionTime": 408
-  },
-  {
-    "timestamp": 1745587882028,
-    "reactionTime": 797
-  },
-  {
-    "timestamp": 1745588012364,
-    "reactionTime": 545
-  },
-  {
-    "timestamp": 1745588019155,
-    "reactionTime": 409
-  },
-  {
-    "timestamp": 1745588026119,
-    "reactionTime": 276
-  },
-  {
-    "timestamp": 1745588040238,
-    "reactionTime": 3689
-  },
-  {
-    "timestamp": 1745588054382,
-    "reactionTime": 364
-  },
-  {
-    "timestamp": 1745588129938,
-    "reactionTime": 417
-  },
-  {
-    "timestamp": 1745588140628,
-    "reactionTime": 422
-  },
-  {
-    "timestamp": 1745588165884,
-    "reactionTime": 2429
-  },
-  {
-    "timestamp": 1745588255970,
-    "reactionTime": 360
-  },
-  {
-    "timestamp": 1745588265510,
-    "reactionTime": 419
-  },
-  {
-    "timestamp": 1745588269823,
-    "reactionTime": 397
-  },
-  {
-    "timestamp": 1745588468143,
-    "reactionTime": 6968
-  },
-  {
-    "timestamp": 1745588483311,
-    "reactionTime": 518
-  },
-  {
-    "timestamp": 1745589870190,
-    "reactionTime": 395
-  },
-  {
-    "timestamp": 1745589885753,
-    "reactionTime": 1881
-  },
-  {
-    "timestamp": 1745589897049,
-    "reactionTime": 293
-  },
-  {
-    "timestamp": 1745589899972,
-    "reactionTime": 259
-  },
-  {
-    "timestamp": 1745589908331,
-    "reactionTime": 274
-  },
-  {
-    "timestamp": 1745589913652,
-    "reactionTime": 268
-  },
-  {
-    "timestamp": 1745677739584,
-    "reactionTime": 357
-  },
-  {
-    "timestamp": 1745677752764,
-    "reactionTime": 496
-  },
-  {
-    "timestamp": 1745677775581,
-    "reactionTime": 424
-  },
-  {
-    "timestamp": 1745677807593,
-    "reactionTime": 370
-  },
-  {
-    "timestamp": 1745677812952,
-    "reactionTime": 416
-  },
-  {
-    "timestamp": 1747665176133,
-    "reactionTime": 573
-  },
-  {
-    "timestamp": 1747675178645,
-    "reactionTime": 791
-  }
-]
+{
+  "global": [
+    {
+      "timestamp": 1736168551017,
+      "reactionTime": 256
+    },
+    {
+      "timestamp": 1736168879528,
+      "reactionTime": 548
+    },
+    {
+      "timestamp": 1736168924028,
+      "reactionTime": 297
+    },
+    {
+      "timestamp": 1736168928159,
+      "reactionTime": 271
+    },
+    {
+      "timestamp": 1736168931687,
+      "reactionTime": 270
+    },
+    {
+      "timestamp": 1736168945732,
+      "reactionTime": 1127
+    },
+    {
+      "timestamp": 1736168949323,
+      "reactionTime": 207
+    },
+    {
+      "timestamp": 1736168987970,
+      "reactionTime": 263
+    },
+    {
+      "timestamp": 1736169192806,
+      "reactionTime": 236
+    },
+    {
+      "timestamp": 1736169196720,
+      "reactionTime": 227
+    },
+    {
+      "timestamp": 1736169199624,
+      "reactionTime": 220
+    },
+    {
+      "timestamp": 1736169203377,
+      "reactionTime": 25
+    },
+    {
+      "timestamp": 1736169218792,
+      "reactionTime": 746
+    },
+    {
+      "timestamp": 1736169237364,
+      "reactionTime": 224
+    },
+    {
+      "timestamp": 1736169241782,
+      "reactionTime": 610
+    },
+    {
+      "timestamp": 1736169252085,
+      "reactionTime": 249
+    },
+    {
+      "timestamp": 1736169261445,
+      "reactionTime": 556
+    },
+    {
+      "timestamp": 1736169266346,
+      "reactionTime": 557
+    },
+    {
+      "timestamp": 1736169270657,
+      "reactionTime": 553
+    },
+    {
+      "timestamp": 1736169278378,
+      "reactionTime": 3605
+    },
+    {
+      "timestamp": 1736169288226,
+      "reactionTime": 424
+    },
+    {
+      "timestamp": 1736169324398,
+      "reactionTime": 223
+    },
+    {
+      "timestamp": 1736169328306,
+      "reactionTime": 217
+    },
+    {
+      "timestamp": 1736169358944,
+      "reactionTime": 3430
+    },
+    {
+      "timestamp": 1736169368527,
+      "reactionTime": 256
+    },
+    {
+      "timestamp": 1736169377445,
+      "reactionTime": 187
+    },
+    {
+      "timestamp": 1736169469598,
+      "reactionTime": 230
+    },
+    {
+      "timestamp": 1736169475141,
+      "reactionTime": 256
+    },
+    {
+      "timestamp": 1736169479293,
+      "reactionTime": 195
+    },
+    {
+      "timestamp": 1736169493911,
+      "reactionTime": 262
+    },
+    {
+      "timestamp": 1736169497308,
+      "reactionTime": 266
+    },
+    {
+      "timestamp": 1736169512445,
+      "reactionTime": 219
+    },
+    {
+      "timestamp": 1736169541762,
+      "reactionTime": 222
+    },
+    {
+      "timestamp": 1736174095931,
+      "reactionTime": 591
+    },
+    {
+      "timestamp": 1736174430358,
+      "reactionTime": 315
+    },
+    {
+      "timestamp": 1736178948470,
+      "reactionTime": 466
+    },
+    {
+      "timestamp": 1736179870222,
+      "reactionTime": 265
+    },
+    {
+      "timestamp": 1736189991709,
+      "reactionTime": 8455
+    },
+    {
+      "timestamp": 1736190006061,
+      "reactionTime": 318
+    },
+    {
+      "timestamp": 1736190014879,
+      "reactionTime": 204
+    },
+    {
+      "timestamp": 1736196047768,
+      "reactionTime": 502
+    },
+    {
+      "timestamp": 1736196056849,
+      "reactionTime": 294
+    },
+    {
+      "timestamp": 1736196065785,
+      "reactionTime": 236
+    },
+    {
+      "timestamp": 1736196086479,
+      "reactionTime": 859
+    },
+    {
+      "timestamp": 1736196097229,
+      "reactionTime": 300
+    },
+    {
+      "timestamp": 1736196103531,
+      "reactionTime": 340
+    },
+    {
+      "timestamp": 1736196108615,
+      "reactionTime": 213
+    },
+    {
+      "timestamp": 1736196126007,
+      "reactionTime": 379
+    },
+    {
+      "timestamp": 1736196130129,
+      "reactionTime": 468
+    },
+    {
+      "timestamp": 1736355834299,
+      "reactionTime": 221
+    },
+    {
+      "timestamp": 1736355841456,
+      "reactionTime": 253
+    },
+    {
+      "timestamp": 1736355850979,
+      "reactionTime": 281
+    },
+    {
+      "timestamp": 1736420764038,
+      "reactionTime": 62324698
+    },
+    {
+      "timestamp": 1737975287147,
+      "reactionTime": 428
+    },
+    {
+      "timestamp": 1737975397852,
+      "reactionTime": 312
+    },
+    {
+      "timestamp": 1737975445370,
+      "reactionTime": 262
+    },
+    {
+      "timestamp": 1737975459077,
+      "reactionTime": 354
+    },
+    {
+      "timestamp": 1737978480152,
+      "reactionTime": 380
+    },
+    {
+      "timestamp": 1737978525325,
+      "reactionTime": 312
+    },
+    {
+      "timestamp": 1737978537686,
+      "reactionTime": 3468
+    },
+    {
+      "timestamp": 1737978717876,
+      "reactionTime": 255
+    },
+    {
+      "timestamp": 1737978724106,
+      "reactionTime": 230
+    },
+    {
+      "timestamp": 1745513106515,
+      "reactionTime": 321
+    },
+    {
+      "timestamp": 1745586226239,
+      "reactionTime": 178
+    },
+    {
+      "timestamp": 1745586239942,
+      "reactionTime": 392
+    },
+    {
+      "timestamp": 1745586246933,
+      "reactionTime": 312
+    },
+    {
+      "timestamp": 1745586668433,
+      "reactionTime": 415
+    },
+    {
+      "timestamp": 1745586686090,
+      "reactionTime": 359
+    },
+    {
+      "timestamp": 1745586708332,
+      "reactionTime": 804
+    },
+    {
+      "timestamp": 1745586719026,
+      "reactionTime": 427
+    },
+    {
+      "timestamp": 1745586752491,
+      "reactionTime": 450
+    },
+    {
+      "timestamp": 1745586762889,
+      "reactionTime": 640
+    },
+    {
+      "timestamp": 1745586774235,
+      "reactionTime": 623
+    },
+    {
+      "timestamp": 1745586791050,
+      "reactionTime": 339
+    },
+    {
+      "timestamp": 1745587006595,
+      "reactionTime": 33718
+    },
+    {
+      "timestamp": 1745587180281,
+      "reactionTime": 2246
+    },
+    {
+      "timestamp": 1745587186275,
+      "reactionTime": 843
+    },
+    {
+      "timestamp": 1745587190788,
+      "reactionTime": 521
+    },
+    {
+      "timestamp": 1745587193033,
+      "reactionTime": 285
+    },
+    {
+      "timestamp": 1745587196926,
+      "reactionTime": 257
+    },
+    {
+      "timestamp": 1745587201658,
+      "reactionTime": 281
+    },
+    {
+      "timestamp": 1745587204572,
+      "reactionTime": 282
+    },
+    {
+      "timestamp": 1745587210567,
+      "reactionTime": 334
+    },
+    {
+      "timestamp": 1745587212621,
+      "reactionTime": 373
+    },
+    {
+      "timestamp": 1745587217511,
+      "reactionTime": 285
+    },
+    {
+      "timestamp": 1745587262976,
+      "reactionTime": 1677
+    },
+    {
+      "timestamp": 1745587332520,
+      "reactionTime": 578
+    },
+    {
+      "timestamp": 1745587862410,
+      "reactionTime": 424
+    },
+    {
+      "timestamp": 1745587878734,
+      "reactionTime": 408
+    },
+    {
+      "timestamp": 1745587882028,
+      "reactionTime": 797
+    },
+    {
+      "timestamp": 1745588012364,
+      "reactionTime": 545
+    },
+    {
+      "timestamp": 1745588019155,
+      "reactionTime": 409
+    },
+    {
+      "timestamp": 1745588026119,
+      "reactionTime": 276
+    },
+    {
+      "timestamp": 1745588040238,
+      "reactionTime": 3689
+    },
+    {
+      "timestamp": 1745588054382,
+      "reactionTime": 364
+    },
+    {
+      "timestamp": 1745588129938,
+      "reactionTime": 417
+    },
+    {
+      "timestamp": 1745588140628,
+      "reactionTime": 422
+    },
+    {
+      "timestamp": 1745588165884,
+      "reactionTime": 2429
+    },
+    {
+      "timestamp": 1745588255970,
+      "reactionTime": 360
+    },
+    {
+      "timestamp": 1745588265510,
+      "reactionTime": 419
+    },
+    {
+      "timestamp": 1745588269823,
+      "reactionTime": 397
+    },
+    {
+      "timestamp": 1745588468143,
+      "reactionTime": 6968
+    },
+    {
+      "timestamp": 1745588483311,
+      "reactionTime": 518
+    },
+    {
+      "timestamp": 1745589870190,
+      "reactionTime": 395
+    },
+    {
+      "timestamp": 1745589885753,
+      "reactionTime": 1881
+    },
+    {
+      "timestamp": 1745589897049,
+      "reactionTime": 293
+    },
+    {
+      "timestamp": 1745589899972,
+      "reactionTime": 259
+    },
+    {
+      "timestamp": 1745589908331,
+      "reactionTime": 274
+    },
+    {
+      "timestamp": 1745589913652,
+      "reactionTime": 268
+    },
+    {
+      "timestamp": 1745677739584,
+      "reactionTime": 357
+    },
+    {
+      "timestamp": 1745677752764,
+      "reactionTime": 496
+    },
+    {
+      "timestamp": 1745677775581,
+      "reactionTime": 424
+    },
+    {
+      "timestamp": 1745677807593,
+      "reactionTime": 370
+    },
+    {
+      "timestamp": 1745677812952,
+      "reactionTime": 416
+    },
+    {
+      "timestamp": 1747665176133,
+      "reactionTime": 573
+    },
+    {
+      "timestamp": 1747675178645,
+      "reactionTime": 791
+    },
+    {
+      "timestamp": 1747995127877,
+      "reactionTime": 269,
+      "userId": "ghyk1RnrAqPAGYMqdWXwsMEbJKl1"
+    }
+  ],
+  "users": {}
+}

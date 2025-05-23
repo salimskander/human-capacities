@@ -15,6 +15,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
+import { useAuth } from '@/contexts/AuthContext';
 
 ChartJS.register(
   CategoryScale,
@@ -232,23 +233,25 @@ function ChimpTestGame({ gameKey, onGameOver }: { gameKey: number, onGameOver: (
 
 // Composant principal qui gère l'état global
 export default function ChimpTest() {
-  // État global
+  const { currentUser } = useAuth();
   const [gameKey, setGameKey] = useState(Date.now());
   const [gameStatus, setGameStatus] = useState<GameStatus>('waiting');
   const [finalScore, setFinalScore] = useState(0);
   const [results, setResults] = useState<TestResult[]>([]);
   
-  // Charger les résultats au montage du composant
   useEffect(() => {
     fetchResults();
-  }, []);
+  }, [currentUser]);
 
-  // Fonction pour récupérer les résultats depuis l'API
   const fetchResults = async () => {
     try {
-      const response = await fetch('/api/chimpTest');
-      const data = await response.json();
-      setResults(data);
+      if (currentUser) {
+        const response = await fetch(`/api/chimpTest?userId=${currentUser.uid}&type=user`);
+        const data = await response.json();
+        setResults(data);
+      } else {
+        setResults([]);
+      }
     } catch (error) {
       console.error('Error fetching results:', error);
     }
@@ -323,7 +326,28 @@ export default function ChimpTest() {
   const handleGameOver = useCallback((score: number) => {
     setFinalScore(score);
     setGameStatus('gameover');
+    saveResult(score);
   }, []);
+
+  // Déplacer la fonction saveResult avant handleGameOver
+  const saveResult = async (score: number) => {
+    try {
+      await fetch('/api/chimpTest', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ 
+          timestamp: Date.now(), 
+          score,
+          userId: currentUser?.uid || null
+        }),
+      });
+      fetchResults();
+    } catch (error) {
+      console.error('Error saving result:', error);
+    }
+  };
 
   // Redémarrer le jeu
   const handleRestart = useCallback(() => {
