@@ -27,6 +27,12 @@ ChartJS.register(
   Legend
 )
 
+// ✅ Ajouter l'interface TestResult
+interface TestResult {
+  score: number;
+  timestamp: string;
+}
+
 export default function VisualMemoryTest() {
   const { currentUser } = useAuth();
   const [lives, setLives] = useState(2)
@@ -38,7 +44,8 @@ export default function VisualMemoryTest() {
   const [correctTiles, setCorrectTiles] = useState<number[]>([])
   const [errorTiles, setErrorTiles] = useState<number[]>([])
   const [isStarted, setIsStarted] = useState(false)
-  const [results, setResults] = useState<Array<{ timestamp: number; score: number }>>([])
+  const [results, setResults] = useState<TestResult[]>([])
+  const [globalResults, setGlobalResults] = useState<TestResult[]>([])
   const [isProcessingError, setIsProcessingError] = useState(false)
 
   const gridSize = Math.min(3 + Math.floor(level / 2), 7)
@@ -111,15 +118,19 @@ export default function VisualMemoryTest() {
 
   const fetchResults = async () => {
     try {
+      // Données utilisateur
       if (currentUser) {
-        const response = await fetch(`/api/visualMemory?userId=${currentUser.uid}&type=user`);
-        const data = await response.json();
-        setResults(data);
-      } else {
-        setResults([]);
+        const userResponse = await fetch(`/api/visualMemory?userId=${currentUser.uid}&type=user`);
+        const userData = await userResponse.json();
+        setResults(userData);
       }
+      
+      // Données globales
+      const globalResponse = await fetch('/api/visualMemory?type=global');
+      const globalData = await globalResponse.json();
+      setGlobalResults(globalData);
     } catch (error) {
-      console.error('Failed to fetch results:', error);
+      console.error('Error fetching results:', error);
     }
   }
 
@@ -140,34 +151,43 @@ export default function VisualMemoryTest() {
   }
 
   const prepareChartData = () => {
-    const intervals = Array.from({ length: 11 }, (_, i) => i * 10)
-    const data = new Array(intervals.length - 1).fill(0)
-    
-    results.forEach(result => {
-      const index = Math.min(Math.floor(result.score / 10), intervals.length - 2)
-      data[index]++
-    })
+    const intervals = Array.from({ length: 15 }, (_, i) => i + 3);
+    const counts = new Array(intervals.length).fill(0);
 
-    const total = data.reduce((a, b) => a + b, 0)
-    const percentages = data.map(count => (count / total) * 100)
+    globalResults.forEach(result => {
+      if (result.score && result.score >= 3) {
+        const index = result.score - 3;
+        if (index >= 0 && index < intervals.length) {
+          counts[index]++;
+        }
+      }
+    });
+
+    const total = globalResults.filter(r => r.score && r.score >= 3).length;
+    const percentages = counts.map(count => (count / total) * 100 || 0);
 
     return {
-      labels: intervals.slice(0, -1).map(i => `${i}-${i + 9}`),
+      labels: intervals.map(value => `Niveau ${value}`),
       datasets: [{
-        label: 'Distribution des scores (%)',
+        label: 'Distribution des scores',
         data: percentages,
-        borderColor: 'rgb(75, 192, 192)',
-        tension: 0.1
+        borderColor: 'rgb(34, 197, 94)',
+        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+        tension: 0.1,
+        fill: true
       }]
-    }
-  }
+    };
+  };
 
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
     plugins: {
       legend: {
-        display: true
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Distribution globale des scores de mémoire visuelle'
       }
     },
     scales: {
@@ -175,17 +195,17 @@ export default function VisualMemoryTest() {
         beginAtZero: true,
         title: {
           display: true,
-          text: '% des parties'
+          text: 'Pourcentage des joueurs (%)'
         }
       },
       x: {
         title: {
           display: true,
-          text: 'Intervalles de score'
+          text: 'Niveau atteint'
         }
       }
     }
-  }
+  };
 
   useEffect(() => {
     fetchResults();
@@ -271,7 +291,7 @@ export default function VisualMemoryTest() {
                 </p>
               }
               onStart={startGame}
-              stats={results.length > 0 ? (
+              stats={globalResults.length > 0 ? (
                 <Line data={prepareChartData()} options={chartOptions} />
               ) : (
                 <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>

@@ -147,7 +147,7 @@ export default function ReflexTest() {
 
   useEffect(() => {
     fetchResults();
-  }, []);
+  }, [currentUser]);
 
   const fetchResults = async () => {
     try {
@@ -170,60 +170,58 @@ export default function ReflexTest() {
   };
 
   const prepareChartData = () => {
-    // Créer des intervalles de 25ms jusqu'à 500ms
     const intervals = Array.from({ length: 21 }, (_, i) => i * 25);
     const counts = new Array(21).fill(0);
 
-    results.forEach(time => {
+    globalResults.forEach(time => {
       const index = Math.floor(time / 25);
       if (index >= 0 && index < 21) {
         counts[index]++;
       }
     });
 
-    // Convertir en pourcentages
-    const percentages = counts.map(count => (count / results.length) * 100 || 0);
+    const total = globalResults.length;
+    const percentages = counts.map(count => (count / total) * 100 || 0);
 
     return {
       labels: intervals.map(i => `${i}ms`),
-      datasets: [
-        {
-          label: 'Distribution des temps de réaction',
-          data: percentages,
-          borderColor: 'rgb(75, 192, 192)',
-          tension: 0.3,
-          fill: false,
-        },
-      ],
+      datasets: [{
+        label: 'Distribution des temps de réaction',
+        data: percentages,
+        borderColor: 'rgb(34, 197, 94)',
+        backgroundColor: 'rgba(34, 197, 94, 0.2)',
+        tension: 0.1,
+        fill: true
+      }]
     };
   };
 
   const chartOptions = {
     responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Distribution globale des temps de réaction'
+      }
+    },
     scales: {
       y: {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Pourcentage',
-        },
-        ticks: {
-          callback: function(tickValue: number | string) {
-            return `${tickValue}%`;
-          }
+          text: 'Pourcentage des joueurs (%)'
         }
       },
       x: {
         title: {
           display: true,
-          text: 'Temps de réaction (ms)',
-        },
-        ticks: {
-          maxRotation: 45,
-          minRotation: 45
+          text: 'Temps de réaction (ms)'
         }
-      },
-    },
+      }
+    }
   };
 
   useEffect(() => {
@@ -268,7 +266,7 @@ export default function ReflexTest() {
               </p>
             }
             onStart={startTest}
-            stats={results.length > 0 ? (
+            stats={globalResults.length > 0 ? (
               <Line data={prepareChartData()} options={chartOptions} />
             ) : (
               <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>

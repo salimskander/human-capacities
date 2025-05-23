@@ -33,6 +33,12 @@ const SYMBOLS = ['🌟', '🎈', '🎨', '🎭', '🎪', '🎯', '🎲', '🎳',
 
 const showDuration = 5000; // 5 secondes pour mémoriser les symboles
 
+// ✅ Ajouter l'interface TestResult
+interface TestResult {
+  score: number;
+  timestamp: string;
+}
+
 const prepareChartData = (results: Array<{ score: number }>) => {
   const scores = results.map(r => r.score);
   
@@ -88,11 +94,12 @@ const chartOptions = {
 export default function SymbolMemoryTest() {
   const { currentUser } = useAuth();
   const [level, setLevel] = useState(1);
-  const [lives, setLives] = useState(2);
+  const [lives, setLives] = useState(3);
   const [cards, setCards] = useState<Array<{ id: number; symbol: string; isFlipped: boolean; isMatched: boolean }>>([]);
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'showing' | 'gameover'>('waiting');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
-  const [results, setResults] = useState<Array<{ timestamp: number; score: number }>>([]);
+  const [results, setResults] = useState<TestResult[]>([]);
+  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
 
   const initializeCards = (level: number) => {
     const numberOfPairs = level + 2; // Commence avec 3 paires au niveau 1
@@ -112,7 +119,7 @@ export default function SymbolMemoryTest() {
 
   const startGame = () => {
     setLevel(1);
-    setLives(2);
+    setLives(3);
     setGameStatus('showing');
     const initialCards = initializeCards(1);
     setCards(initialCards);
@@ -190,14 +197,19 @@ export default function SymbolMemoryTest() {
 
   const fetchResults = async () => {
     try {
-      const url = currentUser?.uid 
-        ? `/api/symbolMemory?userId=${currentUser.uid}&type=user`
-        : '/api/symbolMemory';
-      const response = await fetch(url);
-      const data = await response.json();
-      setResults(data);
+      // Données utilisateur
+      if (currentUser) {
+        const userResponse = await fetch(`/api/symbolMemory?userId=${currentUser.uid}&type=user`);
+        const userData = await userResponse.json();
+        setResults(userData);
+      }
+      
+      // Données globales
+      const globalResponse = await fetch('/api/symbolMemory?type=global');
+      const globalData = await globalResponse.json();
+      setGlobalResults(globalData);
     } catch (error) {
-      console.error('Erreur lors de la récupération des résultats:', error);
+      console.error('Error fetching results:', error);
     }
   };
 
@@ -221,7 +233,7 @@ export default function SymbolMemoryTest() {
 
   const handleRestart = () => {
     setLevel(1);
-    setLives(2);
+    setLives(3);
     setGameStatus('showing');
     const newCards = initializeCards(1);
     setCards(newCards);
@@ -238,7 +250,64 @@ export default function SymbolMemoryTest() {
 
   useEffect(() => {
     fetchResults();
-  }, []);
+  }, [currentUser]);
+
+  const prepareChartData = () => {
+    const intervals = Array.from({ length: 10 }, (_, i) => i + 1);
+    const counts = new Array(intervals.length).fill(0);
+
+    globalResults.forEach(result => {
+      if (result.score && result.score > 0) {
+        const index = Math.min(result.score - 1, intervals.length - 1);
+        if (index >= 0) {
+          counts[index]++;
+        }
+      }
+    });
+
+    const total = globalResults.filter(r => r.score && r.score > 0).length;
+    const percentages = counts.map(count => (count / total) * 100 || 0);
+
+    return {
+      labels: intervals.map(value => `Niveau ${value}`),
+      datasets: [{
+        label: 'Distribution des scores',
+        data: percentages,
+        borderColor: 'rgb(249, 115, 22)',
+        backgroundColor: 'rgba(249, 115, 22, 0.2)',
+        tension: 0.1,
+        fill: true
+      }]
+    };
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Distribution globale des scores de mémoire des symboles'
+      }
+    },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Pourcentage des joueurs (%)'
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Niveau atteint'
+        }
+      }
+    }
+  };
 
   return (
     <>
@@ -269,8 +338,8 @@ export default function SymbolMemoryTest() {
               </p>
             }
             onStart={startGame}
-            stats={results.length > 0 ? (
-              <Line data={prepareChartData(results)} options={chartOptions} />
+            stats={globalResults.length > 0 ? (
+              <Line data={prepareChartData()} options={chartOptions} />
             ) : (
               <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
             )}
@@ -281,9 +350,9 @@ export default function SymbolMemoryTest() {
               <div className="max-w-screen-xl mx-auto h-full flex items-center justify-center gap-8">
                 <div className="text-2xl font-medium dark:text-white">Niveau {level}</div>
                 <div className="flex gap-1">
-                  {Array.from({ length: 2 }).map((_, i) => (
+                  {Array.from({ length: 3 }).map((_, i) => (
                     <span key={i} className="text-2xl">
-                      {i < (2 - lives) ? '🖤' : '❤️'}
+                      {i < (3 - lives) ? '🖤' : '❤️'}
                     </span>
                   ))}
                 </div>

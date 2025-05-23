@@ -90,6 +90,7 @@ export default function TypingSpeed() {
   const inputRef = useRef<HTMLInputElement>(null)
   const containerRef = useRef<HTMLDivElement>(null);
   const [results, setResults] = useState<Result[]>([])
+  const [globalResults, setGlobalResults] = useState<Result[]>([])
   const [hasStartedTyping, setHasStartedTyping] = useState(false);
   const [showStartModal, setShowStartModal] = useState(true);
 
@@ -98,17 +99,20 @@ export default function TypingSpeed() {
     console.log('👤 currentUser dans fetchResults:', currentUser?.uid);
     
     try {
-      const url = currentUser?.uid 
+      const userUrl = currentUser?.uid 
         ? `/api/typingSpeed?userId=${currentUser.uid}&type=user`
         : '/api/typingSpeed';
-      console.log('🌐 URL de récupération:', url);
+      console.log('🌐 URL de récupération utilisateur:', userUrl);
       
-      const response = await fetch(url);
-      const data = await response.json();
-      console.log('📊 Données récupérées:', data);
-      console.log('📈 Nombre de résultats:', data.length);
-      
-      setResults(data);
+      const userResponse = await fetch(userUrl);
+      const userData = await userResponse.json();
+      console.log('📊 Données utilisateur récupérées:', userData);
+      setResults(userData);
+
+      const globalResponse = await fetch('/api/typingSpeed?type=global');
+      const globalData = await globalResponse.json();
+      console.log('🌍 Données globales récupérées:', globalData.length, 'résultats');
+      setGlobalResults(globalData);
     } catch (error) {
       console.error('Failed to fetch results:', error);
     }
@@ -154,7 +158,6 @@ export default function TypingSpeed() {
     }
   }, [currentUser?.uid, fetchResults]);
 
-  // Nouvel effet pour gérer la fin du jeu
   useEffect(() => {
     if (timeLeft === 0 && !isFinished) {
       setIsFinished(true)
@@ -163,7 +166,6 @@ export default function TypingSpeed() {
     }
   }, [timeLeft, wordCount, isFinished, saveResult])
 
-  // Modifier l'effet pour le timer
   useEffect(() => {
     let timer: NodeJS.Timeout;
     
@@ -271,20 +273,19 @@ export default function TypingSpeed() {
   }
 
   const prepareChartData = () => {
-    // Créer des intervalles de 10 en 10 jusqu'à 140
     const intervals = Array.from({ length: 15 }, (_, i) => i * 10)
     const counts = new Array(intervals.length).fill(0)
 
-    // Compter le nombre de résultats pour chaque intervalle
-    results.forEach(result => {
-      const intervalIndex = Math.floor(result.score / 10)
-      if (intervalIndex >= 0 && intervalIndex < intervals.length) {
-        counts[intervalIndex]++
+    globalResults.forEach(result => {
+      if (result.score && result.score > 0) {
+        const intervalIndex = Math.floor(result.score / 10)
+        if (intervalIndex >= 0 && intervalIndex < intervals.length) {
+          counts[intervalIndex]++
+        }
       }
     })
 
-    // Calculer les pourcentages
-    const total = results.length
+    const total = globalResults.filter(r => r.score && r.score > 0).length
     const percentages = counts.map(count => (count / total) * 100 || 0)
 
     return {
@@ -308,7 +309,7 @@ export default function TypingSpeed() {
       },
       title: {
         display: true,
-        text: 'Distribution des scores de vitesse de frappe'
+        text: 'Distribution globale des scores de vitesse de frappe'
       }
     },
     scales: {
@@ -316,7 +317,7 @@ export default function TypingSpeed() {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Pourcentage des joueurs'
+          text: 'Pourcentage des joueurs (%)'
         }
       },
       x: {
@@ -350,14 +351,14 @@ export default function TypingSpeed() {
           <StartModal 
             title="Test de Vitesse de Frappe"
             description={
-              <p>
-                Tapez les mots qui apparaissent à l&apos;écran aussi vite et précisément que possible.
+              <p className="mb-4">
+                Tapez les mots qui apparaissent à l'écran aussi vite et précisément que possible.
                 Vous avez 60 secondes pour taper le maximum de mots.
                 Votre score final sera le nombre de mots correctement tapés par minute.
               </p>
             }
             onStart={handleStart}
-            stats={results.length > 0 ? (
+            stats={globalResults.length > 0 ? (
               <Line data={prepareChartData()} options={chartOptions} />
             ) : (
               <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
@@ -442,11 +443,10 @@ export default function TypingSpeed() {
               </>
             )}
  
-            {/* Annonce après le jeu, avant le modal de fin */}
             {isFinished && (
               <div className="w-full flex justify-center my-4">
                 <AdBanner 
-                  slot="2345678901" // Remplacez par votre ID de slot
+                  slot="2345678901"
                   format="rectangle"
                   className="mx-auto"
                 />

@@ -28,10 +28,10 @@ ChartJS.register(
 );
 
 // Types
-type TestResult = {
-  timestamp: number;
+interface TestResult {
   score: number;
-};
+  timestamp: string;
+}
 
 type GameStatus = 'waiting' | 'playing' | 'showing' | 'gameover';
 type NumberTile = { position: number, value: number };
@@ -238,6 +238,7 @@ export default function ChimpTest() {
   const [gameStatus, setGameStatus] = useState<GameStatus>('waiting');
   const [finalScore, setFinalScore] = useState(0);
   const [results, setResults] = useState<TestResult[]>([]);
+  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   
   useEffect(() => {
     fetchResults();
@@ -245,57 +246,66 @@ export default function ChimpTest() {
 
   const fetchResults = async () => {
     try {
+      // Données utilisateur
       if (currentUser) {
-        const response = await fetch(`/api/chimpTest?userId=${currentUser.uid}&type=user`);
-        const data = await response.json();
-        setResults(data);
-      } else {
-        setResults([]);
+        const userResponse = await fetch(`/api/chimpTest?userId=${currentUser.uid}&type=user`);
+        const userData = await userResponse.json();
+        setResults(userData);
       }
+      
+      // Données globales
+      const globalResponse = await fetch('/api/chimpTest?type=global');
+      const globalData = await globalResponse.json();
+      setGlobalResults(globalData);
     } catch (error) {
       console.error('Error fetching results:', error);
     }
   };
 
-  // Préparation des données pour le graphique
   const prepareChartData = useCallback(() => {
     const intervals = Array.from({ length: 9 }, (_, i) => i + 4);
     const counts = new Array(intervals.length).fill(0);
     
-    results.forEach(result => {
+    globalResults.forEach(result => {
       const index = result.score - 4;
       if (index >= 0 && index < counts.length) {
         counts[index]++;
       }
     });
 
-    const total = results.length;
+    const total = globalResults.length;
     const percentages = counts.map(count => (count / total) * 100 || 0);
 
     return {
       labels: intervals,
-      datasets: [
-        {
-          label: 'Distribution des scores (%)',
-          data: percentages,
-          borderColor: 'rgb(59, 130, 246)',
-          backgroundColor: 'rgba(59, 130, 246, 0.5)',
-          tension: 0.3
-        }
-      ]
+      datasets: [{
+        label: 'Distribution des scores',
+        data: percentages,
+        borderColor: 'rgb(59, 130, 246)',
+        backgroundColor: 'rgba(59, 130, 246, 0.2)',
+        tension: 0.1,
+        fill: true
+      }]
     };
-  }, [results]);
+  }, [globalResults]);
 
-  // Options du graphique
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Distribution globale des scores du test du chimpanzé'
+      }
+    },
     scales: {
       y: {
         beginAtZero: true,
         title: {
           display: true,
-          text: 'Pourcentage de parties (%)'
+          text: 'Pourcentage des joueurs (%)'
         }
       },
       x: {
@@ -303,15 +313,6 @@ export default function ChimpTest() {
           display: true,
           text: 'Niveau atteint'
         }
-      }
-    },
-    plugins: {
-      legend: {
-        position: 'top' as const
-      },
-      title: {
-        display: true,
-        text: 'Distribution des performances'
       }
     }
   };
@@ -383,7 +384,7 @@ export default function ChimpTest() {
               </p>
             }
             onStart={startGame}
-            stats={results.length > 0 ? (
+            stats={globalResults.length > 0 ? (
               <Line data={prepareChartData()} options={chartOptions} />
             ) : (
               <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>

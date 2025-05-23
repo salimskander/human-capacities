@@ -40,14 +40,21 @@ const MOTS_FRANCAIS = [
   'poisson', 'fromage', 'gâteau', 'chocolat', 'sucre', 'sel', 'restaurant', 'hôtel'
 ];
 
+// ✅ Ajouter l'interface TestResult
+interface TestResult {
+  score: number;
+  timestamp: string;
+}
+
 export default function VerbalMemoryTest() {
   const { currentUser } = useAuth();
-  const [motsDejaProposes, setMotsDejaProposes] = useState<Set<string>>(new Set());
-  const [motCourant, setMotCourant] = useState<string>('');
-  const [score, setScore] = useState<number>(0);
-  const [vies, setVies] = useState<number>(2);
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'gameover'>('waiting');
-  const [results, setResults] = useState<Array<{ timestamp: number, score: number }>>([]);
+  const [currentWord, setCurrentWord] = useState('');
+  const [seenWords, setSeenWords] = useState<Set<string>>(new Set());
+  const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(2);
+  const [results, setResults] = useState<TestResult[]>([]);
+  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   const [showErrorAnimation, setShowErrorAnimation] = useState<boolean>(false);
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
 
@@ -57,15 +64,19 @@ export default function VerbalMemoryTest() {
 
   const fetchResults = async () => {
     try {
+      // Données utilisateur
       if (currentUser) {
-        const response = await fetch(`/api/verbalMemory?userId=${currentUser.uid}&type=user`);
-        const data = await response.json();
-        setResults(data);
-      } else {
-        setResults([]);
+        const userResponse = await fetch(`/api/verbalMemory?userId=${currentUser.uid}&type=user`);
+        const userData = await userResponse.json();
+        setResults(userData);
       }
+      
+      // Données globales
+      const globalResponse = await fetch('/api/verbalMemory?type=global');
+      const globalData = await globalResponse.json();
+      setGlobalResults(globalData);
     } catch (error) {
-      console.error('Erreur lors du chargement des résultats:', error);
+      console.error('Error fetching results:', error);
     }
   };
 
@@ -88,90 +99,91 @@ export default function VerbalMemoryTest() {
   };
 
   const prepareChartData = () => {
-    const intervals = Array.from({ length: 10 }, (_, i) => i * 10);
-    const data = new Array(intervals.length).fill(0);
-    const total = results.length;
+    const intervals = Array.from({ length: 20 }, (_, i) => i * 5);
+    const counts = new Array(intervals.length).fill(0);
 
-    results.forEach(result => {
-      const index = Math.floor(result.score / 10);
-      if (index < data.length) {
-        data[index]++;
+    globalResults.forEach(result => {
+      if (result.score && result.score > 0) {
+        const intervalIndex = Math.floor(result.score / 5);
+        if (intervalIndex >= 0 && intervalIndex < intervals.length) {
+          counts[intervalIndex]++;
+        }
       }
     });
 
-    const percentages = data.map(count => (count / total) * 100 || 0);
+    const total = globalResults.filter(r => r.score && r.score > 0).length;
+    const percentages = counts.map(count => (count / total) * 100 || 0);
 
     return {
-      labels: intervals.map(i => `${i}-${i + 9}`),
+      labels: intervals.map(value => `${value} mots`),
       datasets: [{
-        label: 'Distribution des scores (%)',
+        label: 'Distribution des scores',
         data: percentages,
-        borderColor: 'rgb(75, 192, 192)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        tension: 0.3,
-        fill: true,
+        borderColor: 'rgb(168, 85, 247)',
+        backgroundColor: 'rgba(168, 85, 247, 0.2)',
+        tension: 0.1,
+        fill: true
       }]
     };
   };
 
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: 'Intervalles de score',
-        }
-      },
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Pourcentage des parties (%)',
-        },
-      },
-    },
     plugins: {
       legend: {
         position: 'top' as const,
       },
       title: {
         display: true,
-        text: 'Distribution des scores',
-      },
+        text: 'Distribution globale des scores de mémoire verbale'
+      }
     },
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: 'Pourcentage des joueurs (%)'
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: 'Nombre de mots mémorisés'
+        }
+      }
+    }
   };
 
   const choisirNouveauMot = () => {
     // Réinitialiser l'animation d'erreur lorsqu'un nouveau mot est choisi
     setShowErrorAnimation(false);
     
-    const utiliserMotDejaVu = Math.random() > 0.5 && motsDejaProposes.size > 0;
+    const utiliserMotDejaVu = Math.random() > 0.5 && seenWords.size > 0;
     
     if (utiliserMotDejaVu) {
-      const motsArray = Array.from(motsDejaProposes);
+      const motsArray = Array.from(seenWords);
       // Filtrer pour exclure le mot courant et éviter la répétition
-      const motsDisponibles = motsArray.filter(mot => mot !== motCourant);
+      const motsDisponibles = motsArray.filter(mot => mot !== currentWord);
       
       // Si tous les mots déjà vus sont le mot courant (cas rare mais possible)
       if (motsDisponibles.length === 0) {
         // Forcer l'utilisation d'un nouveau mot
-        const nouveauxMots = MOTS_FRANCAIS.filter(mot => !motsDejaProposes.has(mot));
+        const nouveauxMots = MOTS_FRANCAIS.filter(mot => !seenWords.has(mot));
         if (nouveauxMots.length === 0) return;
         const nouveauMot = nouveauxMots[Math.floor(Math.random() * nouveauxMots.length)];
-        setMotCourant(nouveauMot);
+        setCurrentWord(nouveauMot);
       } else {
         // Choisir un mot aléatoire parmi les mots déjà vus (sauf le mot courant)
         const motAleatoire = motsDisponibles[Math.floor(Math.random() * motsDisponibles.length)];
-        setMotCourant(motAleatoire);
+        setCurrentWord(motAleatoire);
       }
     } else {
-      const motsDisponibles = MOTS_FRANCAIS.filter(mot => !motsDejaProposes.has(mot) && mot !== motCourant);
+      const motsDisponibles = MOTS_FRANCAIS.filter(mot => !seenWords.has(mot) && mot !== currentWord);
       if (motsDisponibles.length === 0) return;
       
       const nouveauMot = motsDisponibles[Math.floor(Math.random() * motsDisponibles.length)];
-      setMotCourant(nouveauMot);
+      setCurrentWord(nouveauMot);
     }
   };
 
@@ -181,16 +193,16 @@ export default function VerbalMemoryTest() {
   };
 
   const handleReponse = (dejaVu: boolean) => {
-    const estEffectivementDejaVu = motsDejaProposes.has(motCourant);
+    const estEffectivementDejaVu = seenWords.has(currentWord);
     
     if ((dejaVu && estEffectivementDejaVu) || (!dejaVu && !estEffectivementDejaVu)) {
       setScore(prev => prev + 1);
       if (!estEffectivementDejaVu) {
-        setMotsDejaProposes(prev => new Set(prev).add(motCourant));
+        setSeenWords(prev => new Set(prev).add(currentWord));
       }
       choisirNouveauMot();
     } else {
-      setVies(prev => prev - 1);
+      setLives(prev => prev - 1);
       setShowErrorAnimation(true);
       setButtonsDisabled(true);
       
@@ -199,7 +211,7 @@ export default function VerbalMemoryTest() {
         setShowErrorAnimation(false);
         setButtonsDisabled(false);
         
-        if (vies <= 1) {
+        if (lives <= 1) {
           handleGameOver();
           return;
         }
@@ -212,8 +224,8 @@ export default function VerbalMemoryTest() {
   const startGame = () => {
     setGameStatus('playing');
     setScore(0);
-    setVies(2);
-    setMotsDejaProposes(new Set());
+    setLives(2);
+    setSeenWords(new Set());
     choisirNouveauMot();
   };
 
@@ -254,7 +266,7 @@ export default function VerbalMemoryTest() {
               </p>
             }
             onStart={startGame}
-            stats={results.length > 0 ? (
+            stats={globalResults.length > 0 ? (
               <Line data={prepareChartData()} options={chartOptions} />
             ) : (
               <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
@@ -268,7 +280,7 @@ export default function VerbalMemoryTest() {
                 <div className="flex gap-1">
                   {Array.from({ length: 2 }).map((_, i) => (
                     <span key={i} className="text-xl sm:text-2xl">
-                      {i < (2 - vies) ? '🖤' : '❤️'}
+                      {i < (2 - lives) ? '🖤' : '❤️'}
                     </span>
                   ))}
                 </div>
@@ -283,7 +295,7 @@ export default function VerbalMemoryTest() {
                     : ''
                 }`}
               >
-                {motCourant}
+                {currentWord}
               </div>
               
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full max-w-md">

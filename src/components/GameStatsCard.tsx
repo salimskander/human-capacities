@@ -49,67 +49,93 @@ export default function GameStatsCard({
     );
   }
   
+  // ✅ Trier les données par timestamp (plus récent en premier)
+  const sortedData = [...data].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+  
   // Calcul des statistiques
-  const scores = data
+  const scores = sortedData
     .map(item => {
-      console.log('Item dans GameStatsCard:', item); // Debug
       if (item.reactionTime !== undefined) return item.reactionTime;
       return item.score;
     })
     .filter(score => score !== null && score !== undefined && !isNaN(score));
 
   if (scores.length === 0) {
-    // ... existing code pour le cas "pas de données" ...
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
+        <div className={`bg-gradient-to-r ${color} p-4 text-white`}>
+          <div className="flex justify-between items-center">
+            <h3 className="text-lg font-semibold">{title}</h3>
+            <div className="w-8 h-8 flex items-center justify-center">{icon}</div>
+          </div>
+        </div>
+        
+        <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            Toutes les données ont des scores invalides.
+          </p>
+          <Link 
+            href={link} 
+            className={`px-4 py-2 bg-gradient-to-r ${color} text-white rounded-lg hover:opacity-90 transition-opacity`}
+          >
+            Jouer maintenant
+          </Link>
+        </div>
+      </div>
+    );
   }
 
   const bestScore = lowerIsBetter 
     ? Math.min(...scores) 
     : Math.max(...scores);
   const avgScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
-  const lastScore = scores[0]; // ✅ Prendre le premier (plus récent) au lieu du dernier
-  const chartData = prepareChartData(data);
+  const lastScore = scores[0]; // ✅ Le plus récent (premier après tri)
+  
+  // ✅ Passer les données triées au graphique
+  const chartData = prepareChartData(sortedData);
   
   // Obtenir des couleurs adaptées au thème du jeu
   let borderColor, backgroundColor;
   
-  // Définir des couleurs par défaut basées sur le gradient
-  if (color.includes('blue')) {
-    borderColor = 'rgb(59, 130, 246)';
-    backgroundColor = 'rgba(59, 130, 246, 0.2)';
-  } else if (color.includes('green') || color.includes('emerald')) {
-    borderColor = 'rgb(16, 185, 129)';
-    backgroundColor = 'rgba(16, 185, 129, 0.2)';
-  } else if (color.includes('red') || color.includes('rose')) {
-    borderColor = 'rgb(239, 68, 68)';
-    backgroundColor = 'rgba(239, 68, 68, 0.2)';
-  } else if (color.includes('yellow') || color.includes('amber')) {
-    borderColor = 'rgb(245, 158, 11)';
-    backgroundColor = 'rgba(245, 158, 11, 0.2)';
-  } else if (color.includes('purple') || color.includes('pink')) {
-    borderColor = 'rgb(168, 85, 247)';
-    backgroundColor = 'rgba(168, 85, 247, 0.2)';
-  } else if (color.includes('cyan')) {
-    borderColor = 'rgb(6, 182, 212)';
-    backgroundColor = 'rgba(6, 182, 212, 0.2)';
-  } else if (color.includes('indigo')) {
-    borderColor = 'rgb(79, 70, 229)';
-    backgroundColor = 'rgba(79, 70, 229, 0.2)';
-  } else if (color.includes('teal')) {
-    borderColor = 'rgb(20, 184, 166)';
-    backgroundColor = 'rgba(20, 184, 166, 0.2)';
-  } else {
-    // Couleur par défaut
-    borderColor = 'rgb(107, 114, 128)';
-    backgroundColor = 'rgba(107, 114, 128, 0.2)';
+  switch (color) {
+    case 'from-blue-500 to-blue-600':
+      borderColor = 'rgb(59, 130, 246)';
+      backgroundColor = 'rgba(59, 130, 246, 0.1)';
+      break;
+    case 'from-green-500 to-green-600':
+      borderColor = 'rgb(34, 197, 94)';
+      backgroundColor = 'rgba(34, 197, 94, 0.1)';
+      break;
+    case 'from-purple-500 to-purple-600':
+      borderColor = 'rgb(168, 85, 247)';
+      backgroundColor = 'rgba(168, 85, 247, 0.1)';
+      break;
+    case 'from-red-500 to-red-600':
+      borderColor = 'rgb(239, 68, 68)';
+      backgroundColor = 'rgba(239, 68, 68, 0.1)';
+      break;
+    case 'from-yellow-500 to-yellow-600':
+      borderColor = 'rgb(234, 179, 8)';
+      backgroundColor = 'rgba(234, 179, 8, 0.1)';
+      break;
+    case 'from-indigo-500 to-indigo-600':
+      borderColor = 'rgb(99, 102, 241)';
+      backgroundColor = 'rgba(99, 102, 241, 0.1)';
+      break;
+    case 'from-pink-500 to-pink-600':
+      borderColor = 'rgb(236, 72, 153)';
+      backgroundColor = 'rgba(236, 72, 153, 0.1)';
+      break;
+    case 'from-teal-500 to-teal-600':
+      borderColor = 'rgb(20, 184, 166)';
+      backgroundColor = 'rgba(20, 184, 166, 0.1)';
+      break;
+    default:
+      borderColor = 'rgb(59, 130, 246)';
+      backgroundColor = 'rgba(59, 130, 246, 0.1)';
   }
-  
-  // Appliquer les couleurs au dataset
-  if (chartData && chartData.datasets && chartData.datasets.length > 0) {
-    chartData.datasets[0].borderColor = borderColor;
-    chartData.datasets[0].backgroundColor = backgroundColor;
-  }
-  
-  // Options du graphique simplifiées et plus intuitives
+
+  // ✅ Options du graphique adaptées selon le type de score
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -136,17 +162,26 @@ export default function GameStatsCard({
         displayColors: false,
         callbacks: {
           title: (items: any) => {
-            return `Partie ${items[0].dataIndex + 1}`;
+            // ✅ Inverser l'index pour afficher correctement l'ordre chronologique
+            const actualIndex = scores.length - items[0].dataIndex;
+            return `Partie ${actualIndex}`;
           },
           label: (item: any) => {
             return `${scoreLabel}: ${item.raw}`;
           }
         }
+      },
+      filler: {
+        propagate: false
       }
     },
     scales: {
       y: {
-        beginAtZero: true,
+        // ✅ Pour les réflexes, inverser l'échelle (plus bas = mieux)
+        reverse: lowerIsBetter,
+        beginAtZero: !lowerIsBetter, // Pour les réflexes, ne pas commencer à 0
+        min: lowerIsBetter ? Math.min(...scores) - 50 : undefined, // Marge pour les réflexes
+        max: lowerIsBetter ? Math.max(...scores) + 50 : undefined,
         grid: {
           color: 'rgba(156, 163, 175, 0.1)',
           drawBorder: false
@@ -157,9 +192,8 @@ export default function GameStatsCard({
             size: 10
           },
           callback: function(value: any) {
-            // Afficher seulement des valeurs entières
             if (Math.floor(value) === value) {
-              return value;
+              return lowerIsBetter ? `${value}ms` : value;
             }
           }
         }
@@ -173,38 +207,39 @@ export default function GameStatsCard({
           font: {
             size: 10
           },
-          // Afficher moins de libellés sur l'axe X pour éviter l'encombrement
           maxTicksLimit: 5
         }
       }
     },
     elements: {
       line: {
-        tension: 0.3, // Ligne plus lisse
-        borderWidth: 2
+        tension: 0.3,
+        borderWidth: 2,
+        borderColor: borderColor
       },
       point: {
         radius: 3,
         hoverRadius: 5,
         borderWidth: 2,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        borderColor: borderColor
       }
     }
   };
   
-  // Indicateur de tendance
+  // ✅ Indicateur de tendance corrigé
   const getTrend = () => {
-    if (data.length < 2) return null;
+    if (scores.length < 2) return null;
     
-    const prevScore = scores[scores.length - 2];
-    const currentScore = lastScore;
+    const currentScore = scores[0]; // Plus récent
+    const prevScore = scores[1]; // Précédent
     const diff = lowerIsBetter 
       ? prevScore - currentScore  // Pour les réflexes, plus bas est mieux
       : currentScore - prevScore; // Pour les autres, plus haut est mieux
     
     const percentChange = prevScore ? (diff / prevScore) * 100 : 0;
     
-    if (Math.abs(percentChange) < 1) return null; // Changement négligeable
+    if (Math.abs(percentChange) < 1) return null;
     
     const isPositive = percentChange > 0;
     
@@ -214,6 +249,18 @@ export default function GameStatsCard({
       </span>
     );
   };
+  
+  // ✅ Modifier les données du graphique pour contrôler le remplissage
+  if (chartData && chartData.datasets && chartData.datasets[0]) {
+    chartData.datasets[0] = {
+      ...chartData.datasets[0],
+      borderColor: borderColor,
+      backgroundColor: backgroundColor,
+      // ✅ Pour les réflexes, remplir vers le bas (origin)
+      fill: lowerIsBetter ? 'origin' : true,
+      tension: 0.3
+    };
+  }
   
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-full transition-transform hover:scale-[1.02] duration-300">
@@ -227,17 +274,25 @@ export default function GameStatsCard({
       <div className="p-5 flex-1 flex flex-col">
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Meilleur</p>
-            <p className="text-lg font-semibold dark:text-white">{bestScore}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
+              {lowerIsBetter ? 'Meilleur (min)' : 'Meilleur (max)'}
+            </p>
+            <p className="text-lg font-semibold dark:text-white">
+              {lowerIsBetter ? `${bestScore}ms` : bestScore}
+            </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Moyenne</p>
-            <p className="text-lg font-semibold dark:text-white">{avgScore}</p>
+            <p className="text-lg font-semibold dark:text-white">
+              {lowerIsBetter ? `${avgScore}ms` : avgScore}
+            </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Dernier</p>
             <div className="flex items-center justify-center">
-              <p className="text-lg font-semibold dark:text-white">{lastScore}</p>
+              <p className="text-lg font-semibold dark:text-white">
+                {lowerIsBetter ? `${lastScore}ms` : lastScore}
+              </p>
               {getTrend()}
             </div>
           </div>
@@ -251,18 +306,6 @@ export default function GameStatsCard({
               <p className="text-gray-500 dark:text-gray-400">Graphique non disponible</p>
             </div>
           )}
-        </div>
-        
-        <div className="flex items-center mt-4">
-          <Link 
-            href={link}
-            className="flex-1 text-center py-2 rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-          >
-            Jouer à nouveau
-          </Link>
-          <span className="ml-2 px-3 py-1 text-xs rounded-full bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200">
-            {data.length} parties
-          </span>
         </div>
       </div>
     </div>

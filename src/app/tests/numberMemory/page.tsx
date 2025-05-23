@@ -27,6 +27,12 @@ ChartJS.register(
     Legend
 );
 
+// ✅ Ajouter l'interface TestResult
+interface TestResult {
+  score: number;
+  timestamp: string;
+}
+
 export default function NumberMemoryTest() {
     const { currentUser } = useAuth();
     const [level, setLevel] = useState(1);
@@ -36,7 +42,8 @@ export default function NumberMemoryTest() {
     const [userInput, setUserInput] = useState('');
     const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'lost' | 'gameover'>('waiting');
     const inputRef = useRef<HTMLInputElement>(null);
-    const [results, setResults] = useState<Array<{ timestamp: number, score: number }>>([]);
+    const [results, setResults] = useState<TestResult[]>([]);
+    const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
 
     useEffect(() => {
         fetchResults();
@@ -44,86 +51,73 @@ export default function NumberMemoryTest() {
 
     const fetchResults = async () => {
         try {
+            // Données utilisateur
             if (currentUser) {
-                const response = await fetch(`/api/numberMemory?userId=${currentUser.uid}&type=user`);
-                const data = await response.json();
-                setResults(data);
-            } else {
-                setResults([]);
+                const userResponse = await fetch(`/api/numberMemory?userId=${currentUser.uid}&type=user`);
+                const userData = await userResponse.json();
+                setResults(userData);
             }
+            
+            // Données globales
+            const globalResponse = await fetch('/api/numberMemory?type=global');
+            const globalData = await globalResponse.json();
+            setGlobalResults(globalData);
         } catch (error) {
-            console.error('Erreur lors du chargement des résultats:', error);
-        }
-    };
-
-    const saveResult = async (score: number) => {
-        try {
-            await fetch('/api/numberMemory', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    score,
-                    userId: currentUser?.uid || null
-                })
-            });
-            await fetchResults();
-        } catch (error) {
-            console.error('Erreur lors de la sauvegarde du résultat:', error);
+            console.error('Error fetching results:', error);
         }
     };
 
     const prepareChartData = () => {
         const intervals = Array.from({ length: 10 }, (_, i) => i + 1);
-        const data = new Array(intervals.length).fill(0);
+        const counts = new Array(intervals.length).fill(0);
         
-        results.forEach(result => {
+        globalResults.forEach(result => {
             const index = Math.min(Math.floor(result.score) - 1, intervals.length - 1);
-            if (index >= 0) data[index]++;
+            if (index >= 0) counts[index]++;
         });
 
-        const totalResults = results.length;
-        const percentages = data.map(count => (count / totalResults) * 100);
+        const total = globalResults.length;
+        const percentages = counts.map(count => (count / total) * 100 || 0);
 
         return {
-            labels: intervals.map(i => `Niveau ${i}`),
+            labels: intervals.map(i => `${i} chiffre${i > 1 ? 's' : ''}`),
             datasets: [{
-                label: 'Distribution des scores (%)',
+                label: 'Distribution des scores',
                 data: percentages,
-                borderColor: 'rgb(75, 192, 192)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                tension: 0.3,
-                fill: true,
+                borderColor: 'rgb(239, 68, 68)',
+                backgroundColor: 'rgba(239, 68, 68, 0.2)',
+                tension: 0.1,
+                fill: true
             }]
         };
     };
 
     const chartOptions = {
         responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-            x: {
-                title: {
-                    display: true,
-                    text: 'Niveau atteint',
-                }
-            },
-            y: {
-                beginAtZero: true,
-                title: {
-                    display: true,
-                    text: 'Pourcentage des parties (%)',
-                },
-            },
-        },
         plugins: {
             legend: {
                 position: 'top' as const,
             },
             title: {
                 display: true,
-                text: 'Distribution des niveaux atteints',
-            },
+                text: 'Distribution globale des scores de mémoire des nombres'
+            }
         },
+        scales: {
+            y: {
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: 'Pourcentage des joueurs (%)'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Nombre de chiffres mémorisés'
+                }
+            }
+        }
     };
 
     const generateNumbers = (level: number) => {
@@ -169,7 +163,6 @@ export default function NumberMemoryTest() {
             setLives(prev => prev - 1);
             if (lives <= 1) {
                 setGameStatus('gameover');
-                await saveResult(level - 1);
             } else {
                 startNewLevel(level);
             }
@@ -195,12 +188,7 @@ export default function NumberMemoryTest() {
                     viewBox="0 0 24 24" 
                     stroke="currentColor"
                 >
-                    <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M10 19l-7-7m0 0l7-7m-7 7h18" 
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
             </Link>
 
@@ -231,7 +219,7 @@ export default function NumberMemoryTest() {
 
                 {gameStatus === 'waiting' ? (
                     <StartModal 
-                        title="Test de Mémoire des Chiffres"
+                        title="Test de Mémoire des Nombres"
                         description={
                             <p>
                                 Mémorisez les chiffres qui apparaissent à l&apos;écran.
@@ -240,7 +228,7 @@ export default function NumberMemoryTest() {
                             </p>
                         }
                         onStart={startGame}
-                        stats={results.length > 0 ? (
+                        stats={globalResults.length > 0 ? (
                             <Line data={prepareChartData()} options={chartOptions} />
                         ) : (
                             <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>

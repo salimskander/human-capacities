@@ -173,7 +173,12 @@ export default function ProfilePage() {
   const prepareProgressionData = (data, valueKey = 'score', limit = 10) => {
     if (!data || data.length === 0) return null;
     
-    const recentScores = data.slice(-limit).map(item => item[valueKey]);
+    // ✅ Trier par timestamp et prendre les plus récents
+    const sortedData = [...data]
+      .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()) // Plus ancien au plus récent
+      .slice(-limit); // Prendre les derniers (plus récents)
+    
+    const recentScores = sortedData.map(item => item[valueKey]);
     const labels = Array.from({ length: recentScores.length }, (_, i) => `Partie ${i+1}`);
     
     return {

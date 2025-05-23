@@ -27,6 +27,12 @@ ChartJS.register(
   Legend
 );
 
+// ✅ Ajouter l'interface TestResult
+interface TestResult {
+  score: number;
+  timestamp: string;
+}
+
 export default function SequenceMemoryTest() {
   const { currentUser } = useAuth();
   const [level, setLevel] = useState(1);
@@ -38,7 +44,8 @@ export default function SequenceMemoryTest() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [correctTiles, setCorrectTiles] = useState<number[]>([]);
   const [errorTile, setErrorTile] = useState<number | null>(null);
-  const [results, setResults] = useState<Array<{ timestamp: number, score: number }>>([]);
+  const [results, setResults] = useState<TestResult[]>([]);
+  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   const [isProcessingError, setIsProcessingError] = useState(false);
 
   const generateSequence = (currentLevel: number) => {
@@ -145,16 +152,19 @@ export default function SequenceMemoryTest() {
 
   const fetchResults = async () => {
     try {
+      // Données utilisateur
       if (currentUser) {
-        const response = await fetch(`/api/sequenceMemory?userId=${currentUser.uid}&type=user`);
-        const data = await response.json();
-        setResults(Array.isArray(data) ? data : []);
-      } else {
-        setResults([]);
+        const userResponse = await fetch(`/api/sequenceMemory?userId=${currentUser.uid}&type=user`);
+        const userData = await userResponse.json();
+        setResults(userData);
       }
+      
+      // Données globales
+      const globalResponse = await fetch('/api/sequenceMemory?type=global');
+      const globalData = await globalResponse.json();
+      setGlobalResults(globalData);
     } catch (error) {
-      console.error('Failed to fetch results:', error);
-      setResults([]);
+      console.error('Error fetching results:', error);
     }
   };
 
@@ -180,63 +190,59 @@ export default function SequenceMemoryTest() {
     fetchResults();
   }, [currentUser]);
 
-  const prepareChartData = (results: Array<{ score: number }>) => {
-    // Créer un tableau de 12 niveaux (1-12)
-    const levels = Array.from({ length: 12 }, (_, i) => i + 1);
-    
-    // Compter le nombre de parties pour chaque niveau
-    const scoreCounts = new Array(12).fill(0);
-    results.forEach(result => {
-      if (result.score >= 1 && result.score <= 12) {
-        scoreCounts[result.score - 1]++;
+  const prepareChartData = () => {
+    const intervals = Array.from({ length: 15 }, (_, i) => i + 1);
+    const counts = new Array(intervals.length).fill(0);
+
+    globalResults.forEach(result => {
+      if (result.score && result.score > 0) {
+        const index = Math.min(result.score - 1, intervals.length - 1);
+        if (index >= 0) {
+          counts[index]++;
+        }
       }
     });
-    
-    // Calculer les pourcentages
-    const total = results.length || 1;
-    const percentages = scoreCounts.map(count => (count / total) * 100);
+
+    const total = globalResults.filter(r => r.score && r.score > 0).length;
+    const percentages = counts.map(count => (count / total) * 100 || 0);
 
     return {
-      labels: levels,
+      labels: intervals.map(value => `Niveau ${value}`),
       datasets: [{
-        label: 'Pourcentage des parties',
+        label: 'Distribution des scores',
         data: percentages,
-        borderColor: 'rgba(75, 192, 192, 1)',
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderWidth: 2,
+        borderColor: 'rgb(14, 165, 233)',
+        backgroundColor: 'rgba(14, 165, 233, 0.2)',
+        tension: 0.1,
+        fill: true
       }]
     };
   };
 
   const chartOptions = {
     responsive: true,
-    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        position: 'top' as const,
+      },
+      title: {
+        display: true,
+        text: 'Distribution globale des scores de mémoire de séquence'
+      }
+    },
     scales: {
       y: {
         beginAtZero: true,
-        max: 100,
         title: {
           display: true,
-          text: 'Pourcentage des parties (%)'
+          text: 'Pourcentage des joueurs (%)'
         }
       },
       x: {
         title: {
           display: true,
           text: 'Niveau atteint'
-        },
-        ticks: {
-          stepSize: 1
         }
-      }
-    },
-    plugins: {
-      legend: {
-        display: false
-      },
-      title: {
-        display: true,
-        text: 'Distribution des scores'
       }
     }
   };
@@ -295,8 +301,8 @@ export default function SequenceMemoryTest() {
               </p>
             }
             onStart={startGame}
-            stats={results.length > 0 ? (
-              <Line data={prepareChartData(results)} options={chartOptions} />
+            stats={globalResults.length > 0 ? (
+              <Line data={prepareChartData()} options={chartOptions} />
             ) : (
               <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
             )}
