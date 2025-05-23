@@ -17,6 +17,12 @@ import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import { useAuth } from '@/contexts/AuthContext';
 
+// Ajouter l'interface TestResult
+interface TestResult {
+  reactionTime: number;
+  timestamp: string;
+}
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -147,12 +153,6 @@ export default function ReflexTest() {
 
   const fetchResults = useCallback(async () => {
     try {
-      if (currentUser) {
-        const userResponse = await fetch(`/api/reflex?userId=${currentUser.uid}&type=user`);
-        const userData = await userResponse.json();
-        const userTimes = userData.map((r: { reactionTime: number }) => r.reactionTime);
-      }
-      
       const globalResponse = await fetch('/api/reflex?type=global');
       const globalData = await globalResponse.json();
       const globalTimes = globalData.map((r: { reactionTime: number }) => r.reactionTime);
@@ -160,7 +160,7 @@ export default function ReflexTest() {
     } catch (error) {
       console.error('Erreur lors de la récupération des résultats:', error);
     }
-  }, [currentUser]);
+  }, []);
 
   useEffect(() => {
     fetchResults();
