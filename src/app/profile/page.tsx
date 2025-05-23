@@ -32,6 +32,12 @@ ChartJS.register(
 );
 
 // Définir les types appropriés
+interface UserData {
+  displayName: string | null;
+  email: string | null;
+  uid: string;
+}
+
 interface GameData {
   timestamp: string;
   score: number;
@@ -51,10 +57,11 @@ export default function ProfilePage() {
     symbolMemory: [],
     reflex: []
   });
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('performances');
   const [isResetting, setIsResetting] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
   
   // Rediriger si non connecté
   useEffect(() => {
@@ -360,6 +367,10 @@ export default function ProfilePage() {
             <div className="max-w-7xl mx-auto px-6 py-12">
               <UserProfileHeader user={currentUser} />
               <div className="mt-8">
+                <p className="text-gray-600 mb-8">
+                  Voici un aperçu de vos performances dans nos différents tests cognitifs.
+                  Continuez à vous entraîner pour améliorer vos capacités !
+                </p>
                 {renderContent()}
               </div>
               

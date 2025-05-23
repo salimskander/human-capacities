@@ -17,6 +17,7 @@ import {
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameResults } from '@/contexts/GameResultsContext';
 
 ChartJS.register(
   CategoryScale,
@@ -51,6 +52,7 @@ interface TestResult {
 }
 
 export default function VerbalMemoryTest() {
+  const { saveResult } = useGameResults();
   const { currentUser } = useAuth();
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'gameover'>('waiting');
   const [currentWord, setCurrentWord] = useState('');

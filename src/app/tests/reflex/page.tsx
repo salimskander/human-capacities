@@ -16,6 +16,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameResults } from '@/contexts/GameResultsContext';
 
 // Ajouter l'interface TestResult
 interface TestResult {
@@ -36,6 +37,7 @@ ChartJS.register(
 
 export default function ReflexTest() {
   const { currentUser } = useAuth();
+  const { saveResult } = useGameResults();
   const [globalResults, setGlobalResults] = useState<number[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>('transparent');
   const [, setStartTime] = useState<number | null>(null);
@@ -47,7 +49,6 @@ export default function ReflexTest() {
   const [currentTime, setCurrentTime] = useState<number>(0);
   const animationFrameRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
-  const [results, setResults] = useState<TestResult[]>([]);
 
   const resetTest = () => {
     if (timeoutRef.current) {
@@ -124,30 +125,6 @@ export default function ReflexTest() {
       setIsWaiting(false);
 
       saveResult(finalTime);
-    }
-  };
-
-  const saveResult = async (reactionTime: number) => {
-    try {
-      console.log('🎯 Envoi du résultat:', { reactionTime, userId: currentUser?.uid });
-      
-      const response = await fetch('/api/reflex', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          reactionTime,
-          userId: currentUser?.uid || null
-        }),
-      });
-      
-      const result = await response.json();
-      console.log('📨 Réponse de l\'API:', result);
-      
-      if (!response.ok) {
-        throw new Error(result.error || 'Erreur lors de la sauvegarde');
-      }
-    } catch (error) {
-      console.error('❌ Erreur lors de la sauvegarde du score:', error);
     }
   };
 

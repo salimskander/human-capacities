@@ -16,6 +16,7 @@ import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameResults } from '@/contexts/GameResultsContext';
 
 ChartJS.register(
   CategoryScale,
@@ -35,6 +36,7 @@ interface TestResult {
 
 export default function SequenceMemoryTest() {
   const { currentUser } = useAuth();
+  const { saveResult, globalResults } = useGameResults();
   const [level, setLevel] = useState(1);
   const [lives, setLives] = useState(2);
   const [sequence, setSequence] = useState<number[]>([]);
@@ -44,9 +46,7 @@ export default function SequenceMemoryTest() {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [correctTiles, setCorrectTiles] = useState<number[]>([]);
   const [errorTile, setErrorTile] = useState<number | null>(null);
-  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   const [isProcessingError, setIsProcessingError] = useState(false);
-  const [results, setResults] = useState<TestResult[]>([]);
 
   const generateSequence = (currentLevel: number) => {
     if (currentLevel === 1) {
@@ -157,7 +157,7 @@ export default function SequenceMemoryTest() {
       const response = await fetch('/api/sequence-memory/results');
       if (response.ok) {
         const data = await response.json();
-        setResults(data);
+        // setResults(data);
       }
     } catch (error) {
       console.error('Erreur lors de la récupération des résultats:', error);
@@ -167,24 +167,6 @@ export default function SequenceMemoryTest() {
   useEffect(() => {
     fetchResults();
   }, [fetchResults]);
-
-  const saveResult = async (score: number) => {
-    try {
-      await fetch('/api/sequenceMemory', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          score,
-          userId: currentUser?.uid || null
-        }),
-      });
-      fetchResults();
-    } catch (error) {
-      console.error('Failed to save result:', error);
-    }
-  };
 
   const prepareChartData = () => {
     const intervals = Array.from({ length: 15 }, (_, i) => i + 1);

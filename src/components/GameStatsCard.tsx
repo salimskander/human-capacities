@@ -2,12 +2,6 @@ import { Line } from 'react-chartjs-2';
 import Link from 'next/link';
 import { ReactNode } from 'react';
 
-interface GameResult {
-  timestamp: string;
-  score: number;
-  [key: string]: unknown;
-}
-
 interface GameStatsCardProps {
   title: string;
   data: unknown[];

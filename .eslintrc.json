@@ -6,5 +6,8 @@
       "argsIgnorePattern": "^_",
       "varsIgnorePattern": "^_" 
     }]
-  }
+  },
+  "ignorePatterns": [
+    "src/generated/**/*"
+  ]
 } 

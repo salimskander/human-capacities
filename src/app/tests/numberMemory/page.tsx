@@ -16,6 +16,7 @@ import StartModal from '@/components/StartModal';
 import ProgressBar from "@/components/ProgressBar";
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameResults } from '@/contexts/GameResultsContext';
 
 ChartJS.register(
     CategoryScale,
@@ -34,7 +35,7 @@ interface TestResult {
 }
 
 export default function NumberMemoryTest() {
-    const { currentUser } = useAuth();
+    const { saveResult } = useGameResults();
     const [level, setLevel] = useState(1);
     const [lives, setLives] = useState(2);
     const [numbers, setNumbers] = useState<string>('');

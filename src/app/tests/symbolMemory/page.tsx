@@ -17,6 +17,7 @@ import StartModal from '@/components/StartModal';
 import ProgressBar from "@/components/ProgressBar";
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { useGameResults } from '@/contexts/GameResultsContext';
 
 ChartJS.register(
   CategoryScale,
@@ -93,13 +94,12 @@ const chartOptions = {
 
 export default function SymbolMemoryTest() {
   const { currentUser } = useAuth();
+  const { saveResult, globalResults } = useGameResults();
   const [level, setLevel] = useState(1);
   const [lives, setLives] = useState(3);
   const [cards, setCards] = useState<Array<{ id: number; symbol: string; isFlipped: boolean; isMatched: boolean }>>([]);
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'showing' | 'gameover'>('waiting');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
-  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
-  const [results, setResults] = useState<TestResult[]>([]);
 
   const initializeCards = (level: number) => {
     const numberOfPairs = level + 2; // Commence avec 3 paires au niveau 1
@@ -193,42 +193,6 @@ export default function SymbolMemoryTest() {
       setCards(cards => cards.map(card => ({ ...card, isFlipped: false })));
       setGameStatus('playing');
     }, showDuration);
-  };
-
-  const fetchResults = useCallback(async () => {
-    if (!currentUser) return;
-    
-    try {
-      const response = await fetch('/api/symbol-memory/results');
-      if (response.ok) {
-        const data = await response.json();
-        setResults(data);
-      }
-    } catch (error) {
-      console.error('Erreur lors de la récupération des résultats:', error);
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    fetchResults();
-  }, [fetchResults]);
-
-  const saveResult = async (score: number) => {
-    try {
-      await fetch('/api/symbolMemory', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          score,
-          userId: currentUser?.uid || null
-        }),
-      });
-      fetchResults();
-    } catch (error) {
-      console.error('Erreur lors de la sauvegarde du score:', error);
-    }
   };
 
   const handleRestart = () => {
