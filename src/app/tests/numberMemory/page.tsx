@@ -35,7 +35,6 @@ interface TestResult {
 }
 
 export default function NumberMemoryTest() {
-    const { currentUser } = useAuth();
     const { saveResult } = useGameResults();
     const [level, setLevel] = useState(1);
     const [lives, setLives] = useState(2);
@@ -169,10 +168,8 @@ export default function NumberMemoryTest() {
         }
     };
 
-    const handleGameOver = async (score: number) => {
-        if (currentUser) {
-            await saveResult(score);
-        }
+    const _handleGameOver = () => {
+        // Implementation of handleGameOver
     };
 
     return (

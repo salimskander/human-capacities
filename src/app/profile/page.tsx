@@ -61,7 +61,7 @@ export default function ProfilePage() {
   const [activeTab, setActiveTab] = useState('performances');
   const [isResetting, setIsResetting] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const _userData = useState<UserData | null>(null);
   
   // Rediriger si non connecté
   useEffect(() => {
@@ -91,7 +91,7 @@ export default function ProfilePage() {
   
   useEffect(() => {
     if (currentUser) {
-      setUserData({
+      _userData[1]({
         displayName: currentUser.displayName,
         email: currentUser.email,
         uid: currentUser.uid
