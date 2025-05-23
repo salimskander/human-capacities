@@ -1,33 +1,29 @@
-interface UserData {
-  [key: string]: unknown;
-}
-
-interface GlobalData {
-  [key: string]: unknown;
+interface GameResult {
+  score: number;
 }
 
 interface StatsComparisonProps {
-  userData: UserData;
-  globalData: GlobalData;
+  userData: GameResult[];
+  globalData: GameResult[];
   title: string;
   scoreLabel: string;
 }
 
 export default function StatsComparison({ userData, globalData, title, scoreLabel }: StatsComparisonProps) {
   const userAverage = userData.length > 0 
-    ? userData.reduce((sum, stat) => sum + stat.score, 0) / userData.length 
+    ? userData.reduce((sum, stat) => sum + Number(stat.score), 0) / userData.length 
     : 0;
     
   const globalAverage = globalData.length > 0 
-    ? globalData.reduce((sum, stat) => sum + stat.score, 0) / globalData.length 
+    ? globalData.reduce((sum, stat) => sum + Number(stat.score), 0) / globalData.length 
     : 0;
 
   const userBest = userData.length > 0 
-    ? Math.max(...userData.map(stat => stat.score)) 
+    ? Math.max(...userData.map(stat => Number(stat.score))) 
     : 0;
     
   const globalBest = globalData.length > 0 
-    ? Math.max(...globalData.map(stat => stat.score)) 
+    ? Math.max(...globalData.map(stat => Number(stat.score))) 
     : 0;
 
   return (

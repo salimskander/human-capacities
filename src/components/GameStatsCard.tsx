@@ -59,12 +59,14 @@ export default function GameStatsCard({
   const sortedData = [...data].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
   
   // Calcul des statistiques
-  const scores = sortedData
+  const scores: number[] = sortedData
     .map(item => {
-      if (item.reactionTime !== undefined) return item.reactionTime;
-      return item.score;
+      if (item.reactionTime !== undefined) return Number(item.reactionTime);
+      return Number(item.score);
     })
-    .filter(score => score !== null && score !== undefined && !isNaN(score));
+    .filter((score): score is number => 
+      typeof score === 'number' && !isNaN(score)
+    );
 
   if (scores.length === 0) {
     return (
@@ -95,7 +97,7 @@ export default function GameStatsCard({
     ? Math.min(...scores) 
     : Math.max(...scores);
   const avgScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
-  const lastScore = scores[0]; // ✅ Le plus récent (premier après tri)
+  const lastScore: number = scores[0]; // ✅ Le plus récent (premier après tri)
   
   // ✅ Passer les données triées au graphique
   const chartData = prepareChartData(sortedData);
@@ -234,11 +236,11 @@ export default function GameStatsCard({
   };
   
   // ✅ Indicateur de tendance corrigé
-  const getTrend = () => {
+  const getTrend = (): ReactNode => {
     if (scores.length < 2) return null;
     
-    const currentScore = scores[0]; // Plus récent
-    const prevScore = scores[1]; // Précédent
+    const currentScore = Number(scores[0]); // Plus récent
+    const prevScore = Number(scores[1]); // Précédent
     const diff = lowerIsBetter 
       ? prevScore - currentScore  // Pour les réflexes, plus bas est mieux
       : currentScore - prevScore; // Pour les autres, plus haut est mieux
@@ -299,7 +301,7 @@ export default function GameStatsCard({
               <p className="text-lg font-semibold dark:text-white">
                 {lowerIsBetter ? `${lastScore}ms` : lastScore}
               </p>
-              {getTrend()}
+              {getTrend() as React.ReactNode}
             </div>
           </div>
         </div>
