@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Chart as ChartJS,
@@ -10,7 +10,8 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
@@ -23,7 +24,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 export default function ReflexTest() {
@@ -48,7 +50,7 @@ export default function ReflexTest() {
       cancelAnimationFrame(animationFrameRef.current);
     }
     setCurrentTime(0);
-    setBackgroundColor('transparent'); // Au lieu de 'white'
+    setBackgroundColor('transparent');
     setStartTime(null);
     setReactionTime(null);
     setIsWaiting(false);
@@ -63,7 +65,7 @@ export default function ReflexTest() {
   };
 
   const startTest = () => {
-    setBackgroundColor('#4B5563'); // Gris plus foncé
+    setBackgroundColor('#4B5563');
     setReactionTime(null);
     setIsWaiting(true);
     setShowStart(false);
@@ -84,7 +86,6 @@ export default function ReflexTest() {
     }
 
     if (!isWaiting) {
-      // Si on a déjà affiché un résultat, on relance directement le test
       if (reactionTime !== null) {
         startTest();
       } else {
@@ -93,15 +94,15 @@ export default function ReflexTest() {
       return;
     }
 
-    if (backgroundColor === '#4B5563') { // Mettre à jour la condition
+    if (backgroundColor === '#4B5563') {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
       setTooEarly(true);
-      setBackgroundColor('#EF4444'); // Rouge plus vif
+      setBackgroundColor('#EF4444');
       setTimeout(() => {
         resetTest();
-        startTest(); // Relance automatiquement le test après le délai
+        startTest();
       }, 1500); 
       return;
     }
@@ -112,10 +113,9 @@ export default function ReflexTest() {
       }
       const finalTime = currentTime;
       setReactionTime(finalTime);
-      setBackgroundColor('transparent'); // Au lieu de 'white'
+      setBackgroundColor('transparent');
       setIsWaiting(false);
 
-      // Sauvegarder le résultat avec l'ID utilisateur
       saveResult(finalTime);
     }
   };
@@ -144,20 +144,14 @@ export default function ReflexTest() {
     }
   };
 
-  useEffect(() => {
-    fetchResults();
-  }, [fetchResults]);
-
-  const fetchResults = async () => {
+  const fetchResults = useCallback(async () => {
     try {
-      // Récupérer les résultats de l'utilisateur
       if (currentUser) {
         const userResponse = await fetch(`/api/reflex?userId=${currentUser.uid}&type=user`);
         const userData = await userResponse.json();
         const userTimes = userData.map((r: { reactionTime: number }) => r.reactionTime);
       }
       
-      // Récupérer les résultats globaux pour comparaison
       const globalResponse = await fetch('/api/reflex?type=global');
       const globalData = await globalResponse.json();
       const globalTimes = globalData.map((r: { reactionTime: number }) => r.reactionTime);
@@ -165,7 +159,11 @@ export default function ReflexTest() {
     } catch (error) {
       console.error('Erreur lors de la récupération des résultats:', error);
     }
-  };
+  }, [currentUser]);
+
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]);
 
   const prepareChartData = () => {
     const intervals = Array.from({ length: 21 }, (_, i) => i * 25);
