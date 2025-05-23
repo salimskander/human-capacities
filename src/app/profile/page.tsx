@@ -162,6 +162,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Test du Chimpanzé" 
                   data={gamesData.chimpTest}
+                  getScore={(item) => (item as GameData).score}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Niveau atteint"
                   icon={<Image src="/chimp.svg" alt="Chimp Test" width={32} height={32} />}
                   link="/tests/chimpTest"
@@ -172,6 +174,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Vitesse de Frappe" 
                   data={gamesData.typingSpeed}
+                  getScore={(item) => (item as { wpm: number }).wpm}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Mots par minute"
                   icon={<Image src="/keyboard.svg" alt="Typing Speed" width={32} height={32} />}
                   link="/tests/typingSpeed"
@@ -182,6 +186,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Mémoire Visuelle" 
                   data={gamesData.visualMemory}
+                  getScore={(item) => (item as GameData).score}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Niveau atteint"
                   icon={<Image src="/visual.svg" alt="Visual Memory" width={32} height={32} />}
                   link="/tests/visualMemory"
@@ -192,6 +198,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Mémoire des Chiffres" 
                   data={gamesData.numberMemory}
+                  getScore={(item) => (item as GameData).score}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Chiffres mémorisés"
                   icon={<Image src="/number.svg" alt="Number Memory" width={32} height={32} />}
                   link="/tests/numberMemory"
@@ -202,6 +210,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Mémoire Verbale" 
                   data={gamesData.verbalMemory}
+                  getScore={(item) => (item as GameData).score}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Mots mémorisés"
                   icon={<Image src="/word.svg" alt="Verbal Memory" width={32} height={32} />}
                   link="/tests/verbalMemory"
@@ -212,6 +222,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Mémoire de Séquence" 
                   data={gamesData.sequenceMemory}
+                  getScore={(item) => (item as GameData).score}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Séquence atteinte"
                   icon={<Image src="/sequence.svg" alt="Sequence Memory" width={32} height={32} />}
                   link="/tests/sequenceMemory"
@@ -222,6 +234,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Mémoire des Symboles" 
                   data={gamesData.symbolMemory}
+                  getScore={(item) => (item as GameData).score}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Niveau atteint"
                   icon={<Image src="/cards.svg" alt="Symbol Memory" width={32} height={32} />}
                   link="/tests/symbolMemory"
@@ -232,6 +246,8 @@ export default function ProfilePage() {
                 <GameStatsCard 
                   title="Réflexes" 
                   data={gamesData.reflex}
+                  getScore={(item) => (item as { reactionTime: number }).reactionTime}
+                  getDate={(item) => (item as GameData).timestamp}
                   scoreLabel="Temps (ms)"
                   icon={<Image src="/zap.svg" alt="Reflex Test" width={32} height={32} />}
                   link="/tests/reflex"
