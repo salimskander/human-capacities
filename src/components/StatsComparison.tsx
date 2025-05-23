@@ -1,25 +1,33 @@
+interface UserData {
+  [key: string]: unknown;
+}
+
+interface GlobalData {
+  [key: string]: unknown;
+}
+
 interface StatsComparisonProps {
-  userStats: any[];
-  globalStats: any[];
+  userData: UserData;
+  globalData: GlobalData;
   title: string;
   scoreLabel: string;
 }
 
-export default function StatsComparison({ userStats, globalStats, title, scoreLabel }: StatsComparisonProps) {
-  const userAverage = userStats.length > 0 
-    ? userStats.reduce((sum, stat) => sum + stat.score, 0) / userStats.length 
+export default function StatsComparison({ userData, globalData, title, scoreLabel }: StatsComparisonProps) {
+  const userAverage = userData.length > 0 
+    ? userData.reduce((sum, stat) => sum + stat.score, 0) / userData.length 
     : 0;
     
-  const globalAverage = globalStats.length > 0 
-    ? globalStats.reduce((sum, stat) => sum + stat.score, 0) / globalStats.length 
+  const globalAverage = globalData.length > 0 
+    ? globalData.reduce((sum, stat) => sum + stat.score, 0) / globalData.length 
     : 0;
 
-  const userBest = userStats.length > 0 
-    ? Math.max(...userStats.map(stat => stat.score)) 
+  const userBest = userData.length > 0 
+    ? Math.max(...userData.map(stat => stat.score)) 
     : 0;
     
-  const globalBest = globalStats.length > 0 
-    ? Math.max(...globalStats.map(stat => stat.score)) 
+  const globalBest = globalData.length > 0 
+    ? Math.max(...globalData.map(stat => stat.score)) 
     : 0;
 
   return (
@@ -31,14 +39,14 @@ export default function StatsComparison({ userStats, globalStats, title, scoreLa
           <h4 className="font-semibold text-blue-600 dark:text-blue-400">Vos statistiques</h4>
           <p className="text-sm text-gray-600 dark:text-gray-300">Moyenne: {userAverage.toFixed(1)} {scoreLabel}</p>
           <p className="text-sm text-gray-600 dark:text-gray-300">Meilleur: {userBest} {scoreLabel}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Parties: {userStats.length}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Parties: {userData.length}</p>
         </div>
         
         <div className="text-center">
           <h4 className="font-semibold text-green-600 dark:text-green-400">Statistiques globales</h4>
           <p className="text-sm text-gray-600 dark:text-gray-300">Moyenne: {globalAverage.toFixed(1)} {scoreLabel}</p>
           <p className="text-sm text-gray-600 dark:text-gray-300">Meilleur: {globalBest} {scoreLabel}</p>
-          <p className="text-sm text-gray-600 dark:text-gray-300">Parties: {globalStats.length}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300">Parties: {globalData.length}</p>
         </div>
       </div>
       

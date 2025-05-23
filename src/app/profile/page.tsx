@@ -31,6 +31,13 @@ ChartJS.register(
   Filler
 );
 
+// Définir les types appropriés
+interface GameData {
+  timestamp: string;
+  score: number;
+  [key: string]: unknown;
+}
+
 export default function ProfilePage() {
   const { currentUser, userLoading } = useAuth();
   const router = useRouter();
@@ -104,18 +111,6 @@ export default function ProfilePage() {
         })
       );
       
-      // Récupérer les données globales
-      const globalResults = await Promise.all(
-        endpoints.map(endpoint => 
-          fetch(`/api/${endpoint}?type=global`)
-            .then(res => res.json())
-            .catch(err => {
-              console.error(`Erreur lors du chargement des données globales pour ${endpoint}:`, err);
-              return [];
-            })
-        )
-      );
-      
       setGamesData({
         chimpTest: userResults[0],
         typingSpeed: userResults[1],
@@ -138,17 +133,6 @@ export default function ProfilePage() {
       setTimeout(() => {
         console.log('🎮 STATE gamesData.typingSpeed après setState:', gamesData.typingSpeed);
       }, 100);
-      
-      // setGlobalData({
-      //   chimpTest: globalResults[0],
-      //   typingSpeed: globalResults[1],
-      //   visualMemory: globalResults[2],
-      //   numberMemory: globalResults[3],
-      //   verbalMemory: globalResults[4],
-      //   sequenceMemory: globalResults[5],
-      //   symbolMemory: globalResults[6],
-      //   reflex: globalResults[7]
-      // });
     } catch (error) {
       console.error('❌ Erreur lors du chargement des données de jeu:', error);
     } finally {
@@ -161,11 +145,11 @@ export default function ProfilePage() {
     if (!data || !Array.isArray(data) || data.length === 0) return null;
     
     // ✅ Trier par timestamp et prendre les plus récents
-    const sortedData = [...data]
-      .sort((a: any, b: any) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()) // Plus ancien au plus récent
+    const sortedData = [...(data as GameData[])]
+      .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()) // Plus ancien au plus récent
       .slice(-limit); // Prendre les derniers (plus récents)
     
-    const recentScores = sortedData.map((item: any) => item[valueKey]);
+    const recentScores = sortedData.map((item) => item[valueKey] as number);
     const labels = Array.from({ length: recentScores.length }, (_, i) => `Partie ${i+1}`);
     
     return {
