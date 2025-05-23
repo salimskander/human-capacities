@@ -28,6 +28,12 @@ ChartJS.register(
   Legend
 );
 
+interface GameData {
+  score: number;
+  timestamp: string;
+  [key: string]: unknown;
+}
+
 // ✅ Ajouter l'interface TestResult
 interface TestResult {
   score: number;
@@ -47,6 +53,7 @@ export default function SequenceMemoryTest() {
   const [correctTiles, setCorrectTiles] = useState<number[]>([]);
   const [errorTile, setErrorTile] = useState<number | null>(null);
   const [isProcessingError, setIsProcessingError] = useState(false);
+  const [data, setData] = useState<GameData[]>([]);
 
   const generateSequence = (currentLevel: number) => {
     if (currentLevel === 1) {
@@ -167,6 +174,11 @@ export default function SequenceMemoryTest() {
   useEffect(() => {
     fetchResults();
   }, [fetchResults]);
+
+  useEffect(() => {
+    // Utiliser data pour afficher l'historique
+    setData(globalResults);
+  }, [globalResults]);
 
   const prepareChartData = () => {
     const intervals = Array.from({ length: 15 }, (_, i) => i + 1);

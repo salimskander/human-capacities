@@ -43,6 +43,12 @@ const MOTS_FRANCAIS = [
   'poisson', 'fromage', 'gâteau', 'chocolat', 'sucre', 'sel', 'restaurant', 'hôtel'
 ];
 
+interface UserData {
+  displayName: string | null;
+  email: string | null;
+  uid: string;
+}
+
 // ✅ Ajouter l'interface TestResult
 interface TestResult {
   id: string;
@@ -62,6 +68,7 @@ export default function VerbalMemoryTest() {
   const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
   const [showErrorAnimation, setShowErrorAnimation] = useState<boolean>(false);
   const [buttonsDisabled, setButtonsDisabled] = useState<boolean>(false);
+  const [userData, setUserData] = useState<UserData | null>(null);
 
   const fetchResults = useCallback(async () => {
     try {
@@ -69,6 +76,7 @@ export default function VerbalMemoryTest() {
       if (currentUser) {
         const userResponse = await fetch(`/api/verbalMemory?userId=${currentUser.uid}&type=user`);
         const userData = await userResponse.json();
+        setUserData(userData);
       }
       
       // Données globales
@@ -191,7 +199,10 @@ export default function VerbalMemoryTest() {
     }
   };
 
-  const handleGameOver = async () => {
+  const handleGameOver = async (score: number) => {
+    if (userData) {
+      await saveResult(score);
+    }
     setGameStatus('gameover');
     await saveScore();
   };
@@ -216,7 +227,7 @@ export default function VerbalMemoryTest() {
         setButtonsDisabled(false);
         
         if (lives <= 1) {
-          handleGameOver();
+          handleGameOver(score);
           return;
         }
         

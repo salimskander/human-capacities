@@ -18,6 +18,7 @@ import ProgressBar from "@/components/ProgressBar";
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGameResults } from '@/contexts/GameResultsContext';
+import { useRouter } from 'next/navigation';
 
 ChartJS.register(
   CategoryScale,
@@ -100,6 +101,13 @@ export default function SymbolMemoryTest() {
   const [cards, setCards] = useState<Array<{ id: number; symbol: string; isFlipped: boolean; isMatched: boolean }>>([]);
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'showing' | 'gameover'>('waiting');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!currentUser) {
+      router.push('/login');
+    }
+  }, [currentUser, router]);
 
   const initializeCards = (level: number) => {
     const numberOfPairs = level + 2; // Commence avec 3 paires au niveau 1

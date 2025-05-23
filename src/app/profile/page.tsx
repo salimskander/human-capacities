@@ -89,6 +89,16 @@ export default function ProfilePage() {
     fetchAllGameData();
   }, [fetchAllGameData]);
   
+  useEffect(() => {
+    if (currentUser) {
+      setUserData({
+        displayName: currentUser.displayName,
+        email: currentUser.email,
+        uid: currentUser.uid
+      });
+    }
+  }, [currentUser]);
+  
   // Fonctions de préparation des données pour les graphiques
   const prepareProgressionData = (data: unknown, valueKey: string = 'score', limit: number = 10) => {
     if (!data || !Array.isArray(data) || data.length === 0) return null;

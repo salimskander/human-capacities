@@ -16,6 +16,12 @@ interface GameStatsCardProps {
   lowerIsBetter?: boolean;
 }
 
+interface GameStats {
+  score: number;
+  timestamp: string;
+  [key: string]: unknown;
+}
+
 export default function GameStatsCard({ 
   title, 
   data, 

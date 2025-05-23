@@ -35,6 +35,7 @@ interface TestResult {
 }
 
 export default function NumberMemoryTest() {
+    const { currentUser } = useAuth();
     const { saveResult } = useGameResults();
     const [level, setLevel] = useState(1);
     const [lives, setLives] = useState(2);
@@ -165,6 +166,12 @@ export default function NumberMemoryTest() {
     const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             checkAnswer();
+        }
+    };
+
+    const handleGameOver = async (score: number) => {
+        if (currentUser) {
+            await saveResult(score);
         }
     };
 
