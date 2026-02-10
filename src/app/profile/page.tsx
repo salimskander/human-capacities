@@ -15,8 +15,6 @@ interface GameData {
   reactionTime?: number | null;
 }
 
-type RawGameData = Record<string, unknown>;
-
 interface DashboardTestStats {
   label: string;
   testType: string;
@@ -54,7 +52,7 @@ const emptyGamesData = {
 export default function ProfilePage() {
   const { currentUser, userLoading } = useAuth();
   const router = useRouter();
-  const [gamesData, setGamesData] = useState<Record<string, RawGameData[]>>(emptyGamesData);
+  const [gamesData, setGamesData] = useState<Record<string, GameData[]>>(emptyGamesData);
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('performances');
   const [isResetting, setIsResetting] = useState(false);
@@ -116,31 +114,10 @@ export default function ProfilePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.uid]);
 
-  const toGameData = (item: RawGameData): GameData | null => {
-    if (typeof item.timestamp !== 'string') {
-      return null;
-    }
-
-    return {
-      timestamp: item.timestamp,
-      score: typeof item.score === 'number' ? item.score : null,
-      wpm: typeof item.wpm === 'number' ? item.wpm : null,
-      reactionTime: typeof item.reactionTime === 'number' ? item.reactionTime : null
-    };
-  };
-
-  const prepareProgressionData = (data: RawGameData[], valueKey: keyof GameData = 'score', limit = 10) => {
+  const prepareProgressionData = (data: GameData[], valueKey: keyof GameData = 'score', limit = 10) => {
     if (!Array.isArray(data) || data.length === 0) return null;
 
-    const safeData = data
-      .map((item) => toGameData(item))
-      .filter((item): item is GameData => item !== null);
-
-    if (safeData.length === 0) {
-      return null;
-    }
-
-    const sortedData = [...safeData]
+    const sortedData = [...data]
       .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime())
       .slice(-limit);
 
@@ -213,14 +190,14 @@ export default function ProfilePage() {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <GameStatsCard title="Test du Chimpanzé" data={gamesData.chimpTest} getScore={(item) => Number((toGameData(item as RawGameData)?.score) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Niveau atteint" icon={<Image src="/chimp.svg" alt="Chimp Test" width={32} height={32} />} link="/tests/chimpTest" color="from-yellow-400 to-orange-500" prepareChartData={(data) => prepareProgressionData(data, 'score', 10)} />
-                <GameStatsCard title="Vitesse de Frappe" data={gamesData.typingSpeed} getScore={(item) => Number((toGameData(item as RawGameData)?.wpm) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Mots par minute" icon={<Image src="/keyboard.svg" alt="Typing Speed" width={32} height={32} />} link="/tests/typingSpeed" color="from-blue-400 to-indigo-500" prepareChartData={(data) => prepareProgressionData(data, 'wpm', 10)} />
-                <GameStatsCard title="Mémoire Visuelle" data={gamesData.visualMemory} getScore={(item) => Number((toGameData(item as RawGameData)?.score) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Niveau atteint" icon={<Image src="/visual.svg" alt="Visual Memory" width={32} height={32} />} link="/tests/visualMemory" color="from-purple-400 to-pink-500" prepareChartData={(data) => prepareProgressionData(data, 'score', 10)} />
-                <GameStatsCard title="Mémoire des Chiffres" data={gamesData.numberMemory} getScore={(item) => Number((toGameData(item as RawGameData)?.score) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Chiffres mémorisés" icon={<Image src="/number.svg" alt="Number Memory" width={32} height={32} />} link="/tests/numberMemory" color="from-green-400 to-teal-500" prepareChartData={(data) => prepareProgressionData(data, 'score', 10)} />
-                <GameStatsCard title="Mémoire Verbale" data={gamesData.verbalMemory} getScore={(item) => Number((toGameData(item as RawGameData)?.score) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Mots mémorisés" icon={<Image src="/word.svg" alt="Verbal Memory" width={32} height={32} />} link="/tests/verbalMemory" color="from-red-400 to-rose-500" prepareChartData={(data) => prepareProgressionData(data, 'score', 10)} />
-                <GameStatsCard title="Mémoire de Séquence" data={gamesData.sequenceMemory} getScore={(item) => Number((toGameData(item as RawGameData)?.score) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Séquence atteinte" icon={<Image src="/sequence.svg" alt="Sequence Memory" width={32} height={32} />} link="/tests/sequenceMemory" color="from-cyan-400 to-blue-500" prepareChartData={(data) => prepareProgressionData(data, 'score', 10)} />
-                <GameStatsCard title="Mémoire des Symboles" data={gamesData.symbolMemory} getScore={(item) => Number((toGameData(item as RawGameData)?.score) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Niveau atteint" icon={<Image src="/cards.svg" alt="Symbol Memory" width={32} height={32} />} link="/tests/symbolMemory" color="from-amber-400 to-orange-500" prepareChartData={(data) => prepareProgressionData(data, 'score', 10)} />
-                <GameStatsCard title="Réflexes" data={gamesData.reflex} getScore={(item) => Number((toGameData(item as RawGameData)?.reactionTime) ?? 0)} getDate={(item) => toGameData(item as RawGameData)?.timestamp || new Date(0).toISOString()} scoreLabel="Temps (ms)" icon={<Image src="/zap.svg" alt="Reflex Test" width={32} height={32} />} link="/tests/reflex" color="from-emerald-400 to-green-500" prepareChartData={(data) => prepareProgressionData(data, 'reactionTime', 10)} lowerIsBetter={true} />
+                <GameStatsCard title="Test du Chimpanzé" data={gamesData.chimpTest} getScore={(item) => Number((item as GameData).score ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Niveau atteint" icon={<Image src="/chimp.svg" alt="Chimp Test" width={32} height={32} />} link="/tests/chimpTest" color="from-yellow-400 to-orange-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'score', 10)} />
+                <GameStatsCard title="Vitesse de Frappe" data={gamesData.typingSpeed} getScore={(item) => Number((item as GameData).wpm ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Mots par minute" icon={<Image src="/keyboard.svg" alt="Typing Speed" width={32} height={32} />} link="/tests/typingSpeed" color="from-blue-400 to-indigo-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'wpm', 10)} />
+                <GameStatsCard title="Mémoire Visuelle" data={gamesData.visualMemory} getScore={(item) => Number((item as GameData).score ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Niveau atteint" icon={<Image src="/visual.svg" alt="Visual Memory" width={32} height={32} />} link="/tests/visualMemory" color="from-purple-400 to-pink-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'score', 10)} />
+                <GameStatsCard title="Mémoire des Chiffres" data={gamesData.numberMemory} getScore={(item) => Number((item as GameData).score ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Chiffres mémorisés" icon={<Image src="/number.svg" alt="Number Memory" width={32} height={32} />} link="/tests/numberMemory" color="from-green-400 to-teal-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'score', 10)} />
+                <GameStatsCard title="Mémoire Verbale" data={gamesData.verbalMemory} getScore={(item) => Number((item as GameData).score ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Mots mémorisés" icon={<Image src="/word.svg" alt="Verbal Memory" width={32} height={32} />} link="/tests/verbalMemory" color="from-red-400 to-rose-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'score', 10)} />
+                <GameStatsCard title="Mémoire de Séquence" data={gamesData.sequenceMemory} getScore={(item) => Number((item as GameData).score ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Séquence atteinte" icon={<Image src="/sequence.svg" alt="Sequence Memory" width={32} height={32} />} link="/tests/sequenceMemory" color="from-cyan-400 to-blue-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'score', 10)} />
+                <GameStatsCard title="Mémoire des Symboles" data={gamesData.symbolMemory} getScore={(item) => Number((item as GameData).score ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Niveau atteint" icon={<Image src="/cards.svg" alt="Symbol Memory" width={32} height={32} />} link="/tests/symbolMemory" color="from-amber-400 to-orange-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'score', 10)} />
+                <GameStatsCard title="Réflexes" data={gamesData.reflex} getScore={(item) => Number((item as GameData).reactionTime ?? 0)} getDate={(item) => (item as GameData).timestamp} scoreLabel="Temps (ms)" icon={<Image src="/zap.svg" alt="Reflex Test" width={32} height={32} />} link="/tests/reflex" color="from-emerald-400 to-green-500" prepareChartData={(data) => prepareProgressionData(data as GameData[], 'reactionTime', 10)} lowerIsBetter={true} />
               </div>
             )}
           </>
