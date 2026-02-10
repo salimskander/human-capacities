@@ -74,7 +74,8 @@ const WORDS_PER_LINE = 8; // Nombre de mots par ligne
 
 type Result = {
   timestamp: number;
-  score: number;
+  wpm: number;
+  accuracy: number;
 }
 
 export default function TypingSpeed() {
@@ -121,10 +122,10 @@ export default function TypingSpeed() {
     if (!currentUser) return;
     
     try {
-      await fetch('/api/typing-speed/save', {
+      await fetch('/api/typingSpeed', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ wpm, accuracy }),
+        body: JSON.stringify({ wpm, accuracy, userId: currentUser.uid }),
       });
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
@@ -250,15 +251,15 @@ export default function TypingSpeed() {
     const counts = new Array(intervals.length).fill(0)
 
     globalResults.forEach(result => {
-      if (result.score && result.score > 0) {
-        const intervalIndex = Math.floor(result.score / 10)
+      if (result.wpm && result.wpm > 0) {
+        const intervalIndex = Math.floor(result.wpm / 10)
         if (intervalIndex >= 0 && intervalIndex < intervals.length) {
           counts[intervalIndex]++
         }
       }
     })
 
-    const total = globalResults.filter(r => r.score && r.score > 0).length
+    const total = globalResults.filter(r => r.wpm && r.wpm > 0).length
     const percentages = counts.map(count => (count / total) * 100 || 0)
 
     return {
