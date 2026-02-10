@@ -93,6 +93,14 @@ export const logoutUser = async () => {
   }
 };
 
+export const updateDisplayName = async (displayName: string) => {
+  if (!auth || !auth.currentUser) {
+    throw new Error('Utilisateur non connecté');
+  }
+
+  await updateProfile(auth.currentUser, { displayName });
+};
+
 export const subscribeToAuthChanges = (callback: (user: User | null) => void) => {
   if (!auth) return () => {};
   return onAuthStateChanged(auth, callback);
