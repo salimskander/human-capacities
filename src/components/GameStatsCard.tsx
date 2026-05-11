@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 type CardInsight = {
   percentile?: number;
+  topPercent?: number;
   progressPercent?: number;
   worldAverageLabel?: string;
 };
