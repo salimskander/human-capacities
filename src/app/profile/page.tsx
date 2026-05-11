@@ -397,71 +397,65 @@ export default function ProfilePage() {
     { id: 'reglages', label: 'Réglages' },
   ];
 
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+
+  const SIDEBAR_W = 'w-52';
+
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-14 sm:pt-16">
 
-      {/* Mobile tab bar — sticky below TopBar */}
-      <div className="md:hidden sticky top-14 sm:top-16 z-20 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex">
-        {TABS.map((tab) => (
+      {/* Fixed sidebar */}
+      <aside
+        className={`fixed top-14 sm:top-16 left-0 bottom-0 z-30 bg-white dark:bg-gray-800 shadow-lg overflow-y-auto overflow-x-hidden transition-[width] duration-300 ${sidebarOpen ? SIDEBAR_W : 'w-0'}`}
+      >
+        <nav className="p-3 space-y-1 w-52">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className={`w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm whitespace-nowrap ${
+                activeTab === tab.id
+                  ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium'
+                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+              }`}
+            >
+              {tab.label}
+            </button>
+          ))}
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`flex-1 py-3 text-sm font-medium transition-colors ${
-              activeTab === tab.id
-                ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
-                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
-            }`}
+            onClick={() => logoutUser()}
+            className="w-full flex items-center px-3 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors whitespace-nowrap"
           >
-            {tab.label}
+            Déconnexion
           </button>
-        ))}
-        <button
-          onClick={() => logoutUser()}
-          className="flex-1 py-3 text-sm font-medium text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
+        </nav>
+      </aside>
+
+      {/* Sidebar toggle tab — always visible, slides with sidebar */}
+      <button
+        onClick={() => setSidebarOpen((o) => !o)}
+        aria-label={sidebarOpen ? 'Réduire le menu' : 'Ouvrir le menu'}
+        className={`fixed top-24 z-40 flex items-center justify-center w-5 h-10 bg-white dark:bg-gray-800 border border-l-0 border-gray-200 dark:border-gray-700 rounded-r-lg shadow-md text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-200 transition-[left,color] duration-300 ${sidebarOpen ? 'left-52' : 'left-0'}`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className={`w-3 h-3 transition-transform duration-300 ${sidebarOpen ? 'rotate-180' : ''}`}
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2.5}
         >
-          Déconnexion
-        </button>
-      </div>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
 
-      {/* Page body */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div className="flex gap-6 items-start">
-
-          {/* Desktop sidebar */}
-          <aside className="hidden md:block w-52 flex-shrink-0">
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sticky top-24">
-              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3 px-2">Menu</p>
-              <nav className="space-y-1">
-                {TABS.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm ${
-                      activeTab === tab.id
-                        ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium'
-                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                    }`}
-                  >
-                    {tab.label}
-                  </button>
-                ))}
-                <button
-                  onClick={() => logoutUser()}
-                  className="w-full flex items-center px-3 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
-                >
-                  Déconnexion
-                </button>
-              </nav>
-            </div>
-          </aside>
-
-          {/* Main content */}
-          <div className="flex-1 min-w-0">
-            <UserProfileHeader />
-            <div className="mt-6">
-              {activeTab === 'performances' && renderPerformances()}
-              {activeTab === 'reglages' && renderSettings()}
-            </div>
+      {/* Main content — shifts right when sidebar is open */}
+      <div className={`transition-[padding-left] duration-300 ${sidebarOpen ? 'pl-52' : 'pl-0'}`}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+          <UserProfileHeader />
+          <div className="mt-6">
+            {activeTab === 'performances' && renderPerformances()}
+            {activeTab === 'reglages' && renderSettings()}
           </div>
         </div>
       </div>
