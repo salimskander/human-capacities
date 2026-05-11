@@ -640,17 +640,6 @@ export default function ProfilePage() {
               <p className="text-xs text-green-500 mt-1">Pseudo disponible.</p>
             )}
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 dark:text-white opacity-60 cursor-not-allowed"
-              value={currentUser.email || ''}
-              disabled
-            />
-          </div>
           <button
             onClick={saveProfile}
             disabled={usernameStatus === 'taken' || usernameStatus === 'too_short' || usernameStatus === 'checking'}
@@ -709,7 +698,7 @@ export default function ProfilePage() {
           {/* Main content */}
           <div className="flex-1 pl-64">
             <div className="max-w-7xl mx-auto px-6 py-12">
-              <UserProfileHeader user={currentUser} />
+              <UserProfileHeader />
               <div className="mt-8">
                 {activeTab === 'performances' && renderPerformances()}
                 {activeTab === 'classement' && renderClassement()}
