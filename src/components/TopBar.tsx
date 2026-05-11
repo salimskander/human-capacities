@@ -134,54 +134,63 @@ export default function TopBar() {
       
       {/* Menu mobile plein écran */}
       {showMobileMenu && (
-        <div className="fixed inset-0 z-40 bg-white/95 dark:bg-gray-900/98 pt-16 flex flex-col items-center sm:hidden">
-          <div className="w-full max-w-sm px-6 py-8 space-y-6">
+        <div className="fixed inset-0 z-40 flex flex-col sm:hidden" style={{ backgroundColor: 'var(--mobile-menu-bg, #ffffff)' }}>
+          {/* Fond explicitement solide selon le mode */}
+          <div className="absolute inset-0 bg-white dark:bg-gray-950" />
+
+          <div className="relative flex flex-col h-full pt-16 px-6 pb-8 overflow-y-auto">
+            {/* Lien classement */}
             <Link
               href="/leaderboard"
-              className="block w-full py-3 text-center font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
+              className="flex items-center justify-center w-full py-4 text-base font-medium text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors mt-4"
               onClick={() => setShowMobileMenu(false)}
             >
               Classement
             </Link>
+
+            <div className="border-t border-gray-200 dark:border-gray-700 my-4" />
+
             {userLoading ? (
-              <div className="h-8 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+              <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse" />
             ) : currentUser ? (
-              <div className="flex flex-col items-center space-y-4">
-                <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl">
+              <div className="flex flex-col items-center gap-4">
+                {/* Avatar */}
+                <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                   {(currentUser.displayName || currentUser.email || 'U').charAt(0).toUpperCase()}
                 </div>
-                <span className="text-gray-800 dark:text-white text-lg">{currentUser.displayName || currentUser.email}</span>
-                <div className="w-full border-t border-gray-200 dark:border-gray-700 pt-6 space-y-3">
-                  <Link 
-                    href="/profile" 
-                    className="block w-full py-3 text-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
+                {/* Nom */}
+                <span className="text-lg font-semibold text-gray-900 dark:text-white text-center">
+                  {currentUser.displayName || currentUser.email}
+                </span>
+
+                <div className="w-full flex flex-col gap-2 mt-2">
+                  <Link
+                    href="/profile"
+                    className="flex items-center justify-center w-full py-3.5 text-sm font-medium text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors"
                     onClick={() => setShowMobileMenu(false)}
                   >
-                    Profil
+                    Mon profil
                   </Link>
-                  <button 
-                    onClick={() => {
-                      logoutUser();
-                      setShowMobileMenu(false);
-                    }}
-                    className="block w-full py-3 text-center text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
+                  <button
+                    onClick={() => { logoutUser(); setShowMobileMenu(false); }}
+                    className="flex items-center justify-center w-full py-3.5 text-sm font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 rounded-xl transition-colors"
                   >
                     Déconnexion
                   </button>
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col space-y-3 w-full">
-                <Link 
-                  href="/login" 
-                  className="block w-full py-3 text-center rounded-md font-medium bg-transparent border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              <div className="flex flex-col gap-3 w-full">
+                <Link
+                  href="/login"
+                  className="flex items-center justify-center w-full py-3.5 text-sm font-semibold text-gray-800 dark:text-gray-100 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 rounded-xl transition-colors"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   Connexion
                 </Link>
-                <Link 
-                  href="/signup" 
-                  className="block w-full py-3 text-center rounded-md font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                <Link
+                  href="/signup"
+                  className="flex items-center justify-center w-full py-3.5 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-xl transition-colors"
                   onClick={() => setShowMobileMenu(false)}
                 >
                   Inscription
