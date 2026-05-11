@@ -334,7 +334,7 @@ export default function GameStatsCard({
             href={link}
             className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
           >
-            Voir le test
+            Jouer maintenant
           </Link>
         </div>
       </div>
