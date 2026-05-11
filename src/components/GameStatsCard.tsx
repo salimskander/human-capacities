@@ -69,12 +69,8 @@ export default function GameStatsCard({
   );
 
   const scores: number[] = sortedData
-    .map((item) => {
-      const typedItem = item as { reactionTime?: number };
-      if (typedItem.reactionTime !== undefined) return Number(typedItem.reactionTime);
-      return Number(getScore(item));
-    })
-    .filter((score): score is number => typeof score === 'number' && !Number.isNaN(score));
+    .map((item) => getScore(item))
+    .filter((score): score is number => typeof score === 'number' && !Number.isNaN(score) && score > 0);
 
   if (scores.length === 0) {
     return (
@@ -295,24 +291,22 @@ export default function GameStatsCard({
       <div className="p-5 flex-1 flex flex-col">
         <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-4">
           <div className="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg text-center">
-            <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 leading-tight">
-              {lowerIsBetter ? 'Meilleur' : 'Meilleur'}
-            </p>
+            <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 leading-tight">Meilleur</p>
             <p className="text-base sm:text-lg font-semibold dark:text-white">
-              {lowerIsBetter ? `${bestScore}ms` : bestScore}
+              {bestScore}{unit ? <span className="text-xs font-normal text-gray-400 dark:text-gray-500 ml-0.5">{unit}</span> : null}
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg text-center">
             <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 leading-tight">Moyenne</p>
             <p className="text-base sm:text-lg font-semibold dark:text-white">
-              {lowerIsBetter ? `${avgScore}ms` : avgScore}
+              {avgScore}{unit ? <span className="text-xs font-normal text-gray-400 dark:text-gray-500 ml-0.5">{unit}</span> : null}
             </p>
           </div>
           <div className="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg text-center">
             <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 leading-tight">Dernier</p>
             <div className="flex items-center justify-center flex-wrap gap-0.5">
               <p className="text-base sm:text-lg font-semibold dark:text-white">
-                {lowerIsBetter ? `${lastScore}ms` : lastScore}
+                {lastScore}{unit ? <span className="text-xs font-normal text-gray-400 dark:text-gray-500 ml-0.5">{unit}</span> : null}
               </p>
               {getTrend()}
             </div>

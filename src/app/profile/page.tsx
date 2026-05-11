@@ -43,6 +43,7 @@ const TEST_META: Record<
   {
     title: string;
     scoreLabel: string;
+    unit: string;
     icon: ReactNode;
     link: string;
     color: string;
@@ -53,6 +54,7 @@ const TEST_META: Record<
   chimpTest: {
     title: 'Test du chimpanzé',
     scoreLabel: 'Niveau atteint',
+    unit: '',
     icon: <Image src="/chimp.svg" alt="Chimp Test" width={32} height={32} />,
     link: '/tests/chimpTest',
     color: 'from-yellow-400 to-orange-500',
@@ -61,6 +63,7 @@ const TEST_META: Record<
   typingSpeed: {
     title: 'Vitesse de frappe',
     scoreLabel: 'Mots par minute',
+    unit: 'mpm',
     icon: <Image src="/keyboard.svg" alt="Typing Speed" width={32} height={32} />,
     link: '/tests/typingSpeed',
     color: 'from-blue-400 to-indigo-500',
@@ -69,6 +72,7 @@ const TEST_META: Record<
   visualMemory: {
     title: 'Mémoire visuelle',
     scoreLabel: 'Niveau atteint',
+    unit: '',
     icon: <Image src="/visual.svg" alt="Visual Memory" width={32} height={32} />,
     link: '/tests/visualMemory',
     color: 'from-purple-400 to-pink-500',
@@ -77,6 +81,7 @@ const TEST_META: Record<
   numberMemory: {
     title: 'Mémoire des chiffres',
     scoreLabel: 'Chiffres mémorisés',
+    unit: '',
     icon: <Image src="/number.svg" alt="Number Memory" width={32} height={32} />,
     link: '/tests/numberMemory',
     color: 'from-green-400 to-teal-500',
@@ -85,6 +90,7 @@ const TEST_META: Record<
   verbalMemory: {
     title: 'Mémoire verbale',
     scoreLabel: 'Mots mémorisés',
+    unit: '',
     icon: <Image src="/word.svg" alt="Verbal Memory" width={32} height={32} />,
     link: '/tests/verbalMemory',
     color: 'from-red-400 to-rose-500',
@@ -93,6 +99,7 @@ const TEST_META: Record<
   sequenceMemory: {
     title: 'Mémoire de séquence',
     scoreLabel: 'Séquence atteinte',
+    unit: '',
     icon: <Image src="/sequence.svg" alt="Sequence Memory" width={32} height={32} />,
     link: '/tests/sequenceMemory',
     color: 'from-cyan-400 to-blue-500',
@@ -101,6 +108,7 @@ const TEST_META: Record<
   symbolMemory: {
     title: 'Mémoire des symboles',
     scoreLabel: 'Niveau atteint',
+    unit: '',
     icon: <Image src="/cards.svg" alt="Symbol Memory" width={32} height={32} />,
     link: '/tests/symbolMemory',
     color: 'from-amber-400 to-orange-500',
@@ -108,7 +116,8 @@ const TEST_META: Record<
   },
   reflex: {
     title: 'Réflexes',
-    scoreLabel: 'Temps',
+    scoreLabel: 'Temps de réaction',
+    unit: 'ms',
     icon: <Image src="/zap.svg" alt="Reflex Test" width={32} height={32} />,
     link: '/tests/reflex',
     color: 'from-emerald-400 to-green-500',
@@ -264,6 +273,7 @@ export default function ProfilePage() {
                 getScore={(item) => Number((item as GameData)[meta.valueKey] ?? 0)}
                 getDate={(item) => (item as GameData).timestamp}
                 scoreLabel={meta.scoreLabel}
+                unit={meta.unit}
                 icon={meta.icon}
                 link={meta.link}
                 color={meta.color}
