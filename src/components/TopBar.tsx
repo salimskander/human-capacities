@@ -67,12 +67,14 @@ export default function TopBar() {
             
             {/* Menu desktop */}
             <div className="hidden sm:flex items-center gap-4">
-              <Link
-                href="/leaderboard"
-                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-              >
-                Classement
-              </Link>
+              {!userLoading && !currentUser && (
+                <Link
+                  href="/leaderboard"
+                  className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                >
+                  Classement
+                </Link>
+              )}
               {userLoading ? (
                 <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
               ) : currentUser ? (

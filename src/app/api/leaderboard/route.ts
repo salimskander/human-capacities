@@ -58,6 +58,7 @@ export async function GET(request: Request) {
 
     const entries = totals.map((e, i) => ({
       rank: i + 1,
+      userId: e.userId,
       username: profileMap[e.userId] || `Joueur ${e.userId.slice(-6).toUpperCase()}`,
       totalPoints: e.totalPoints,
       testsCompleted: e.testsCompleted,

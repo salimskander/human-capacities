@@ -46,7 +46,7 @@ export default function LeaderboardPage() {
     fetchLeaderboard();
   }, [fetchLeaderboard]);
 
-  const currentUserEntry = data?.entries.find((e) => e.userId === currentUser?.uid);
+  const currentUserEntry = currentUser != null ? data?.entries.find((e) => e.userId === currentUser.uid) : undefined;
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-14 sm:pt-16">
@@ -117,7 +117,7 @@ export default function LeaderboardPage() {
               </thead>
               <tbody className="divide-y divide-gray-50 dark:divide-gray-700/50">
                 {data.entries.map((entry) => {
-                  const isMe = entry.userId === currentUser?.uid;
+                  const isMe = currentUser != null && entry.userId === currentUser.uid;
                   const isExpanded = expandedRow === entry.userId;
                   return (
                     <Fragment key={entry.userId}>
