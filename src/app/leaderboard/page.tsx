@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, Fragment } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { TEST_NAMES, TOTAL_MAX_POINTS } from '@/lib/points';
@@ -120,9 +120,8 @@ export default function LeaderboardPage() {
                   const isMe = entry.userId === currentUser?.uid;
                   const isExpanded = expandedRow === entry.userId;
                   return (
-                    <>
+                    <Fragment key={entry.userId}>
                       <tr
-                        key={entry.userId}
                         onClick={() => setExpandedRow(isExpanded ? null : entry.userId)}
                         className={`cursor-pointer transition-colors ${
                           isMe
@@ -184,7 +183,7 @@ export default function LeaderboardPage() {
                           </td>
                         </tr>
                       )}
-                    </>
+                    </Fragment>
                   );
                 })}
               </tbody>

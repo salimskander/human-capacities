@@ -7,6 +7,7 @@ import UserProfileHeader from '@/components/UserProfileHeader';
 import GameStatsCard from '@/components/GameStatsCard';
 import { useAuth } from '@/contexts/AuthContext';
 import { logoutUser } from '@/firebase';
+import Link from 'next/link';
 import { TOTAL_MAX_POINTS } from '@/lib/points';
 
 interface GameData {
@@ -409,19 +410,39 @@ export default function ProfilePage() {
         className={`fixed top-14 sm:top-16 left-0 bottom-0 z-30 bg-white dark:bg-gray-800 shadow-lg overflow-y-auto overflow-x-hidden transition-[width] duration-300 ${sidebarOpen ? SIDEBAR_W : 'w-0'}`}
       >
         <nav className="p-3 space-y-1 w-52">
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm whitespace-nowrap ${
-                activeTab === tab.id
-                  ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium'
-                  : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-              }`}
-            >
-              {tab.label}
-            </button>
-          ))}
+          {/* Performances */}
+          <button
+            onClick={() => setActiveTab('performances')}
+            className={`w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm whitespace-nowrap ${
+              activeTab === 'performances'
+                ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+            }`}
+          >
+            Performances
+          </button>
+
+          {/* Classement — lien externe */}
+          <Link
+            href="/leaderboard"
+            className="w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm whitespace-nowrap text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+          >
+            Classement
+          </Link>
+
+          {/* Réglages */}
+          <button
+            onClick={() => setActiveTab('reglages')}
+            className={`w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm whitespace-nowrap ${
+              activeTab === 'reglages'
+                ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+            }`}
+          >
+            Réglages
+          </button>
+
+          <div className="border-t border-gray-100 dark:border-gray-700 my-1" />
           <button
             onClick={() => logoutUser()}
             className="w-full flex items-center px-3 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors whitespace-nowrap"

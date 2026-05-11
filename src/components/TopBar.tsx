@@ -139,26 +139,14 @@ export default function TopBar() {
           <div className="absolute inset-0 bg-white dark:bg-gray-950" />
 
           <div className="relative flex flex-col h-full pt-16 px-6 pb-8 overflow-y-auto">
-            {/* Lien classement */}
-            <Link
-              href="/leaderboard"
-              className="flex items-center justify-center w-full py-4 text-base font-medium text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors mt-4"
-              onClick={() => setShowMobileMenu(false)}
-            >
-              Classement
-            </Link>
-
-            <div className="border-t border-gray-200 dark:border-gray-700 my-4" />
-
             {userLoading ? (
-              <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse" />
+              <div className="h-10 w-full bg-gray-200 dark:bg-gray-700 rounded-xl animate-pulse mt-4" />
             ) : currentUser ? (
-              <div className="flex flex-col items-center gap-4">
-                {/* Avatar */}
+              /* Connecté : avatar + nom + actions (classement sous profil) */
+              <div className="flex flex-col items-center gap-4 mt-4">
                 <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0">
                   {(currentUser.displayName || currentUser.email || 'U').charAt(0).toUpperCase()}
                 </div>
-                {/* Nom */}
                 <span className="text-lg font-semibold text-gray-900 dark:text-white text-center">
                   {currentUser.displayName || currentUser.email}
                 </span>
@@ -171,6 +159,13 @@ export default function TopBar() {
                   >
                     Mon profil
                   </Link>
+                  <Link
+                    href="/leaderboard"
+                    className="flex items-center justify-center w-full py-3.5 text-sm font-medium text-gray-800 dark:text-gray-100 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors"
+                    onClick={() => setShowMobileMenu(false)}
+                  >
+                    Classement
+                  </Link>
                   <button
                     onClick={() => { logoutUser(); setShowMobileMenu(false); }}
                     className="flex items-center justify-center w-full py-3.5 text-sm font-medium text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 rounded-xl transition-colors"
@@ -180,7 +175,17 @@ export default function TopBar() {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col gap-3 w-full">
+              /* Non connecté : classement en haut + connexion/inscription */
+              <>
+                <Link
+                  href="/leaderboard"
+                  className="flex items-center justify-center w-full py-4 text-base font-medium text-gray-800 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-xl transition-colors mt-4"
+                  onClick={() => setShowMobileMenu(false)}
+                >
+                  Classement
+                </Link>
+                <div className="border-t border-gray-200 dark:border-gray-700 my-4" />
+                <div className="flex flex-col gap-3 w-full">
                 <Link
                   href="/login"
                   className="flex items-center justify-center w-full py-3.5 text-sm font-semibold text-gray-800 dark:text-gray-100 border-2 border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-600 rounded-xl transition-colors"
@@ -196,6 +201,7 @@ export default function TopBar() {
                   Inscription
                 </Link>
               </div>
+              </>
             )}
           </div>
         </div>
