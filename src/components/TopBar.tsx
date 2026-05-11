@@ -69,6 +69,12 @@ export default function TopBar() {
                 <div className="h-8 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
               ) : currentUser ? (
                 <>
+                  <Link
+                    href="/leaderboard"
+                    className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  >
+                    Classement
+                  </Link>
                   {/* Avatar + username → profil */}
                   <Link
                     href="/profile"

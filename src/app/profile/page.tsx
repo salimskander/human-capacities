@@ -349,14 +349,6 @@ export default function ProfilePage() {
             Performances
           </button>
 
-          {/* Classement — lien externe */}
-          <Link
-            href="/leaderboard"
-            className="w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm whitespace-nowrap text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-          >
-            Classement
-          </Link>
-
           {/* Réglages */}
           <button
             onClick={() => setActiveTab('reglages')}
