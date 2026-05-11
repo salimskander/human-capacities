@@ -54,7 +54,7 @@ export async function GET(request: Request) {
           })
         : [];
 
-    const profileMap = Object.fromEntries(profiles.map((p) => [p.firebaseUid, p.username]));
+    const profileMap = Object.fromEntries(profiles.map((p: { firebaseUid: string; username: string | null }) => [p.firebaseUid, p.username]));
 
     const entries = totals.map((e, i) => ({
       rank: i + 1,

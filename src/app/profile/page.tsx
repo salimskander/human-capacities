@@ -392,27 +392,53 @@ export default function ProfilePage() {
     </>
   );
 
+  const TABS = [
+    { id: 'performances', label: 'Performances' },
+    { id: 'reglages', label: 'Réglages' },
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
-          {/* Sidebar */}
-          <div className="w-64 bg-white dark:bg-gray-800 shadow-lg fixed inset-y-0 left-0 overflow-y-auto z-10 pt-20">
-            <div className="p-4">
-              <div className="text-xl font-bold mb-6 text-gray-800 dark:text-white border-b border-gray-200 dark:border-gray-700 pb-2">
-                Menu
-              </div>
-              <nav className="space-y-2">
-                {[
-                  { id: 'performances', label: 'Performances' },
-                  { id: 'reglages', label: 'Réglages' },
-                ].map((tab) => (
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-14 sm:pt-16">
+
+      {/* Mobile tab bar — sticky below TopBar */}
+      <div className="md:hidden sticky top-14 sm:top-16 z-20 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex">
+        {TABS.map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveTab(tab.id)}
+            className={`flex-1 py-3 text-sm font-medium transition-colors ${
+              activeTab === tab.id
+                ? 'text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400'
+                : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+        <button
+          onClick={() => logoutUser()}
+          className="flex-1 py-3 text-sm font-medium text-red-500 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition-colors"
+        >
+          Déconnexion
+        </button>
+      </div>
+
+      {/* Page body */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+        <div className="flex gap-6 items-start">
+
+          {/* Desktop sidebar */}
+          <aside className="hidden md:block w-52 flex-shrink-0">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 sticky top-24">
+              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-3 px-2">Menu</p>
+              <nav className="space-y-1">
+                {TABS.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors text-left ${
+                    className={`w-full flex items-center px-3 py-2.5 rounded-lg transition-colors text-left text-sm ${
                       activeTab === tab.id
-                        ? 'bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200'
+                        ? 'bg-blue-50 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 font-medium'
                         : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                     }`}
                   >
@@ -421,56 +447,53 @@ export default function ProfilePage() {
                 ))}
                 <button
                   onClick={() => logoutUser()}
-                  className="w-full flex items-center px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                  className="w-full flex items-center px-3 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
                 >
                   Déconnexion
                 </button>
               </nav>
             </div>
-          </div>
+          </aside>
 
           {/* Main content */}
-          <div className="flex-1 pl-64">
-            <div className="max-w-7xl mx-auto px-6 py-12">
-              <UserProfileHeader />
-              <div className="mt-8">
-                {activeTab === 'performances' && renderPerformances()}
-                {activeTab === 'reglages' && renderSettings()}
-              </div>
-
-              {showResetConfirm && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md mx-4">
-                    <h3 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
-                      Confirmer la réinitialisation
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-6">
-                      Êtes-vous sûr de vouloir supprimer toutes vos performances ? Cette action
-                      est irréversible.
-                    </p>
-                    <div className="flex gap-3 justify-end">
-                      <button
-                        onClick={() => setShowResetConfirm(false)}
-                        className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 rounded-lg transition-colors"
-                        disabled={isResetting}
-                      >
-                        Annuler
-                      </button>
-                      <button
-                        onClick={resetUserPerformances}
-                        disabled={isResetting}
-                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:opacity-50"
-                      >
-                        {isResetting ? 'Suppression…' : 'Confirmer'}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              )}
+          <div className="flex-1 min-w-0">
+            <UserProfileHeader />
+            <div className="mt-6">
+              {activeTab === 'performances' && renderPerformances()}
+              {activeTab === 'reglages' && renderSettings()}
             </div>
           </div>
         </div>
       </div>
+
+      {showResetConfirm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 px-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 w-full max-w-md">
+            <h3 className="text-lg font-bold mb-4 text-gray-800 dark:text-white">
+              Confirmer la réinitialisation
+            </h3>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Êtes-vous sûr de vouloir supprimer toutes vos performances ? Cette action est irréversible.
+            </p>
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 rounded-lg transition-colors"
+                disabled={isResetting}
+              >
+                Annuler
+              </button>
+              <button
+                onClick={resetUserPerformances}
+                disabled={isResetting}
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors disabled:opacity-50"
+              >
+                {isResetting ? 'Suppression…' : 'Confirmer'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

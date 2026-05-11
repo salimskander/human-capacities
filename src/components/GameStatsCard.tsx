@@ -293,25 +293,25 @@ export default function GameStatsCard({
       </div>
 
       <div className="p-5 flex-1 flex flex-col">
-        <div className="grid grid-cols-3 gap-2 mb-4">
-          <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">
-              {lowerIsBetter ? 'Meilleur (min)' : 'Meilleur (max)'}
+        <div className="grid grid-cols-3 gap-1.5 sm:gap-2 mb-4">
+          <div className="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg text-center">
+            <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 leading-tight">
+              {lowerIsBetter ? 'Meilleur' : 'Meilleur'}
             </p>
-            <p className="text-lg font-semibold dark:text-white">
+            <p className="text-base sm:text-lg font-semibold dark:text-white">
               {lowerIsBetter ? `${bestScore}ms` : bestScore}
             </p>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Moyenne</p>
-            <p className="text-lg font-semibold dark:text-white">
+          <div className="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg text-center">
+            <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 leading-tight">Moyenne</p>
+            <p className="text-base sm:text-lg font-semibold dark:text-white">
               {lowerIsBetter ? `${avgScore}ms` : avgScore}
             </p>
           </div>
-          <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
-            <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Dernier</p>
-            <div className="flex items-center justify-center">
-              <p className="text-lg font-semibold dark:text-white">
+          <div className="bg-gray-50 dark:bg-gray-700 p-2 sm:p-3 rounded-lg text-center">
+            <p className="text-[10px] sm:text-xs text-gray-500 dark:text-gray-400 mb-1 leading-tight">Dernier</p>
+            <div className="flex items-center justify-center flex-wrap gap-0.5">
+              <p className="text-base sm:text-lg font-semibold dark:text-white">
                 {lowerIsBetter ? `${lastScore}ms` : lastScore}
               </p>
               {getTrend()}

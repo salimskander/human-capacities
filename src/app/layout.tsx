@@ -15,11 +15,50 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const BASE_URL = 'https://human-capacities.fr';
+
 export const metadata: Metadata = {
-  title: "Human-capacities",
-  description: "Human-capacities",
+  metadataBase: new URL(BASE_URL),
+  title: {
+    template: '%s | Human Capacities',
+    default: 'Human Capacities — Testez vos capacités cognitives',
+  },
+  description:
+    'Évaluez vos réflexes, votre mémoire et vos capacités cognitives avec 8 tests scientifiques. Comparez-vous à des milliers de joueurs dans le monde entier.',
+  keywords: [
+    'test cognitif', 'mémoire', 'réflexes', 'chimp test', 'vitesse de frappe',
+    'capacités humaines', 'test de mémoire', 'temps de réaction', 'mémoire visuelle',
+    'mémoire verbale', 'mémoire des chiffres',
+  ],
+  authors: [{ name: 'Human Capacities', url: BASE_URL }],
+  creator: 'Human Capacities',
+  openGraph: {
+    type: 'website',
+    locale: 'fr_FR',
+    url: BASE_URL,
+    siteName: 'Human Capacities',
+    title: 'Human Capacities — Testez vos capacités cognitives',
+    description:
+      'Évaluez vos réflexes, votre mémoire et vos capacités cognitives avec 8 tests scientifiques. Comparez-vous à des milliers de joueurs dans le monde.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Human Capacities — Testez vos capacités cognitives',
+    description:
+      'Évaluez vos réflexes, votre mémoire et vos capacités cognitives avec 8 tests scientifiques.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-snippet': -1 },
+  },
   icons: {
-    icon: "/chimp.svg",
+    icon: '/chimp.svg',
+    apple: '/chimp.svg',
+  },
+  alternates: {
+    canonical: BASE_URL,
+    languages: { 'fr-FR': BASE_URL },
   },
 };
 

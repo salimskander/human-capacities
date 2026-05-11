@@ -49,17 +49,8 @@ export default function LeaderboardPage() {
   const currentUserEntry = data?.entries.find((e) => e.userId === currentUser?.uid);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      <Link
-        href="/"
-        className="fixed top-4 left-4 w-12 h-12 bg-white dark:bg-gray-800 dark:text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-50"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-        </svg>
-      </Link>
-
-      <div className="max-w-4xl mx-auto px-4 py-12">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-14 sm:pt-16">
+      <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
             🏆 Classement mondial
