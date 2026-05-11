@@ -73,7 +73,13 @@ export default function TopBar() {
             </div>
             
             {/* Menu desktop */}
-            <div className="hidden sm:block">
+            <div className="hidden sm:flex items-center gap-4">
+              <Link
+                href="/leaderboard"
+                className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+              >
+                🏆 Classement
+              </Link>
               {userLoading ? (
                 <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
               ) : currentUser ? (
@@ -137,6 +143,13 @@ export default function TopBar() {
       {showMobileMenu && (
         <div className="fixed inset-0 z-40 bg-white/95 dark:bg-gray-900/98 pt-16 flex flex-col items-center sm:hidden">
           <div className="w-full max-w-sm px-6 py-8 space-y-6">
+            <Link
+              href="/leaderboard"
+              className="block w-full py-3 text-center font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
+              onClick={() => setShowMobileMenu(false)}
+            >
+              🏆 Classement
+            </Link>
             {userLoading ? (
               <div className="h-8 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
             ) : currentUser ? (

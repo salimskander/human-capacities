@@ -11,37 +11,22 @@ import {
   Title,
   Tooltip,
   Legend,
-  Filler
+  Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
-import { useAuth } from '@/contexts/AuthContext';
 import { useGameResults } from '@/contexts/GameResultsContext';
+import { calculatePoints } from '@/lib/points';
 
-// Ajouter l'interface TestResult
-interface TestResult {
-  reactionTime: number;
-  timestamp: string;
-}
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend,
-  Filler
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
 export default function ReflexTest() {
-  const { currentUser } = useAuth();
   const { saveResult } = useGameResults();
   const [globalResults, setGlobalResults] = useState<number[]>([]);
   const [backgroundColor, setBackgroundColor] = useState<string>('transparent');
   const [, setStartTime] = useState<number | null>(null);
   const [reactionTime, setReactionTime] = useState<number | null>(null);
+  const [earnedPoints, setEarnedPoints] = useState<number | null>(null);
   const [isWaiting, setIsWaiting] = useState<boolean>(false);
   const [showStart, setShowStart] = useState<boolean>(true);
   const [tooEarly, setTooEarly] = useState<boolean>(false);
@@ -51,16 +36,13 @@ export default function ReflexTest() {
   const startTimeRef = useRef<number>(0);
 
   const resetTest = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-    if (animationFrameRef.current) {
-      cancelAnimationFrame(animationFrameRef.current);
-    }
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
     setCurrentTime(0);
     setBackgroundColor('transparent');
     setStartTime(null);
     setReactionTime(null);
+    setEarnedPoints(null);
     setIsWaiting(false);
     setShowStart(true);
     setTooEarly(false);
@@ -75,12 +57,12 @@ export default function ReflexTest() {
   const startTest = () => {
     setBackgroundColor('#4B5563');
     setReactionTime(null);
+    setEarnedPoints(null);
     setIsWaiting(true);
     setShowStart(false);
     setTooEarly(false);
-    
+
     const delay = Math.random() * 4000 + 1000;
-    
     timeoutRef.current = setTimeout(() => {
       setBackgroundColor('green');
       startTimeRef.current = performance.now();
@@ -89,9 +71,7 @@ export default function ReflexTest() {
   };
 
   const handleClick = () => {
-    if (showStart || tooEarly) {
-      return;
-    }
+    if (showStart || tooEarly) return;
 
     if (!isWaiting) {
       if (reactionTime !== null) {
@@ -103,27 +83,23 @@ export default function ReflexTest() {
     }
 
     if (backgroundColor === '#4B5563') {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
       setTooEarly(true);
       setBackgroundColor('#EF4444');
       setTimeout(() => {
         resetTest();
         startTest();
-      }, 1500); 
+      }, 1500);
       return;
     }
 
     if (backgroundColor === 'green') {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      if (animationFrameRef.current) cancelAnimationFrame(animationFrameRef.current);
       const finalTime = currentTime;
       setReactionTime(finalTime);
+      setEarnedPoints(calculatePoints('reflex', { reactionTime: finalTime }));
       setBackgroundColor('transparent');
       setIsWaiting(false);
-
       saveResult(finalTime);
     }
   };
@@ -143,61 +119,6 @@ export default function ReflexTest() {
     fetchResults();
   }, [fetchResults]);
 
-  const prepareChartData = () => {
-    const intervals = Array.from({ length: 21 }, (_, i) => i * 25);
-    const counts = new Array(21).fill(0);
-
-    globalResults.forEach(time => {
-      const index = Math.floor(time / 25);
-      if (index >= 0 && index < 21) {
-        counts[index]++;
-      }
-    });
-
-    const total = globalResults.length;
-    const percentages = counts.map(count => (count / total) * 100 || 0);
-
-    return {
-      labels: intervals.map(i => `${i}ms`),
-      datasets: [{
-        label: 'Distribution des temps de réaction',
-        data: percentages,
-        borderColor: 'rgb(34, 197, 94)',
-        backgroundColor: 'rgba(34, 197, 94, 0.2)',
-        tension: 0.1,
-        fill: true
-      }]
-    };
-  };
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Distribution globale des temps de réaction'
-      }
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Pourcentage des joueurs (%)'
-        }
-      },
-      x: {
-        title: {
-          display: true,
-          text: 'Temps de réaction (ms)'
-        }
-      }
-    }
-  };
-
   useEffect(() => {
     return () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -205,89 +126,104 @@ export default function ReflexTest() {
     };
   }, []);
 
+  const prepareChartData = () => {
+    const intervals = Array.from({ length: 21 }, (_, i) => i * 25);
+    const counts = new Array(21).fill(0);
+    globalResults.forEach((time) => {
+      const index = Math.floor(time / 25);
+      if (index >= 0 && index < 21) counts[index]++;
+    });
+    const total = globalResults.length;
+    const percentages = counts.map((count) => (count / total) * 100 || 0);
+    return {
+      labels: intervals.map((i) => `${i}ms`),
+      datasets: [
+        {
+          label: 'Distribution des temps de réaction',
+          data: percentages,
+          borderColor: 'rgb(34, 197, 94)',
+          backgroundColor: 'rgba(34, 197, 94, 0.2)',
+          tension: 0.1,
+          fill: true,
+        },
+      ],
+    };
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { position: 'top' as const },
+      title: { display: true, text: 'Distribution globale des temps de réaction' },
+    },
+    scales: {
+      y: { beginAtZero: true, title: { display: true, text: 'Pourcentage des joueurs (%)' } },
+      x: { title: { display: true, text: 'Temps de réaction (ms)' } },
+    },
+  };
+
   return (
     <>
-      <Link 
+      <Link
         href="/#tests-section"
         className="fixed top-4 left-4 w-12 h-12 bg-white dark:bg-gray-800 dark:text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-50"
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-6 w-6" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M10 19l-7-7m0 0l7-7m-7 7h18" 
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
       </Link>
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center" 
-           style={{ backgroundColor }} 
-           onClick={handleClick}>
+
+      <div
+        className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center"
+        style={{ backgroundColor }}
+        onClick={handleClick}
+      >
         {showStart ? (
-          <StartModal 
+          <StartModal
             title="Test de Réflexes"
             description={
               <p>
-                Mesurez votre temps de réaction.
-                Attendez que l&apos;écran devienne vert, puis cliquez le plus rapidement possible.
-                Attention à ne pas cliquer trop tôt !
+                Mesurez votre temps de réaction. Attendez que l&apos;écran devienne vert, puis
+                cliquez le plus rapidement possible. Attention à ne pas cliquer trop tôt !
               </p>
             }
             onStart={startTest}
-            stats={globalResults.length > 0 ? (
-              <Line data={prepareChartData()} options={chartOptions} />
-            ) : (
-              <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-            )}
+            stats={
+              globalResults.length > 0 ? (
+                <Line data={prepareChartData()} options={chartOptions} />
+              ) : (
+                <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
+              )
+            }
           />
         ) : (
           <div className="text-center flex flex-col items-center justify-center min-h-screen">
             {backgroundColor === 'green' && (
               <>
-                <div className="text-black dark:text-white text-6xl font-bold mb-4">
-                  CLIC !
-                </div>
-                <div className="text-black dark:text-white text-3xl">
-                  {currentTime} ms
-                </div>
+                <div className="text-black dark:text-white text-6xl font-bold mb-4">CLIC !</div>
+                <div className="text-black dark:text-white text-3xl">{currentTime} ms</div>
               </>
             )}
             {backgroundColor === '#4B5563' && !tooEarly && (
-              <p className="text-white text-xl">Attendez le signal vert...</p>
+              <p className="text-white text-xl">Attendez le signal vert…</p>
             )}
             {backgroundColor === '#EF4444' && (
-              <div className="text-white text-4xl font-bold">
-                Trop tôt !
-              </div>
+              <div className="text-white text-4xl font-bold">Trop tôt !</div>
             )}
-            {reactionTime && reactionTime > 0 && (
-              <div className="bg-white/90 dark:bg-gray-800/90 p-4 rounded-lg backdrop-blur-sm">
-                <p className="text-black dark:text-white text-xl">
-                  Votre temps de réaction : {reactionTime} ms
+            {reactionTime !== null && reactionTime > 0 && (
+              <div className="bg-white/90 dark:bg-gray-800/90 p-6 rounded-lg backdrop-blur-sm text-center">
+                <p className="text-black dark:text-white text-xl mb-2">
+                  Votre temps de réaction : <span className="font-bold">{reactionTime} ms</span>
                 </p>
-                <div className="flex justify-center mt-4">
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      resetTest();
-                      setShowStart(true);
-                      setTimeout(() => {
-                        // @ts-expect-error - ChartJS types are incompatible with our configuration
-                        if (window.scrollToReflexStats) window.scrollToReflexStats();
-                      }, 100);
-                    }}
-                    className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
-                  >
-                    Voir les statistiques
-                  </button>
-                </div>
-                <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">
+                {earnedPoints !== null && earnedPoints > 0 && (
+                  <div className="inline-flex items-center gap-1.5 bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300 px-4 py-2 rounded-full mb-4 text-sm font-semibold">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    +{earnedPoints} pts
+                  </div>
+                )}
+                <p className="mt-1 text-sm text-gray-600 dark:text-gray-300">
                   Cliquez n&apos;importe où pour rejouer
                 </p>
               </div>

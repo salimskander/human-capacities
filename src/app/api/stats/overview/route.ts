@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { computeStats } from '@/lib/stats';
+import { computeOverviewAnalytics } from '@/lib/stats';
 
 type TestConfig = {
   label: string;
@@ -10,8 +10,14 @@ type TestConfig = {
   unit: string;
 };
 
+type ResultRow = {
+  score: number | null;
+  wpm: number | null;
+  reactionTime: number | null;
+};
+
 const TESTS: TestConfig[] = [
-  { label: 'Test du Chimpanzé', testType: 'chimpTest', valueField: 'score', unit: 'niveau' },
+  { label: 'Test du chimpanzé', testType: 'chimpTest', valueField: 'score', unit: 'niveau' },
   { label: 'Vitesse de frappe', testType: 'typingSpeed', valueField: 'wpm', unit: 'wpm' },
   { label: 'Mémoire visuelle', testType: 'visualMemory', valueField: 'score', unit: 'niveau' },
   { label: 'Mémoire des chiffres', testType: 'numberMemory', valueField: 'score', unit: 'chiffres' },
@@ -33,29 +39,34 @@ export async function GET(request: Request) {
     const response = await Promise.all(
       TESTS.map(async (test) => {
         const [userRows, globalRows] = await Promise.all([
-          prisma.testResult.findMany({ where: { testType: test.testType, userId }, orderBy: { timestamp: 'desc' } }),
-          prisma.testResult.findMany({ where: { testType: test.testType }, orderBy: { timestamp: 'desc' } })
+          prisma.testResult.findMany({
+            where: { testType: test.testType, userId },
+            orderBy: { timestamp: 'asc' }
+          }),
+          prisma.testResult.findMany({
+            where: { testType: test.testType },
+            orderBy: { timestamp: 'desc' }
+          })
         ]);
 
         const userValues = userRows
-          .map((row) => row[test.valueField])
-          .filter((value): value is number => typeof value === 'number' && Number.isFinite(value));
+          .map((row: ResultRow) => row[test.valueField])
+          .filter((value: number | null): value is number => typeof value === 'number' && Number.isFinite(value));
 
         const globalValues = globalRows
-          .map((row) => row[test.valueField])
-          .filter((value): value is number => typeof value === 'number' && Number.isFinite(value));
+          .map((row: ResultRow) => row[test.valueField])
+          .filter((value: number | null): value is number => typeof value === 'number' && Number.isFinite(value));
 
         return {
           ...test,
-          user: computeStats(userValues, Boolean(test.lowerIsBetter)),
-          global: computeStats(globalValues, Boolean(test.lowerIsBetter))
+          ...computeOverviewAnalytics(userValues, globalValues, Boolean(test.lowerIsBetter))
         };
       })
     );
 
     return NextResponse.json({ tests: response });
   } catch (error) {
-    console.error('Erreur lors du calcul des statistiques du dashboard:', error);
+    console.error("Erreur lors du calcul des statistiques d'ensemble :", error);
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 });
   }
 }

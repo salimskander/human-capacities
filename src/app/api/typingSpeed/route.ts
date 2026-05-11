@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { calculatePoints } from '@/lib/points';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -7,23 +8,20 @@ export async function GET(request: Request) {
   const type = searchParams.get('type') || 'user';
 
   try {
-    const where = type === 'global' ? { testType: 'typingSpeed' } : { testType: 'typingSpeed', userId: userId || undefined };
+    const where =
+      type === 'global'
+        ? { testType: 'typingSpeed' }
+        : { testType: 'typingSpeed', userId: userId || undefined };
 
     const results = await prisma.testResult.findMany({
       where,
       orderBy: { timestamp: 'desc' },
-      select: {
-        id: true,
-        wpm: true,
-        accuracy: true,
-        timestamp: true,
-        userId: true
-      }
+      select: { id: true, wpm: true, accuracy: true, points: true, timestamp: true, userId: true },
     });
 
     return NextResponse.json(results);
   } catch (error) {
-    console.error('Erreur lors de la récupération:', error);
+    console.error('Erreur typingSpeed GET:', error);
     return NextResponse.json({ error: 'Erreur lors de la récupération' }, { status: 500 });
   }
 }
@@ -36,18 +34,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
     }
 
+    const points = calculatePoints('typingSpeed', { wpm, accuracy });
+
     const result = await prisma.testResult.create({
-      data: {
-        testType: 'typingSpeed',
-        wpm,
-        accuracy,
-        userId: userId || null
-      }
+      data: { testType: 'typingSpeed', wpm, accuracy, points, userId: userId || null },
     });
 
-    return NextResponse.json({ success: true, id: result.id });
+    return NextResponse.json({ success: true, id: result.id, points });
   } catch (error) {
-    console.error('Erreur lors de la sauvegarde:', error);
+    console.error('Erreur typingSpeed POST:', error);
     return NextResponse.json({ error: 'Erreur lors de la sauvegarde' }, { status: 500 });
   }
 }
@@ -60,16 +55,11 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 });
     }
 
-    await prisma.testResult.deleteMany({
-      where: {
-        testType: 'typingSpeed',
-        userId
-      }
-    });
+    await prisma.testResult.deleteMany({ where: { testType: 'typingSpeed', userId } });
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    console.error('Erreur lors de la suppression:', error);
+    console.error('Erreur typingSpeed DELETE:', error);
     return NextResponse.json({ error: 'Erreur lors de la suppression' }, { status: 500 });
   }
 }

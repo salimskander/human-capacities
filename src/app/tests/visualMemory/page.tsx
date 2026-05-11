@@ -1,6 +1,6 @@
-'use client'
-import { useEffect, useState, useCallback } from 'react'
-import Link from 'next/link'
+'use client';
+import { useEffect, useState, useCallback } from 'react';
+import Link from 'next/link';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,25 +9,17 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
-} from 'chart.js'
-import { Line } from 'react-chartjs-2'
-import StartModal from '@/components/StartModal'
-import ProgressBar from "@/components/ProgressBar";
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+import StartModal from '@/components/StartModal';
+import ProgressBar from '@/components/ProgressBar';
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { calculatePoints } from '@/lib/points';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-)
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// ✅ Ajouter l'interface TestResult
 interface TestResult {
   score: number;
   timestamp: string;
@@ -35,91 +27,97 @@ interface TestResult {
 
 export default function VisualMemoryTest() {
   const { currentUser } = useAuth();
-  const [lives, setLives] = useState(2)
-  const [level, setLevel] = useState(1)
-  const [sequence, setSequence] = useState<number[]>([])
-  const [userSequence, setUserSequence] = useState<number[]>([])
-  const [isShowingSequence, setIsShowingSequence] = useState(false)
-  const [gameOver, setGameOver] = useState(false)
-  const [correctTiles, setCorrectTiles] = useState<number[]>([])
-  const [errorTiles, setErrorTiles] = useState<number[]>([])
-  const [isStarted, setIsStarted] = useState(false)
-  const [globalResults, setGlobalResults] = useState<TestResult[]>([])
-  const [isProcessingError, setIsProcessingError] = useState(false)
+  const [lives, setLives] = useState(2);
+  const [level, setLevel] = useState(1);
+  const [sequence, setSequence] = useState<number[]>([]);
+  const [userSequence, setUserSequence] = useState<number[]>([]);
+  const [isShowingSequence, setIsShowingSequence] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
+  const [finalScore, setFinalScore] = useState(0);
+  const [finalPoints, setFinalPoints] = useState(0);
+  const [correctTiles, setCorrectTiles] = useState<number[]>([]);
+  const [errorTiles, setErrorTiles] = useState<number[]>([]);
+  const [isStarted, setIsStarted] = useState(false);
+  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
+  const [isProcessingError, setIsProcessingError] = useState(false);
 
-  const gridSize = Math.min(3 + Math.floor(level / 2), 7)
-  const tilesToRemember = Math.min(3 + level, gridSize * gridSize - 1)
-  const SEQUENCE_SHOW_TIME = 2200 // 2,2 secondes
+  const gridSize = Math.min(3 + Math.floor(level / 2), 7);
+  const tilesToRemember = Math.min(3 + level, gridSize * gridSize - 1);
+  const SEQUENCE_SHOW_TIME = 2200;
 
   const generateSequence = () => {
-    const newSequence: number[] = []
+    const newSequence: number[] = [];
     while (newSequence.length < tilesToRemember) {
-      const num = Math.floor(Math.random() * (gridSize * gridSize))
-      if (!newSequence.includes(num)) newSequence.push(num)
+      const num = Math.floor(Math.random() * (gridSize * gridSize));
+      if (!newSequence.includes(num)) newSequence.push(num);
     }
-    return newSequence
-  }
+    return newSequence;
+  };
 
   const startLevel = () => {
-    setCorrectTiles([])
-    setErrorTiles([])
-    setUserSequence([])
-    
-    const newSequence = generateSequence()
-    setSequence(newSequence)
-    setIsShowingSequence(true)
-    
-    // La séquence se termine après SEQUENCE_SHOW_TIME
+    setCorrectTiles([]);
+    setErrorTiles([]);
+    setUserSequence([]);
+    const newSequence = generateSequence();
+    setSequence(newSequence);
+    setIsShowingSequence(true);
     setTimeout(() => {
-      setIsShowingSequence(false)
-      setIsProcessingError(false) // Réactive les clics uniquement après la séquence
-    }, SEQUENCE_SHOW_TIME)
-  }
+      setIsShowingSequence(false);
+      setIsProcessingError(false);
+    }, SEQUENCE_SHOW_TIME);
+  };
 
   const startGame = () => {
-    setIsStarted(true)
-    startLevel()
-  }
+    setIsStarted(true);
+    startLevel();
+  };
+
+  const saveResult = async (score: number) => {
+    try {
+      await fetch('/api/visualMemory', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ score, userId: currentUser?.uid || null }),
+      });
+      await fetchResults();
+    } catch (error) {
+      console.error('Failed to save result:', error);
+    }
+  };
 
   const handleTileClick = (index: number) => {
-    if (isShowingSequence || gameOver || isProcessingError) return
+    if (isShowingSequence || gameOver || isProcessingError) return;
 
     if (!sequence.includes(index)) {
-      // Mauvaise tuile : perd une vie immédiatement
-      setIsProcessingError(true)
-      const newLives = lives - 1
-      setLives(newLives)
-      setErrorTiles(prev => [...prev, index])
-      
+      setIsProcessingError(true);
+      const newLives = lives - 1;
+      setLives(newLives);
+      setErrorTiles((prev) => [...prev, index]);
+
       if (newLives <= 0) {
-        setGameOver(true)
-        saveResult(level)
+        const score = level;
+        setFinalScore(score);
+        setFinalPoints(calculatePoints('visualMemory', { score }));
+        setGameOver(true);
+        saveResult(score);
       } else {
-        // Attend 500ms avec la tuile rouge visible
-        setTimeout(() => {
-          // Démarre directement la nouvelle séquence
-          startLevel()
-        }, 500)
+        setTimeout(() => startLevel(), 500);
       }
     } else if (!userSequence.includes(index)) {
-      // Bonne tuile
-      const newUserSequence = [...userSequence, index]
-      setUserSequence(newUserSequence)
-      setCorrectTiles(prev => [...prev, index])
-      
+      const newUserSequence = [...userSequence, index];
+      setUserSequence(newUserSequence);
+      setCorrectTiles((prev) => [...prev, index]);
+
       if (newUserSequence.length === sequence.length) {
-        // Niveau réussi
-        setLevel(prev => prev + 1)
-        startLevel()
+        setLevel((prev) => prev + 1);
+        startLevel();
       }
     }
-  }
+  };
 
   const fetchResults = useCallback(async () => {
-    if (!currentUser) return;
-    
     try {
-      const response = await fetch('/api/visual-memory/results');
+      const response = await fetch('/api/visualMemory?type=global');
       if (response.ok) {
         const data = await response.json();
         setGlobalResults(data);
@@ -133,97 +131,56 @@ export default function VisualMemoryTest() {
     fetchResults();
   }, [fetchResults]);
 
-  const saveResult = async (finalScore: number) => {
-    try {
-      await fetch('/api/visualMemory', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          score: finalScore,
-          userId: currentUser?.uid || null
-        })
-      });
-      await fetchResults();
-    } catch (error) {
-      console.error('Failed to save result:', error);
-    }
-  }
-
   const prepareChartData = () => {
     const intervals = Array.from({ length: 15 }, (_, i) => i + 3);
     const counts = new Array(intervals.length).fill(0);
-
-    globalResults.forEach(result => {
+    globalResults.forEach((result) => {
       if (result.score && result.score >= 3) {
         const index = result.score - 3;
-        if (index >= 0 && index < intervals.length) {
-          counts[index]++;
-        }
+        if (index >= 0 && index < intervals.length) counts[index]++;
       }
     });
-
-    const total = globalResults.filter(r => r.score && r.score >= 3).length;
-    const percentages = counts.map(count => (count / total) * 100 || 0);
-
+    const total = globalResults.filter((r) => r.score && r.score >= 3).length;
+    const percentages = counts.map((count) => (count / total) * 100 || 0);
     return {
-      labels: intervals.map(value => `Niveau ${value}`),
-      datasets: [{
-        label: 'Distribution des scores',
-        data: percentages,
-        borderColor: 'rgb(34, 197, 94)',
-        backgroundColor: 'rgba(34, 197, 94, 0.2)',
-        tension: 0.1,
-        fill: true
-      }]
+      labels: intervals.map((value) => `Niveau ${value}`),
+      datasets: [
+        {
+          label: 'Distribution des scores',
+          data: percentages,
+          borderColor: 'rgb(34, 197, 94)',
+          backgroundColor: 'rgba(34, 197, 94, 0.2)',
+          tension: 0.1,
+          fill: true,
+        },
+      ],
     };
   };
 
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Distribution globale des scores de mémoire visuelle'
-      }
+      legend: { position: 'top' as const },
+      title: { display: true, text: 'Distribution globale des scores de mémoire visuelle' },
     },
     scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Pourcentage des joueurs (%)'
-        }
-      },
-      x: {
-        title: {
-          display: true,
-          text: 'Niveau atteint'
-        }
-      }
-    }
+      y: { beginAtZero: true, title: { display: true, text: 'Pourcentage des joueurs (%)' } },
+      x: { title: { display: true, text: 'Niveau atteint' } },
+    },
   };
 
   const calculateGridSize = useCallback(() => {
     if (typeof window === 'undefined') return 400;
-    
     const maxWidth = window.innerWidth * (window.innerWidth < 768 ? 0.9 : 0.8);
     const maxHeight = (window.innerHeight - (window.innerWidth < 768 ? 180 : 250)) * 0.9;
-    
     return Math.floor(Math.min(maxWidth, maxHeight, 500) / gridSize) * gridSize;
   }, [gridSize]);
 
-  const [tileSize, setTileSize] = useState(400); // Valeur par défaut fixe
+  const [tileSize, setTileSize] = useState(400);
 
   useEffect(() => {
-    setTileSize(calculateGridSize()); // Met à jour la taille une fois monté
-    
-    const handleResize = () => {
-      setTileSize(calculateGridSize());
-    };
-
+    setTileSize(calculateGridSize());
+    const handleResize = () => setTileSize(calculateGridSize());
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, [gridSize, calculateGridSize]);
@@ -252,45 +209,35 @@ export default function VisualMemoryTest() {
 
   return (
     <>
-      <Link 
+      <Link
         href="/#tests-section"
         className="fixed top-4 left-4 w-12 h-12 bg-white dark:bg-gray-800 dark:text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-50"
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-6 w-6" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
-          <path 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            strokeWidth={2} 
-            d="M10 19l-7-7m0 0l7-7m-7 7h18" 
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
       </Link>
 
       <div className="h-full min-h-[100vh] bg-white dark:bg-gray-900 flex items-center justify-center">
         <div className="max-w-screen-xl mx-auto">
           {!isStarted ? (
-            <StartModal 
+            <StartModal
               title="Test de Mémoire Visuelle"
               description={
                 <p>
-                  Testez votre mémoire visuelle.
-                  Des tuiles vont s&apos;illuminer brièvement à l&apos;écran.
-                  Reproduisez la séquence pour passer au niveau suivant.
-                  Vous avez droit à 2 erreurs.
+                  Testez votre mémoire visuelle. Des tuiles vont s&apos;illuminer brièvement à
+                  l&apos;écran. Reproduisez la séquence pour passer au niveau suivant. Vous avez
+                  droit à 2 erreurs.
                 </p>
               }
               onStart={startGame}
-              stats={globalResults.length > 0 ? (
-                <Line data={prepareChartData()} options={chartOptions} />
-              ) : (
-                <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-              )}
+              stats={
+                globalResults.length > 0 ? (
+                  <Line data={prepareChartData()} options={chartOptions} />
+                ) : (
+                  <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
+                )
+              }
             />
           ) : (
             <>
@@ -300,25 +247,22 @@ export default function VisualMemoryTest() {
                   <div className="flex gap-1">
                     {Array.from({ length: 2 }).map((_, i) => (
                       <span key={i} className="text-2xl">
-                        {i < (2 - lives) ? '🖤' : '❤️'}
+                        {i < 2 - lives ? '🖤' : '❤️'}
                       </span>
                     ))}
                   </div>
                 </div>
                 {isShowingSequence && (
-                  <ProgressBar 
-                    duration={SEQUENCE_SHOW_TIME} 
-                    isActive={isShowingSequence} 
-                  />
+                  <ProgressBar duration={SEQUENCE_SHOW_TIME} isActive={isShowingSequence} />
                 )}
               </div>
 
-              <div 
-                className="grid mx-auto mt-20 sm:mt-32" 
-                style={{ 
+              <div
+                className="grid mx-auto mt-20 sm:mt-32"
+                style={{
                   display: 'grid',
                   gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-                  gap: '0.25rem sm:0.5rem',
+                  gap: '0.25rem',
                   width: `${tileSize}px`,
                   height: `${tileSize}px`,
                   pointerEvents: isShowingSequence || isProcessingError ? 'none' : 'auto',
@@ -329,18 +273,19 @@ export default function VisualMemoryTest() {
                     key={index}
                     onClick={() => handleTileClick(index)}
                     style={{
-                      width: `${tileSize / gridSize - (window.innerWidth < 768 ? 4 : 8)}px`,
-                      height: `${tileSize / gridSize - (window.innerWidth < 768 ? 4 : 8)}px`
+                      width: `${tileSize / gridSize - (typeof window !== 'undefined' && window.innerWidth < 768 ? 4 : 8)}px`,
+                      height: `${tileSize / gridSize - (typeof window !== 'undefined' && window.innerWidth < 768 ? 4 : 8)}px`,
                     }}
                     className={`
                       rounded-lg sm:rounded-xl transition-colors cursor-pointer backdrop-blur-sm shadow-md
-                      ${isShowingSequence && sequence.includes(index) 
-                        ? 'bg-blue-500' 
-                        : correctTiles.includes(index)
+                      ${
+                        isShowingSequence && sequence.includes(index)
+                          ? 'bg-blue-500'
+                          : correctTiles.includes(index)
                           ? 'bg-green-500'
                           : errorTiles.includes(index)
-                            ? 'bg-red-500'
-                            : 'bg-white/80 dark:bg-gray-800/80 hover:bg-gray-100 dark:hover:bg-gray-700'
+                          ? 'bg-red-500'
+                          : 'bg-white/80 dark:bg-gray-800/80 hover:bg-gray-100 dark:hover:bg-gray-700'
                       }
                     `}
                   />
@@ -351,13 +296,14 @@ export default function VisualMemoryTest() {
         </div>
       </div>
 
-      <GameOverModal 
+      <GameOverModal
         isOpen={gameOver}
-        score={level}
+        score={finalScore}
+        points={finalPoints}
         onRestart={handleRestart}
         onBackToRules={handleBackToRules}
         scoreLabel="Niveau atteint"
       />
     </>
-  )
+  );
 }

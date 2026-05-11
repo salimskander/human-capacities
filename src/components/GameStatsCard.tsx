@@ -1,12 +1,13 @@
+import 'chart.js/auto';
+import { ReactNode } from 'react';
 import { Line } from 'react-chartjs-2';
 import Link from 'next/link';
-import { ReactNode } from 'react';
 
-interface GameResult {
-  timestamp: string;
-  score: number;
-  [key: string]: unknown;
-}
+type CardInsight = {
+  percentile?: number;
+  progressPercent?: number;
+  worldAverageLabel?: string;
+};
 
 interface GameStatsCardProps {
   title: string;
@@ -20,16 +21,12 @@ interface GameStatsCardProps {
   link: string;
   prepareChartData: (data: Record<string, unknown>[], valueKey?: string) => any;
   lowerIsBetter?: boolean;
+  insight?: CardInsight;
 }
 
-interface ChartData {
-  name: string;
-  value: number;
-}
-
-export default function GameStatsCard({ 
-  title, 
-  data, 
+export default function GameStatsCard({
+  title,
+  data,
   getScore,
   getDate,
   unit,
@@ -38,9 +35,9 @@ export default function GameStatsCard({
   icon,
   link,
   prepareChartData,
-  lowerIsBetter = false
+  lowerIsBetter = false,
+  insight
 }: GameStatsCardProps) {
-  // Pas de données
   if (!data || data.length === 0) {
     return (
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-full">
@@ -50,13 +47,13 @@ export default function GameStatsCard({
             <div className="w-8 h-8 flex items-center justify-center">{icon}</div>
           </div>
         </div>
-        
+
         <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
           <p className="text-gray-600 dark:text-gray-300 mb-4">
             Aucune donnée disponible pour ce test.
           </p>
-          <Link 
-            href={link} 
+          <Link
+            href={link}
             className={`px-4 py-2 bg-gradient-to-r ${color || '#3B82F6'} text-white rounded-lg hover:opacity-90 transition-opacity`}
           >
             Jouer maintenant
@@ -65,20 +62,18 @@ export default function GameStatsCard({
       </div>
     );
   }
-  
-  // ✅ Trier les données par timestamp (plus récent en premier)
-  const sortedData = [...data].sort((a, b) => new Date(getDate(b)).getTime() - new Date(getDate(a)).getTime());
-  
-  // Calcul des statistiques
+
+  const sortedData = [...data].sort(
+    (a, b) => new Date(getDate(b)).getTime() - new Date(getDate(a)).getTime()
+  );
+
   const scores: number[] = sortedData
-    .map(item => {
+    .map((item) => {
       const typedItem = item as { reactionTime?: number };
       if (typedItem.reactionTime !== undefined) return Number(typedItem.reactionTime);
       return Number(getScore(item));
     })
-    .filter((score): score is number => 
-      typeof score === 'number' && !isNaN(score)
-    );
+    .filter((score): score is number => typeof score === 'number' && !Number.isNaN(score));
 
   if (scores.length === 0) {
     return (
@@ -89,13 +84,13 @@ export default function GameStatsCard({
             <div className="w-8 h-8 flex items-center justify-center">{icon}</div>
           </div>
         </div>
-        
+
         <div className="p-6 flex-1 flex flex-col items-center justify-center text-center">
           <p className="text-gray-600 dark:text-gray-300 mb-4">
             Toutes les données ont des scores invalides.
           </p>
-          <Link 
-            href={link} 
+          <Link
+            href={link}
             className={`px-4 py-2 bg-gradient-to-r ${color || '#3B82F6'} text-white rounded-lg hover:opacity-90 transition-opacity`}
           >
             Jouer maintenant
@@ -105,18 +100,14 @@ export default function GameStatsCard({
     );
   }
 
-  const bestScore = lowerIsBetter 
-    ? Math.min(...scores) 
-    : Math.max(...scores);
-  const avgScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
-  const lastScore: number = scores[0]; // ✅ Le plus récent (premier après tri)
-  
-  // ✅ Passer les données triées au graphique
+  const bestScore = lowerIsBetter ? Math.min(...scores) : Math.max(...scores);
+  const avgScore = Math.round(scores.reduce((sum, value) => sum + value, 0) / scores.length);
+  const lastScore = scores[0];
   const chartData = prepareChartData(sortedData as Record<string, unknown>[]);
-  
-  // Obtenir des couleurs adaptées au thème du jeu
-  let borderColor, backgroundColor;
-  
+
+  let borderColor: string;
+  let backgroundColor: string;
+
   switch (color) {
     case 'from-blue-500 to-blue-600':
       borderColor = 'rgb(59, 130, 246)';
@@ -155,7 +146,6 @@ export default function GameStatsCard({
       backgroundColor = 'rgba(59, 130, 246, 0.1)';
   }
 
-  // ✅ Options du graphique adaptées selon le type de score
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -165,7 +155,7 @@ export default function GameStatsCard({
     },
     interaction: {
       mode: 'index' as const,
-      intersect: false,
+      intersect: false
     },
     plugins: {
       legend: {
@@ -182,14 +172,10 @@ export default function GameStatsCard({
         displayColors: false,
         callbacks: {
           title: (items: any) => {
-            // ✅ Inverser l'index pour afficher correctement l'ordre chronologique
             const actualIndex = scores.length - items[0].dataIndex;
             return `Partie ${actualIndex}`;
           },
-          label: (item: any) => {
-            const value = item.raw;
-            return `${scoreLabel}: ${value}${unit || ''}`;
-          }
+          label: (item: any) => `${scoreLabel}: ${item.raw}${unit || ''}`
         }
       },
       filler: {
@@ -198,10 +184,9 @@ export default function GameStatsCard({
     },
     scales: {
       y: {
-        // ✅ Pour les réflexes, inverser l'échelle (plus bas = mieux)
         reverse: lowerIsBetter,
-        beginAtZero: !lowerIsBetter, // Pour les réflexes, ne pas commencer à 0
-        min: lowerIsBetter ? Math.min(...scores) - 50 : undefined, // Marge pour les réflexes
+        beginAtZero: !lowerIsBetter,
+        min: lowerIsBetter ? Math.min(...scores) - 50 : undefined,
         max: lowerIsBetter ? Math.max(...scores) + 50 : undefined,
         grid: {
           color: 'rgba(156, 163, 175, 0.1)',
@@ -212,7 +197,7 @@ export default function GameStatsCard({
           font: {
             size: 10
           },
-          callback: function(value: any) {
+          callback: (value: any) => {
             if (Math.floor(value) === value) {
               return lowerIsBetter ? `${value}ms` : value;
             }
@@ -236,62 +221,76 @@ export default function GameStatsCard({
       line: {
         tension: 0.3,
         borderWidth: 2,
-        borderColor: borderColor
+        borderColor
       },
       point: {
         radius: 3,
         hoverRadius: 5,
         borderWidth: 2,
         backgroundColor: 'white',
-        borderColor: borderColor
+        borderColor
       }
     }
   };
-  
-  // ✅ Indicateur de tendance corrigé
+
   const getTrend = (): ReactNode => {
     if (scores.length < 2) return null;
-    
-    const currentScore = Number(scores[0]); // Plus récent
-    const prevScore = Number(scores[1]); // Précédent
-    const diff = lowerIsBetter 
-      ? prevScore - currentScore  // Pour les réflexes, plus bas est mieux
-      : currentScore - prevScore; // Pour les autres, plus haut est mieux
-    
-    const percentChange = prevScore ? (diff / prevScore) * 100 : 0;
-    
+
+    const currentScore = Number(scores[0]);
+    const previousScore = Number(scores[1]);
+    const diff = lowerIsBetter ? previousScore - currentScore : currentScore - previousScore;
+    const percentChange = previousScore ? (diff / previousScore) * 100 : 0;
+
     if (Math.abs(percentChange) < 1) return null;
-    
+
     const isPositive = percentChange > 0;
-    
+
     return (
       <span className={`ml-1 text-xs ${isPositive ? 'text-green-500' : 'text-red-500'}`}>
         {isPositive ? '↑' : '↓'} {Math.abs(percentChange).toFixed(1)}%
       </span>
     );
   };
-  
-  // ✅ Modifier les données du graphique pour contrôler le remplissage
-  if (chartData && chartData.datasets && chartData.datasets[0]) {
+
+  if (chartData?.datasets?.[0]) {
     chartData.datasets[0] = {
       ...chartData.datasets[0],
-      borderColor: borderColor,
-      backgroundColor: backgroundColor,
-      // ✅ Pour les réflexes, remplir vers le bas (origin)
+      borderColor,
+      backgroundColor,
       fill: lowerIsBetter ? 'origin' : true,
       tension: 0.3
     };
   }
-  
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden flex flex-col h-full transition-transform hover:scale-[1.02] duration-300">
       <div className={`bg-gradient-to-r ${color || '#3B82F6'} p-4 text-white`}>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-3">
           <h3 className="text-lg font-semibold">{title}</h3>
           <div className="w-8 h-8 flex items-center justify-center">{icon}</div>
         </div>
+
+        {insight && (
+          <div className="mt-3 flex flex-wrap gap-2 text-xs">
+            {typeof insight.percentile === 'number' && (
+              <span className="rounded-full bg-white/20 px-2.5 py-1">
+                Monde : top {Math.max(0, 100 - insight.percentile).toFixed(1)}%
+              </span>
+            )}
+            {typeof insight.progressPercent === 'number' && (
+              <span className="rounded-full bg-white/20 px-2.5 py-1">
+                Progression : {insight.progressPercent > 0 ? '+' : ''}{insight.progressPercent.toFixed(1)}%
+              </span>
+            )}
+            {insight.worldAverageLabel && (
+              <span className="rounded-full bg-white/20 px-2.5 py-1">
+                Moyenne monde : {insight.worldAverageLabel}
+              </span>
+            )}
+          </div>
+        )}
       </div>
-      
+
       <div className="p-5 flex-1 flex flex-col">
         <div className="grid grid-cols-3 gap-2 mb-4">
           <div className="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg text-center">
@@ -314,11 +313,11 @@ export default function GameStatsCard({
               <p className="text-lg font-semibold dark:text-white">
                 {lowerIsBetter ? `${lastScore}ms` : lastScore}
               </p>
-              {getTrend() as React.ReactNode}
+              {getTrend()}
             </div>
           </div>
         </div>
-        
+
         <div className="flex-1 min-h-[150px] relative">
           {chartData ? (
             <Line data={chartData} options={chartOptions} />
@@ -328,7 +327,16 @@ export default function GameStatsCard({
             </div>
           )}
         </div>
+
+        <div className="mt-4 flex justify-end">
+          <Link
+            href={link}
+            className="text-sm font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+          >
+            Voir le test
+          </Link>
+        </div>
       </div>
     </div>
   );
-} 
+}

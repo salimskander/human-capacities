@@ -11,56 +11,44 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from 'chart.js';
 import StartModal from '@/components/StartModal';
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from '@/components/ProgressBar';
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { useGameResults } from '@/contexts/GameResultsContext';
-import { useRouter } from 'next/navigation';
+import { calculatePoints } from '@/lib/points';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// Symboles possibles pour les cartes (emojis)
-const SYMBOLS = ['🌟', '🎈', '🎨', '🎭', '🎪', '🎯', '🎲', '🎳', '🎮', '🎸', '🎺', '🎨', '🎭', '🎪'];
+const SYMBOLS = ['🌟', '🎈', '🎨', '🎭', '🎪', '🎯', '🎲', '🎳', '🎮', '🎸', '🎺', '🏆', '🎁', '🎀'];
+const SHOW_DURATION = 5000;
 
-const showDuration = 5000; // 5 secondes pour mémoriser les symboles
-
-// ✅ Ajouter l'interface TestResult
 interface TestResult {
   score: number;
   timestamp: string;
 }
 
 const prepareChartData = (results: Array<{ score: number }>) => {
-  const scores = results.map(r => r.score);
-  
-  // Calculer les occurrences pour chaque niveau de 1 à 10
+  const scores = results.map((r) => r.score);
   const occurrences = Array.from({ length: 10 }, (_, i) => {
     const level = i + 1;
-    const count = scores.filter(score => score === level).length;
+    const count = scores.filter((s) => s === level).length;
     return (count / scores.length) * 100 || 0;
   });
-
   return {
     labels: Array.from({ length: 10 }, (_, i) => `Niveau ${i + 1}`),
-    datasets: [{
-      label: 'Distribution des scores (%)',
-      data: occurrences,
-      borderColor: 'rgb(75, 192, 192)',
-      backgroundColor: 'rgba(75, 192, 192, 0.2)',
-      tension: 0.3,
-      fill: true,
-    }],
+    datasets: [
+      {
+        label: 'Distribution des scores (%)',
+        data: occurrences,
+        borderColor: 'rgb(75, 192, 192)',
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        tension: 0.3,
+        fill: true,
+      },
+    ],
   };
 };
 
@@ -68,28 +56,12 @@ const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
   scales: {
-    x: {
-      title: {
-        display: true,
-        text: 'Niveau atteint',
-      }
-    },
-    y: {
-      beginAtZero: true,
-      title: {
-        display: true,
-        text: 'Pourcentage des parties (%)',
-      },
-    },
+    x: { title: { display: true, text: 'Niveau atteint' } },
+    y: { beginAtZero: true, title: { display: true, text: 'Pourcentage des parties (%)' } },
   },
   plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Distribution des niveaux atteints',
-    },
+    legend: { position: 'top' as const },
+    title: { display: true, text: 'Distribution des niveaux atteints' },
   },
 };
 
@@ -98,162 +70,148 @@ export default function SymbolMemoryTest() {
   const { saveResult, globalResults } = useGameResults();
   const [level, setLevel] = useState(1);
   const [lives, setLives] = useState(3);
-  const [cards, setCards] = useState<Array<{ id: number; symbol: string; isFlipped: boolean; isMatched: boolean }>>([]);
+  const [cards, setCards] = useState<
+    Array<{ id: number; symbol: string; isFlipped: boolean; isMatched: boolean }>
+  >([]);
   const [gameStatus, setGameStatus] = useState<'waiting' | 'playing' | 'showing' | 'gameover'>('waiting');
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
-  const router = useRouter();
+  const [finalScore, setFinalScore] = useState(0);
+  const [finalPoints, setFinalPoints] = useState(0);
 
-  useEffect(() => {
-    if (!currentUser) {
-      router.push('/login');
-    }
-  }, [currentUser, router]);
-
-  const initializeCards = (level: number) => {
-    const numberOfPairs = level + 2; // Commence avec 3 paires au niveau 1
+  const initializeCards = useCallback((lvl: number) => {
+    const numberOfPairs = lvl + 2;
     const symbols = SYMBOLS.slice(0, numberOfPairs);
-    const pairs = [...symbols, ...symbols];
-    
-    // Mélanger les cartes
-    const shuffledPairs = pairs.sort(() => Math.random() - 0.5);
-    
-    return shuffledPairs.map((symbol, index) => ({
-      id: index,
-      symbol,
-      isFlipped: true, // Au début, toutes les cartes sont visibles
-      isMatched: false
-    }));
-  };
+    const pairs = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+    return pairs.map((symbol, index) => ({ id: index, symbol, isFlipped: true, isMatched: false }));
+  }, []);
 
-  const startGame = () => {
+  const startGame = useCallback(() => {
     setLevel(1);
     setLives(3);
     setGameStatus('showing');
     const initialCards = initializeCards(1);
     setCards(initialCards);
-    
-    // Retourner les cartes après 5 secondes
     setTimeout(() => {
-      setCards(cards => cards.map(card => ({ ...card, isFlipped: false })));
+      setCards((c) => c.map((card) => ({ ...card, isFlipped: false })));
       setGameStatus('playing');
-    }, 5000);
-  };
+    }, SHOW_DURATION);
+  }, [initializeCards]);
 
-  const handleCardClick = (cardId: number) => {
-    if (gameStatus !== 'playing') return;
-    if (selectedCards.length === 2) return;
-    if (cards[cardId].isMatched || cards[cardId].isFlipped) return;
+  const startNextLevel = useCallback(
+    (nextLevel: number) => {
+      setGameStatus('showing');
+      const newCards = initializeCards(nextLevel);
+      setCards(newCards);
+      setTimeout(() => {
+        setCards((c) => c.map((card) => ({ ...card, isFlipped: false })));
+        setGameStatus('playing');
+      }, SHOW_DURATION);
+    },
+    [initializeCards]
+  );
 
-    // Retourner la carte sélectionnée
-    setCards(cards.map(card => 
-      card.id === cardId ? { ...card, isFlipped: true } : card
-    ));
+  const handleCardClick = useCallback(
+    (cardId: number) => {
+      if (gameStatus !== 'playing') return;
+      if (selectedCards.length === 2) return;
+      if (cards[cardId].isMatched || cards[cardId].isFlipped) return;
 
-    setSelectedCards([...selectedCards, cardId]);
+      const newCards = cards.map((card) =>
+        card.id === cardId ? { ...card, isFlipped: true } : card
+      );
+      setCards(newCards);
+      const newSelected = [...selectedCards, cardId];
+      setSelectedCards(newSelected);
 
-    // Si c'est la deuxième carte
-    if (selectedCards.length === 1) {
-      const firstCard = cards[selectedCards[0]];
-      const secondCard = cards[cardId];
+      if (newSelected.length === 2) {
+        const firstCard = newCards[newSelected[0]];
+        const secondCard = newCards[newSelected[1]];
 
-      if (firstCard.symbol === secondCard.symbol) {
-        // Paire trouvée
-        setTimeout(() => {
-          setCards(cards.map(card => 
-            card.id === cardId || card.id === selectedCards[0]
-              ? { ...card, isMatched: true }
-              : card
-          ));
-          setSelectedCards([]);
+        if (firstCard.symbol === secondCard.symbol) {
+          setTimeout(() => {
+            setCards((c) =>
+              c.map((card) =>
+                card.id === newSelected[0] || card.id === newSelected[1]
+                  ? { ...card, isMatched: true }
+                  : card
+              )
+            );
+            setSelectedCards([]);
 
-          // Vérifier si toutes les paires sont trouvées
-          if (cards.filter(card => !card.isMatched).length === 2) {
-            // Niveau suivant
-            setLevel(prev => prev + 1);
-            startNextLevel();
-          }
-        }, 500);
-      } else {
-        // Erreur
-        setTimeout(() => {
-          setCards(cards.map(card => 
-            card.id === cardId || card.id === selectedCards[0]
-              ? { ...card, isFlipped: false }
-              : card
-          ));
-          setSelectedCards([]);
-          setLives(prev => prev - 1);
-          if (lives <= 1) {
-            setGameStatus('gameover');
-            saveResult(level - 1);
-          }
-        }, 1000);
+            const matched = newCards.filter((c) => c.isMatched).length + 2;
+            if (matched >= newCards.length) {
+              const nextLevel = level + 1;
+              setLevel(nextLevel);
+              startNextLevel(nextLevel);
+            }
+          }, 500);
+        } else {
+          setTimeout(() => {
+            setCards((c) =>
+              c.map((card) =>
+                card.id === newSelected[0] || card.id === newSelected[1]
+                  ? { ...card, isFlipped: false }
+                  : card
+              )
+            );
+            setSelectedCards([]);
+            const newLives = lives - 1;
+            setLives(newLives);
+            if (newLives <= 0) {
+              const score = level - 1;
+              setFinalScore(score);
+              setFinalPoints(calculatePoints('symbolMemory', { score }));
+              setGameStatus('gameover');
+              saveResult(score);
+            }
+          }, 1000);
+        }
       }
-    }
-  };
+    },
+    [gameStatus, selectedCards, cards, level, lives, startNextLevel, saveResult]
+  );
 
-  const startNextLevel = () => {
-    setGameStatus('showing');
-    const newCards = initializeCards(level);
-    setCards(newCards);
-    
-    setTimeout(() => {
-      setCards(cards => cards.map(card => ({ ...card, isFlipped: false })));
-      setGameStatus('playing');
-    }, showDuration);
-  };
-
-  const handleRestart = () => {
+  const handleRestart = useCallback(() => {
     setLevel(1);
     setLives(3);
     setGameStatus('showing');
     const newCards = initializeCards(1);
     setCards(newCards);
-    
     setTimeout(() => {
-      setCards(cards => cards.map(card => ({ ...card, isFlipped: false })));
+      setCards((c) => c.map((card) => ({ ...card, isFlipped: false })));
       setGameStatus('playing');
-    }, showDuration);
-  };
-
-  const handleBackToRules = () => {
-    setGameStatus('waiting');
-  };
+    }, SHOW_DURATION);
+  }, [initializeCards]);
 
   return (
     <>
-      <Link 
+      <Link
         href="/#tests-section"
         className="fixed top-4 left-4 w-12 h-12 bg-white dark:bg-gray-800 dark:text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-50"
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-6 w-6" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
       </Link>
 
       <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
         {gameStatus === 'waiting' ? (
-          <StartModal 
+          <StartModal
             title="Test de Mémoire des Symboles"
             description={
               <p>
-                Mémorisez la position des paires de symboles.
-                Retrouvez toutes les paires pour passer au niveau suivant.
-                Attention, vous n&apos;avez que trois vies !
+                Mémorisez la position des paires de symboles. Retrouvez toutes les paires pour
+                passer au niveau suivant. Vous avez trois vies !
               </p>
             }
             onStart={startGame}
-            stats={globalResults.length > 0 ? (
-              <Line data={prepareChartData(globalResults)} options={chartOptions} />
-            ) : (
-              <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-            )}
+            stats={
+              (globalResults as TestResult[]).length > 0 ? (
+                <Line data={prepareChartData(globalResults as TestResult[])} options={chartOptions} />
+              ) : (
+                <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
+              )
+            }
           />
         ) : (
           <>
@@ -263,7 +221,7 @@ export default function SymbolMemoryTest() {
                 <div className="flex gap-1">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <span key={i} className="text-2xl">
-                      {i < (3 - lives) ? '🖤' : '❤️'}
+                      {i < 3 - lives ? '🖤' : '❤️'}
                     </span>
                   ))}
                 </div>
@@ -273,22 +231,19 @@ export default function SymbolMemoryTest() {
             <div className="container mx-auto px-4 pt-24 pb-6">
               {gameStatus === 'showing' && (
                 <div className="fixed top-20 left-0 right-0 z-40">
-                  <ProgressBar 
-                    duration={showDuration} 
-                    isActive={gameStatus === 'showing'} 
-                  />
+                  <ProgressBar duration={SHOW_DURATION} isActive={gameStatus === 'showing'} />
                 </div>
               )}
-              
-              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-1 md:gap-2 mx-auto max-w-md">
+
+              <div className="grid grid-cols-3 md:grid-cols-4 gap-1 md:gap-2 mx-auto max-w-md">
                 {cards.map((card) => (
                   <button
                     key={card.id}
                     onClick={() => handleCardClick(card.id)}
                     className={`
                       aspect-square w-full rounded-lg text-xl
-                      flex items-center justify-center 
-                      transition-transform duration-500 
+                      flex items-center justify-center
+                      transition-transform duration-500
                       preserve-3d cursor-pointer
                       ${card.isFlipped || card.isMatched ? 'rotate-y-180' : ''}
                     `}
@@ -308,19 +263,18 @@ export default function SymbolMemoryTest() {
                 ))}
               </div>
             </div>
-
-            {gameStatus === 'gameover' && (
-              <GameOverModal 
-                isOpen={gameStatus === 'gameover'}
-                score={level - 1}
-                onRestart={handleRestart}
-                onBackToRules={handleBackToRules}
-                scoreLabel="Niveau atteint"
-              />
-            )}
           </>
         )}
       </div>
+
+      <GameOverModal
+        isOpen={gameStatus === 'gameover'}
+        score={finalScore}
+        points={finalPoints}
+        onRestart={handleRestart}
+        onBackToRules={() => setGameStatus('waiting')}
+        scoreLabel="Niveau atteint"
+      />
     </>
   );
 }

@@ -16,29 +16,25 @@ import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
+import { calculatePoints } from '@/lib/points';
 
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-// Types
 interface TestResult {
   score: number;
   timestamp: string;
 }
 
 type GameStatus = 'waiting' | 'playing' | 'showing' | 'gameover';
-type NumberTile = { position: number, value: number };
+type NumberTile = { position: number; value: number };
 
-// Composant de jeu principal
-function ChimpTestGame({ gameKey, onGameOver }: { gameKey: number, onGameOver: (score: number) => void }) {
-  // États du jeu
+function ChimpTestGame({
+  gameKey,
+  onGameOver,
+}: {
+  gameKey: number;
+  onGameOver: (score: number) => void;
+}) {
   const [level, setLevel] = useState(4);
   const [numbers, setNumbers] = useState<NumberTile[]>([]);
   const [userSequence, setUserSequence] = useState<number[]>([]);
@@ -47,43 +43,51 @@ function ChimpTestGame({ gameKey, onGameOver }: { gameKey: number, onGameOver: (
   const [, setScore] = useState(0);
   const [gridSize, setGridSize] = useState(4);
   const [numbersVisible, setNumbersVisible] = useState(true);
-  
-  // États d'interface utilisateur
+  const [cellSize, setCellSize] = useState(70);
+
   const [correctTiles, setCorrectTiles] = useState<number[]>([]);
   const [errorTile, setErrorTile] = useState<number | null>(null);
   const [clickedTile, setClickedTile] = useState<number | null>(null);
   const [canClick, setCanClick] = useState(false);
-  
-  // Ajuster la taille de la grille en fonction du niveau
+
+  // Compute cell size so the grid always fits below the in-game topbar
   useEffect(() => {
-    const levelIndex = level - 4; // Niveau 4 = index 0
+    const update = () => {
+      const topBarH = 80;
+      const padding = 24;
+      const availW = window.innerWidth - padding;
+      const availH = window.innerHeight - topBarH - padding;
+      const available = Math.min(availW, availH);
+      const size = Math.floor(available / gridSize);
+      setCellSize(Math.max(40, Math.min(size, 80)));
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [gridSize]);
+
+  // Increase grid size every 3 levels
+  useEffect(() => {
+    const levelIndex = level - 4;
     const shouldIncreaseGrid = levelIndex > 0 && levelIndex % 3 === 0;
     if (shouldIncreaseGrid) {
-      setGridSize(prev => Math.min(prev + 1, 8)); // Maximum 8x8
+      setGridSize((prev) => Math.min(prev + 1, 8));
     }
   }, [level]);
 
-  // Génération d'une séquence aléatoire de nombres
   const generateSequence = useCallback(() => {
     const positions = new Set<number>();
     const sequence: NumberTile[] = [];
-    
-    // Utiliser le niveau actuel comme nombre de chiffres à générer
     while (positions.size < level) {
       const pos = Math.floor(Math.random() * (gridSize * gridSize));
       if (!positions.has(pos)) {
         positions.add(pos);
-        sequence.push({
-          position: pos,
-          value: positions.size
-        });
+        sequence.push({ position: pos, value: positions.size });
       }
     }
-    
     return sequence;
   }, [level, gridSize]);
 
-  // Démarrage d'un nouveau niveau
   const startNewLevel = useCallback(() => {
     const newSequence = generateSequence();
     setNumbers(newSequence);
@@ -94,74 +98,56 @@ function ChimpTestGame({ gameKey, onGameOver }: { gameKey: number, onGameOver: (
     setCanClick(true);
   }, [generateSequence]);
 
-  // Initialiser le jeu au montage
   useEffect(() => {
-    // Démarrer le premier niveau après un court délai
-    const timer = setTimeout(() => {
-      startNewLevel();
-    }, 500);
-    
+    const timer = setTimeout(() => startNewLevel(), 500);
     return () => clearTimeout(timer);
   }, [startNewLevel]);
 
-  // Gestion du clic sur une tuile
-  const handleTileClick = useCallback((position: number) => {
-    if (gameStatus !== 'playing' || !canClick) return;
+  const handleTileClick = useCallback(
+    (position: number) => {
+      if (gameStatus !== 'playing' || !canClick) return;
 
-    setClickedTile(position);
-    setTimeout(() => setClickedTile(null), 200);
+      setClickedTile(position);
+      setTimeout(() => setClickedTile(null), 200);
 
-    const clickedNumber = numbers.find(n => n.position === position);
-    if (!clickedNumber) return;
+      const clickedNumber = numbers.find((n) => n.position === position);
+      if (!clickedNumber) return;
 
-    if (clickedNumber.value === 1) {
-      setNumbersVisible(false);
-    }
+      if (clickedNumber.value === 1) setNumbersVisible(false);
 
-    const expectedValue = userSequence.length + 1;
-    
-    if (clickedNumber.value === expectedValue) {
-      // Clic correct
-      setCorrectTiles(prev => [...prev, position]);
-      const newSequence = [...userSequence, clickedNumber.value];
-      setUserSequence(newSequence);
+      const expectedValue = userSequence.length + 1;
 
-      if (newSequence.length === numbers.length) {
-        // Niveau réussi
-        setScore(prev => prev + level);
-        setLevel(prev => prev + 1);
-        
-        // Désactiver les clics pendant la transition
-        setCanClick(false);
-        
-        setTimeout(() => {
-          startNewLevel();
-        }, 500);
-      }
-    } else {
-      // Clic incorrect
-      setCanClick(false);
-      setErrorTile(position);
-      setStrikes(prev => prev + 1);
-      
-      if (strikes >= 1) {
-        // Game over après 2 erreurs
-        setTimeout(() => {
-          setGameStatus('gameover');
-          onGameOver(level - 3);
-        }, 500);
+      if (clickedNumber.value === expectedValue) {
+        setCorrectTiles((prev) => [...prev, position]);
+        const newSequence = [...userSequence, clickedNumber.value];
+        setUserSequence(newSequence);
+
+        if (newSequence.length === numbers.length) {
+          setScore((prev) => prev + level);
+          setLevel((prev) => prev + 1);
+          setCanClick(false);
+          setTimeout(() => startNewLevel(), 500);
+        }
       } else {
-        // Continuer après une erreur
-        setTimeout(() => {
-          startNewLevel();
-        }, 800);
-      }
-    }
-  }, [gameStatus, canClick, numbers, userSequence, strikes, level, startNewLevel, onGameOver]);
+        setCanClick(false);
+        setErrorTile(position);
+        setStrikes((prev) => prev + 1);
 
-  useEffect(() => {
-    // Mise à jour de la logique pour le rendu
-  }, [level]);
+        if (strikes >= 1) {
+          setTimeout(() => {
+            setGameStatus('gameover');
+            onGameOver(level - 3);
+          }, 500);
+        } else {
+          setTimeout(() => startNewLevel(), 800);
+        }
+      }
+    },
+    [gameStatus, canClick, numbers, userSequence, strikes, level, startNewLevel, onGameOver]
+  );
+
+  const gap = 4;
+  const gridPx = gridSize * cellSize + (gridSize - 1) * gap;
 
   return (
     <>
@@ -178,17 +164,22 @@ function ChimpTestGame({ gameKey, onGameOver }: { gameKey: number, onGameOver: (
         </div>
       </div>
 
-      <div className="flex items-center justify-center min-h-screen">
-        <div 
-          className="grid gap-1 sm:gap-2 mx-auto"
-          style={{ 
-            gridTemplateColumns: `repeat(${gridSize}, 1fr)`,
-            width: `${gridSize * (window.innerWidth < 768 ? 70 : 80)}px`,
-            height: `${gridSize * (window.innerWidth < 768 ? 70 : 80)}px`
+      {/* Container starts below the topbar and centers the grid in the remaining space */}
+      <div
+        className="flex items-center justify-center"
+        style={{ minHeight: '100vh', paddingTop: '5rem' }}
+      >
+        <div
+          className="grid mx-auto"
+          style={{
+            gridTemplateColumns: `repeat(${gridSize}, ${cellSize}px)`,
+            gap: `${gap}px`,
+            width: `${gridPx}px`,
+            height: `${gridPx}px`,
           }}
         >
           {Array.from({ length: gridSize * gridSize }).map((_, index) => {
-            const number = numbers.find(n => n.position === index);
+            const number = numbers.find((n) => n.position === index);
             const isCorrect = correctTiles.includes(index);
             const isError = errorTile === index;
             const isClicked = clickedTile === index;
@@ -197,19 +188,19 @@ function ChimpTestGame({ gameKey, onGameOver }: { gameKey: number, onGameOver: (
               <button
                 key={`${gameKey}-tile-${index}`}
                 onClick={() => handleTileClick(index)}
+                style={{ width: `${cellSize}px`, height: `${cellSize}px` }}
                 className={`
-                  w-16 h-16 rounded-lg transition-all transform duration-200
+                  rounded-lg transition-all transform duration-200 relative overflow-hidden flex items-center justify-center
                   ${number ? 'bg-blue-500 hover:bg-blue-600 shadow-lg' : 'bg-transparent'}
                   ${gameStatus === 'playing' && canClick ? 'cursor-pointer hover:scale-105' : 'cursor-default'}
-                  ${isCorrect ? 'bg-green-500 hover:bg-green-600 animate-[pulse_0.5s_ease-in-out]' : ''}
-                  ${isError ? 'bg-red-500 hover:bg-red-600 animate-[bounce_0.5s_ease-in-out]' : ''}
+                  ${isCorrect ? 'bg-green-500 hover:bg-green-600' : ''}
+                  ${isError ? 'bg-red-500 hover:bg-red-600' : ''}
                   ${isClicked ? 'scale-95' : ''}
-                  relative overflow-hidden flex items-center justify-center
                 `}
                 disabled={!canClick || gameStatus !== 'playing'}
               >
                 {numbersVisible && number && (
-                  <span className="text-white text-2xl font-bold">
+                  <span className="text-white text-xl font-bold select-none">
                     {number.value}
                   </span>
                 )}
@@ -231,28 +222,20 @@ function ChimpTestGame({ gameKey, onGameOver }: { gameKey: number, onGameOver: (
   );
 }
 
-// Composant principal qui gère l'état global
 export default function ChimpTest() {
   const { currentUser } = useAuth();
   const [gameKey, setGameKey] = useState(Date.now());
   const [gameStatus, setGameStatus] = useState<GameStatus>('waiting');
   const [finalScore, setFinalScore] = useState(0);
+  const [finalPoints, setFinalPoints] = useState(0);
   const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
-  
+
   useEffect(() => {
     fetchResults();
   }, [currentUser]);
 
   const fetchResults = async () => {
     try {
-      // Données utilisateur
-      if (currentUser) {
-        const userResponse = await fetch(`/api/chimpTest?userId=${currentUser.uid}&type=user`);
-        const userData = await userResponse.json();
-        setGlobalResults(userData);
-      }
-      
-      // Données globales
       const globalResponse = await fetch('/api/chimpTest?type=global');
       const globalData = await globalResponse.json();
       setGlobalResults(globalData);
@@ -264,84 +247,53 @@ export default function ChimpTest() {
   const prepareChartData = useCallback(() => {
     const intervals = Array.from({ length: 9 }, (_, i) => i + 4);
     const counts = new Array(intervals.length).fill(0);
-    
-    globalResults.forEach(result => {
+    globalResults.forEach((result) => {
       const index = result.score - 4;
-      if (index >= 0 && index < counts.length) {
-        counts[index]++;
-      }
+      if (index >= 0 && index < counts.length) counts[index]++;
     });
-
     const total = globalResults.length;
-    const percentages = counts.map(count => (count / total) * 100 || 0);
-
+    const percentages = counts.map((count) => (count / total) * 100 || 0);
     return {
       labels: intervals,
-      datasets: [{
-        label: 'Distribution des scores',
-        data: percentages,
-        borderColor: 'rgb(59, 130, 246)',
-        backgroundColor: 'rgba(59, 130, 246, 0.2)',
-        tension: 0.1,
-        fill: true
-      }]
+      datasets: [
+        {
+          label: 'Distribution des scores',
+          data: percentages,
+          borderColor: 'rgb(59, 130, 246)',
+          backgroundColor: 'rgba(59, 130, 246, 0.2)',
+          tension: 0.1,
+          fill: true,
+        },
+      ],
     };
   }, [globalResults]);
 
   const chartOptions = {
     responsive: true,
     plugins: {
-      legend: {
-        position: 'top' as const,
-      },
-      title: {
-        display: true,
-        text: 'Distribution globale des scores du test du chimpanzé'
-      }
+      legend: { position: 'top' as const },
+      title: { display: true, text: 'Distribution globale des scores du test du chimpanzé' },
     },
     scales: {
       y: {
         beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Pourcentage des joueurs (%)'
-        }
+        title: { display: true, text: 'Pourcentage des joueurs (%)' },
       },
-      x: {
-        title: {
-          display: true,
-          text: 'Niveau atteint'
-        }
-      }
-    }
+      x: { title: { display: true, text: 'Niveau atteint' } },
+    },
   };
 
-  // Démarrer une nouvelle partie
   const startGame = useCallback(() => {
-    setGameKey(Date.now()); // Forcer la recréation complète du composant de jeu
+    setGameKey(Date.now());
     setGameStatus('playing');
   }, []);
 
-  // Gérer la fin de partie
-  const handleGameOver = useCallback((score: number) => {
-    setFinalScore(score);
-    setGameStatus('gameover');
-    saveResult(score);
-  }, []);
-
-  // Déplacer la fonction saveResult avant handleGameOver
   const saveResult = async (score: number) => {
     try {
       await fetch('/api/chimpTest', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          timestamp: Date.now(), 
-          score,
-          userId: currentUser?.uid || null
-        }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ score, userId: currentUser?.uid || null }),
       });
       fetchResults();
     } catch (error) {
@@ -349,58 +301,59 @@ export default function ChimpTest() {
     }
   };
 
-  // Redémarrer le jeu
+  const handleGameOver = useCallback((score: number) => {
+    setFinalScore(score);
+    setFinalPoints(calculatePoints('chimpTest', { score }));
+    setGameStatus('gameover');
+    saveResult(score);
+  }, []);
+
   const handleRestart = useCallback(() => {
-    setGameKey(Date.now()); // Forcer la recréation complète du composant de jeu
+    setGameKey(Date.now());
     setGameStatus('playing');
   }, []);
 
   return (
     <>
-      <Link 
+      <Link
         href="/#tests-section"
         className="fixed top-4 left-4 w-12 h-12 bg-white dark:bg-gray-800 dark:text-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors z-50"
       >
-        <svg 
-          xmlns="http://www.w3.org/2000/svg" 
-          className="h-6 w-6" 
-          fill="none" 
-          viewBox="0 0 24 24" 
-          stroke="currentColor"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
         </svg>
       </Link>
 
-      <div className="min-h-screen bg-white dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-white dark:bg-gray-900">
         {gameStatus === 'waiting' ? (
-          <StartModal 
-            title="Test du Chimpanzé"
-            description={
-              <p>
-                Les chimpanzés surpassent systématiquement les humains dans ce test de mémoire.
-                Certains peuvent mémoriser 9 chiffres avec plus de 90% de réussite.
-              </p>
-            }
-            onStart={startGame}
-            stats={globalResults.length > 0 ? (
-              <Line data={prepareChartData()} options={chartOptions} />
-            ) : (
-              <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-            )}
-          />
+          <div className="flex items-center justify-center min-h-screen">
+            <StartModal
+              title="Test du Chimpanzé"
+              description={
+                <p>
+                  Les chimpanzés surpassent systématiquement les humains dans ce test de mémoire.
+                  Certains peuvent mémoriser 9 chiffres avec plus de 90% de réussite.
+                </p>
+              }
+              onStart={startGame}
+              stats={
+                globalResults.length > 0 ? (
+                  <Line data={prepareChartData()} options={chartOptions} />
+                ) : (
+                  <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
+                )
+              }
+            />
+          </div>
         ) : gameStatus === 'playing' ? (
-          <ChimpTestGame 
-            key={gameKey} 
-            gameKey={gameKey} 
-            onGameOver={handleGameOver} 
-          />
+          <ChimpTestGame key={gameKey} gameKey={gameKey} onGameOver={handleGameOver} />
         ) : null}
 
-        <GameOverModal 
+        <GameOverModal
           key={`game-over-${gameKey}`}
           isOpen={gameStatus === 'gameover'}
           score={finalScore}
+          points={finalPoints}
           onRestart={handleRestart}
           onBackToRules={() => setGameStatus('waiting')}
           scoreLabel="Niveau atteint"
