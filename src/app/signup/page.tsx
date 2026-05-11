@@ -39,18 +39,37 @@ export default function SignupPage() {
       return;
     }
 
-    if (!pseudo.trim()) {
+    const trimmedPseudo = pseudo.trim();
+    if (!trimmedPseudo) {
       setError("Le pseudo ne peut pas être vide");
+      return;
+    }
+    if (trimmedPseudo.length < 5) {
+      setError("Le pseudo doit contenir au moins 5 caractères");
       return;
     }
 
     setLoading(true);
     try {
-      await createUserAccount(email, password, pseudo);
+      const credential = await createUserAccount(email, password, trimmedPseudo);
+      if (credential?.user) {
+        // Sauvegarder le pseudo dans la base de données
+        const res = await fetch('/api/user/profile', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ firebaseUid: credential.user.uid, username: trimmedPseudo }),
+        });
+        if (!res.ok) {
+          const data = await res.json();
+          if (data.error === 'USERNAME_TAKEN') {
+            setError("Ce pseudo est déjà utilisé, veuillez en choisir un autre");
+            return;
+          }
+        }
+      }
       router.push('/');
     } catch (err) {
       const error = err as { code?: string; message?: string };
-      // Gestion améliorée des erreurs Firebase
       if (error.code === 'auth/email-already-in-use') {
         setError("Cette adresse email est déjà utilisée par un autre compte");
       } else if (error.code === 'auth/invalid-email') {
