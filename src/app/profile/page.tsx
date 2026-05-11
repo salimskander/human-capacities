@@ -1,12 +1,12 @@
 "use client";
 
-import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import UserProfileHeader from '@/components/UserProfileHeader';
 import GameStatsCard from '@/components/GameStatsCard';
 import { useAuth } from '@/contexts/AuthContext';
-import { logoutUser, updateDisplayName } from '@/firebase';
+import { logoutUser } from '@/firebase';
 import { TOTAL_MAX_POINTS } from '@/lib/points';
 
 interface GameData {
@@ -24,14 +24,6 @@ interface DashboardTestStats {
   global: { average: number };
   comparison: { bestPercentile: number };
   progression: { percentChange: number };
-}
-
-interface LeaderboardEntry {
-  rank: number;
-  username: string;
-  totalPoints: number;
-  testsCompleted: number;
-  testPoints: Record<string, number>;
 }
 
 interface UserRank {
@@ -154,53 +146,13 @@ export default function ProfilePage() {
   const [isResetting, setIsResetting] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [profileStats, setProfileStats] = useState<DashboardTestStats[]>([]);
-  const [displayName, setDisplayName] = useState('');
-  const [profileFeedback, setProfileFeedback] = useState<string | null>(null);
-  const [usernameStatus, setUsernameStatus] = useState<'idle' | 'checking' | 'available' | 'taken' | 'too_short'>('idle');
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [userRank, setUserRank] = useState<UserRank | null>(null);
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
-  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
-  const [totalPlayers, setTotalPlayers] = useState(0);
 
   useEffect(() => {
     if (!userLoading && !currentUser) {
       router.replace('/login');
     }
   }, [currentUser, userLoading, router]);
-
-  useEffect(() => {
-    if (currentUser) {
-      setDisplayName(currentUser.displayName || '');
-    }
-  }, [currentUser]);
-
-  const checkUsernameAvailability = useCallback((value: string) => {
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    const trimmed = value.trim();
-    if (trimmed === (currentUser?.displayName ?? '').trim()) {
-      setUsernameStatus('idle');
-      return;
-    }
-    if (trimmed.length > 0 && trimmed.length < 5) {
-      setUsernameStatus('too_short');
-      return;
-    }
-    if (trimmed.length === 0) {
-      setUsernameStatus('idle');
-      return;
-    }
-    setUsernameStatus('checking');
-    debounceRef.current = setTimeout(async () => {
-      try {
-        const res = await fetch(`/api/user/profile?check=${encodeURIComponent(trimmed)}`);
-        const data = await res.json();
-        setUsernameStatus(data.available ? 'available' : 'taken');
-      } catch {
-        setUsernameStatus('idle');
-      }
-    }, 500);
-  }, [currentUser?.displayName]);
 
   const fetchAllGameData = async () => {
     if (!currentUser) {
@@ -255,22 +207,6 @@ export default function ProfilePage() {
     }
   };
 
-  const fetchLeaderboard = async () => {
-    setLeaderboardLoading(true);
-    try {
-      const response = await fetch('/api/leaderboard?limit=50');
-      if (response.ok) {
-        const data = await response.json();
-        setLeaderboard(data.entries || []);
-        setTotalPlayers(data.totalPlayers || 0);
-      }
-    } catch (error) {
-      console.error('Erreur leaderboard:', error);
-    } finally {
-      setLeaderboardLoading(false);
-    }
-  };
-
   useEffect(() => {
     if (userLoading) return;
     if (!currentUser) {
@@ -284,12 +220,6 @@ export default function ProfilePage() {
     fetchUserRank();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.uid, userLoading]);
-
-  useEffect(() => {
-    if (activeTab === 'classement') {
-      fetchLeaderboard();
-    }
-  }, [activeTab]);
 
   const statsByType = useMemo(
     () => Object.fromEntries(profileStats.map((item) => [item.testType, item])),
@@ -339,45 +269,6 @@ export default function ProfilePage() {
     }
   };
 
-  const saveProfile = async () => {
-    setProfileFeedback(null);
-    const value = displayName.trim();
-    if (!value) {
-      setProfileFeedback('Le pseudo ne peut pas être vide.');
-      return;
-    }
-    if (value.length < 5) {
-      setProfileFeedback('Le pseudo doit contenir au moins 5 caractères.');
-      return;
-    }
-    if (usernameStatus === 'taken') {
-      setProfileFeedback('Ce pseudo est déjà utilisé.');
-      return;
-    }
-    try {
-      const res = await fetch('/api/user/profile', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ firebaseUid: currentUser?.uid, username: value }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        if (data.error === 'USERNAME_TAKEN') {
-          setProfileFeedback('Ce pseudo est déjà utilisé.');
-          setUsernameStatus('taken');
-        } else {
-          setProfileFeedback(data.error || 'Impossible de mettre à jour le pseudo.');
-        }
-        return;
-      }
-      await updateDisplayName(value);
-      setProfileFeedback('Pseudo mis à jour avec succès.');
-      setUsernameStatus('idle');
-    } catch {
-      setProfileFeedback('Impossible de mettre à jour le pseudo.');
-    }
-  };
-
   if (userLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
@@ -396,13 +287,13 @@ export default function ProfilePage() {
   const renderRankBanner = () => {
     if (!userRank || userRank.totalPoints === 0) return null;
     return (
-      <div className="bg-gradient-to-r from-amber-400 to-orange-500 rounded-xl p-5 text-white mb-6 shadow-lg">
+      <div className="bg-gradient-to-r from-slate-700 to-slate-900 rounded-xl p-5 text-white mb-6 shadow-lg">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div>
-            <p className="text-amber-100 text-sm font-medium mb-1">Score global</p>
+            <p className="text-slate-300 text-sm font-medium mb-1">Score global</p>
             <div className="flex items-baseline gap-2">
               <span className="text-4xl font-bold">{userRank.totalPoints.toLocaleString()}</span>
-              <span className="text-amber-200 text-sm">/ {TOTAL_MAX_POINTS.toLocaleString()} pts max</span>
+              <span className="text-slate-400 text-sm">/ {TOTAL_MAX_POINTS.toLocaleString()} pts max</span>
             </div>
             <div className="mt-1 w-full bg-white/20 rounded-full h-2">
               <div
@@ -412,10 +303,10 @@ export default function ProfilePage() {
             </div>
           </div>
           <div className="text-right">
-            <p className="text-amber-100 text-sm font-medium mb-1">Classement mondial</p>
+            <p className="text-slate-300 text-sm font-medium mb-1">Classement mondial</p>
             <p className="text-3xl font-bold">#{userRank.rank}</p>
             {rankPercent !== null && (
-              <p className="text-amber-200 text-sm">Top {100 - rankPercent}% des {userRank.totalPlayers} joueurs</p>
+              <p className="text-slate-400 text-sm">Top {100 - rankPercent}% des {userRank.totalPlayers} joueurs</p>
             )}
           </div>
         </div>
@@ -483,176 +374,20 @@ export default function ProfilePage() {
     </>
   );
 
-  const renderClassement = () => (
-    <>
-      <h2 className="text-2xl font-bold mb-3 text-gray-800 dark:text-white">Classement mondial</h2>
-      <p className="text-gray-600 dark:text-gray-300 mb-6">
-        Top 50 des joueurs par score total (meilleur score par test, max 1000 pts chacun).
-      </p>
-
-      {userRank && userRank.totalPoints > 0 && (
-        <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700 rounded-xl p-4 mb-6 flex items-center justify-between">
-          <div>
-            <p className="text-sm text-blue-600 dark:text-blue-300 font-medium">Votre position</p>
-            <p className="text-2xl font-bold text-blue-800 dark:text-blue-100">
-              #{userRank.rank} — {userRank.totalPoints.toLocaleString()} pts
-            </p>
-          </div>
-          <div className="text-right text-sm text-blue-600 dark:text-blue-300">
-            <p>sur {userRank.totalPlayers} joueurs</p>
-          </div>
-        </div>
-      )}
-
-      {leaderboardLoading ? (
-        <div className="flex justify-center items-center h-48">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500" />
-        </div>
-      ) : leaderboard.length === 0 ? (
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-8 text-center text-gray-500 dark:text-gray-400">
-          Aucun joueur dans le classement pour le moment. Jouez des tests pour apparaître ici !
-        </div>
-      ) : (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-gray-50 dark:bg-gray-700">
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Rang
-                </th>
-                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Joueur
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                  Points
-                </th>
-                <th className="px-4 py-3 text-right text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider hidden sm:table-cell">
-                  Tests
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
-              {leaderboard.map((entry) => {
-                const isMe = userRank && entry.rank === userRank.rank && entry.totalPoints === userRank.totalPoints;
-                return (
-                  <tr
-                    key={entry.rank}
-                    className={`transition-colors ${
-                      isMe
-                        ? 'bg-blue-50 dark:bg-blue-900/20'
-                        : 'hover:bg-gray-50 dark:hover:bg-gray-700/50'
-                    }`}
-                  >
-                    <td className="px-4 py-3">
-                      <span
-                        className={`inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold ${
-                          entry.rank === 1
-                            ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
-                            : entry.rank === 2
-                            ? 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300'
-                            : entry.rank === 3
-                            ? 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400'
-                            : 'text-gray-500 dark:text-gray-400'
-                        }`}
-                      >
-                        {entry.rank <= 3 ? (entry.rank === 1 ? '🥇' : entry.rank === 2 ? '🥈' : '🥉') : entry.rank}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <span className={`font-medium ${isMe ? 'text-blue-700 dark:text-blue-300' : 'text-gray-800 dark:text-white'}`}>
-                        {entry.username}
-                        {isMe && <span className="ml-2 text-xs text-blue-500">(vous)</span>}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <span className="font-bold text-gray-800 dark:text-white">
-                        {entry.totalPoints.toLocaleString()}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-right hidden sm:table-cell">
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {entry.testsCompleted}/8
-                      </span>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-          {totalPlayers > 50 && (
-            <div className="px-4 py-3 bg-gray-50 dark:bg-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              Affichage du top 50 sur {totalPlayers} joueurs
-            </div>
-          )}
-        </div>
-      )}
-    </>
-  );
-
   const renderSettings = () => (
     <>
       <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Réglages</h2>
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-        <h3 className="text-lg font-semibold mb-4 dark:text-white">Informations personnelles</h3>
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Pseudo <span className="text-gray-400 font-normal">(affiché dans le classement · min. 5 caractères)</span>
-            </label>
-            <div className="relative">
-              <input
-                type="text"
-                value={displayName}
-                onChange={(e) => {
-                  setDisplayName(e.target.value);
-                  setProfileFeedback(null);
-                  checkUsernameAvailability(e.target.value);
-                }}
-                maxLength={32}
-                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-white pr-10 ${
-                  usernameStatus === 'taken' || usernameStatus === 'too_short'
-                    ? 'border-red-400 focus:ring-red-400'
-                    : usernameStatus === 'available'
-                    ? 'border-green-400 focus:ring-green-400'
-                    : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500'
-                }`}
-                placeholder="Votre pseudo"
-              />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm">
-                {usernameStatus === 'checking' && (
-                  <span className="text-gray-400">…</span>
-                )}
-                {usernameStatus === 'available' && (
-                  <span className="text-green-500">✓</span>
-                )}
-                {(usernameStatus === 'taken' || usernameStatus === 'too_short') && (
-                  <span className="text-red-500">✗</span>
-                )}
-              </div>
-            </div>
-            {usernameStatus === 'too_short' && (
-              <p className="text-xs text-red-500 mt-1">Minimum 5 caractères.</p>
-            )}
-            {usernameStatus === 'taken' && (
-              <p className="text-xs text-red-500 mt-1">Ce pseudo est déjà utilisé.</p>
-            )}
-            {usernameStatus === 'available' && (
-              <p className="text-xs text-green-500 mt-1">Pseudo disponible.</p>
-            )}
-          </div>
-          <button
-            onClick={saveProfile}
-            disabled={usernameStatus === 'taken' || usernameStatus === 'too_short' || usernameStatus === 'checking'}
-            className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
-          >
-            Enregistrer les modifications
-          </button>
-          {profileFeedback && (
-            <p className={`text-sm ${profileFeedback.includes('succès') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-              {profileFeedback}
-            </p>
-          )}
-        </div>
+        <h3 className="text-lg font-semibold mb-2 text-red-600 dark:text-red-400">Zone dangereuse</h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          Cette action supprime définitivement tous vos scores. Elle est irréversible.
+        </p>
+        <button
+          onClick={() => setShowResetConfirm(true)}
+          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm font-medium"
+        >
+          Réinitialiser mes performances
+        </button>
       </div>
     </>
   );
@@ -670,7 +405,6 @@ export default function ProfilePage() {
               <nav className="space-y-2">
                 {[
                   { id: 'performances', label: 'Performances' },
-                  { id: 'classement', label: '🏆 Classement' },
                   { id: 'reglages', label: 'Réglages' },
                 ].map((tab) => (
                   <button
@@ -701,20 +435,8 @@ export default function ProfilePage() {
               <UserProfileHeader />
               <div className="mt-8">
                 {activeTab === 'performances' && renderPerformances()}
-                {activeTab === 'classement' && renderClassement()}
                 {activeTab === 'reglages' && renderSettings()}
               </div>
-
-              {activeTab !== 'classement' && (
-                <div className="mt-12 flex justify-center">
-                  <button
-                    onClick={() => setShowResetConfirm(true)}
-                    className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm font-medium"
-                  >
-                    Réinitialiser mes performances
-                  </button>
-                </div>
-              )}
 
               {showResetConfirm && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
