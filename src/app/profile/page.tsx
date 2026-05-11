@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import UserProfileHeader from '@/components/UserProfileHeader';
@@ -156,6 +156,8 @@ export default function ProfilePage() {
   const [profileStats, setProfileStats] = useState<DashboardTestStats[]>([]);
   const [displayName, setDisplayName] = useState('');
   const [profileFeedback, setProfileFeedback] = useState<string | null>(null);
+  const [usernameStatus, setUsernameStatus] = useState<'idle' | 'checking' | 'available' | 'taken' | 'too_short'>('idle');
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [userRank, setUserRank] = useState<UserRank | null>(null);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [leaderboardLoading, setLeaderboardLoading] = useState(false);
@@ -172,6 +174,33 @@ export default function ProfilePage() {
       setDisplayName(currentUser.displayName || '');
     }
   }, [currentUser]);
+
+  const checkUsernameAvailability = useCallback((value: string) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    const trimmed = value.trim();
+    if (trimmed === (currentUser?.displayName ?? '').trim()) {
+      setUsernameStatus('idle');
+      return;
+    }
+    if (trimmed.length > 0 && trimmed.length < 5) {
+      setUsernameStatus('too_short');
+      return;
+    }
+    if (trimmed.length === 0) {
+      setUsernameStatus('idle');
+      return;
+    }
+    setUsernameStatus('checking');
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/user/profile?check=${encodeURIComponent(trimmed)}`);
+        const data = await res.json();
+        setUsernameStatus(data.available ? 'available' : 'taken');
+      } catch {
+        setUsernameStatus('idle');
+      }
+    }, 500);
+  }, [currentUser?.displayName]);
 
   const fetchAllGameData = async () => {
     if (!currentUser) {
@@ -317,16 +346,33 @@ export default function ProfilePage() {
       setProfileFeedback('Le pseudo ne peut pas être vide.');
       return;
     }
+    if (value.length < 5) {
+      setProfileFeedback('Le pseudo doit contenir au moins 5 caractères.');
+      return;
+    }
+    if (usernameStatus === 'taken') {
+      setProfileFeedback('Ce pseudo est déjà utilisé.');
+      return;
+    }
     try {
-      await Promise.all([
-        updateDisplayName(value),
-        fetch('/api/user/profile', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ firebaseUid: currentUser?.uid, username: value }),
-        }),
-      ]);
+      const res = await fetch('/api/user/profile', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firebaseUid: currentUser?.uid, username: value }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        if (data.error === 'USERNAME_TAKEN') {
+          setProfileFeedback('Ce pseudo est déjà utilisé.');
+          setUsernameStatus('taken');
+        } else {
+          setProfileFeedback(data.error || 'Impossible de mettre à jour le pseudo.');
+        }
+        return;
+      }
+      await updateDisplayName(value);
       setProfileFeedback('Pseudo mis à jour avec succès.');
+      setUsernameStatus('idle');
     } catch {
       setProfileFeedback('Impossible de mettre à jour le pseudo.');
     }
@@ -551,16 +597,48 @@ export default function ProfilePage() {
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-              Nom d&apos;utilisateur (affiché dans le classement)
+              Pseudo <span className="text-gray-400 font-normal">(affiché dans le classement · min. 5 caractères)</span>
             </label>
-            <input
-              type="text"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              maxLength={32}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white"
-              placeholder="Votre pseudo"
-            />
+            <div className="relative">
+              <input
+                type="text"
+                value={displayName}
+                onChange={(e) => {
+                  setDisplayName(e.target.value);
+                  setProfileFeedback(null);
+                  checkUsernameAvailability(e.target.value);
+                }}
+                maxLength={32}
+                className={`w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 dark:bg-gray-700 dark:text-white pr-10 ${
+                  usernameStatus === 'taken' || usernameStatus === 'too_short'
+                    ? 'border-red-400 focus:ring-red-400'
+                    : usernameStatus === 'available'
+                    ? 'border-green-400 focus:ring-green-400'
+                    : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500'
+                }`}
+                placeholder="Votre pseudo"
+              />
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 text-sm">
+                {usernameStatus === 'checking' && (
+                  <span className="text-gray-400">…</span>
+                )}
+                {usernameStatus === 'available' && (
+                  <span className="text-green-500">✓</span>
+                )}
+                {(usernameStatus === 'taken' || usernameStatus === 'too_short') && (
+                  <span className="text-red-500">✗</span>
+                )}
+              </div>
+            </div>
+            {usernameStatus === 'too_short' && (
+              <p className="text-xs text-red-500 mt-1">Minimum 5 caractères.</p>
+            )}
+            {usernameStatus === 'taken' && (
+              <p className="text-xs text-red-500 mt-1">Ce pseudo est déjà utilisé.</p>
+            )}
+            {usernameStatus === 'available' && (
+              <p className="text-xs text-green-500 mt-1">Pseudo disponible.</p>
+            )}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
@@ -568,14 +646,15 @@ export default function ProfilePage() {
             </label>
             <input
               type="email"
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 dark:text-white"
+              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm dark:bg-gray-700 dark:text-white opacity-60 cursor-not-allowed"
               value={currentUser.email || ''}
               disabled
             />
           </div>
           <button
             onClick={saveProfile}
-            className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+            disabled={usernameStatus === 'taken' || usernameStatus === 'too_short' || usernameStatus === 'checking'}
+            className="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg transition-colors"
           >
             Enregistrer les modifications
           </button>

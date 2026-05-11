@@ -31,13 +31,6 @@ export default function TopBar() {
     };
   }, [showMobileMenu]);
   
-  // Log utilisateur connecté
-  useEffect(() => {
-    if (currentUser) {
-      console.log("L'utilisateur est connecté:", currentUser.email);
-    }
-  }, [currentUser]);
-  
   // Masquer la TopBar sur les pages de jeu
   if (pathname && pathname.startsWith('/tests/') && pathname !== '/tests') {
     return null;
@@ -76,9 +69,9 @@ export default function TopBar() {
             <div className="hidden sm:flex items-center gap-4">
               <Link
                 href="/leaderboard"
-                className="flex items-center gap-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
-                🏆 Classement
+                Classement
               </Link>
               {userLoading ? (
                 <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
@@ -89,9 +82,9 @@ export default function TopBar() {
                     className="flex items-center space-x-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"
                   >
                     <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
-                      {currentUser.email?.charAt(0).toUpperCase() || 'U'}
+                      {(currentUser.displayName || currentUser.email || 'U').charAt(0).toUpperCase()}
                     </div>
-                    <span className="hidden sm:inline">{currentUser.email}</span>
+                    <span className="hidden sm:inline">{currentUser.displayName || currentUser.email}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                       <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                     </svg>
@@ -148,16 +141,16 @@ export default function TopBar() {
               className="block w-full py-3 text-center font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md"
               onClick={() => setShowMobileMenu(false)}
             >
-              🏆 Classement
+              Classement
             </Link>
             {userLoading ? (
               <div className="h-8 w-full bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
             ) : currentUser ? (
               <div className="flex flex-col items-center space-y-4">
                 <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-2xl">
-                  {currentUser.email?.charAt(0).toUpperCase() || 'U'}
+                  {(currentUser.displayName || currentUser.email || 'U').charAt(0).toUpperCase()}
                 </div>
-                <span className="text-gray-800 dark:text-white text-lg">{currentUser.email}</span>
+                <span className="text-gray-800 dark:text-white text-lg">{currentUser.displayName || currentUser.email}</span>
                 <div className="w-full border-t border-gray-200 dark:border-gray-700 pt-6 space-y-3">
                   <Link 
                     href="/profile" 

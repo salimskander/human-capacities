@@ -3,14 +3,15 @@
 // Import des fonctions nécessaires depuis les SDK Firebase
 import { initializeApp } from "firebase/app";
 import { getAnalytics, Analytics } from "firebase/analytics";
-import { 
-  getAuth, 
-  createUserWithEmailAndPassword, 
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
+  sendPasswordResetEmail,
   User,
   Auth,
   updateProfile
@@ -99,6 +100,11 @@ export const updateDisplayName = async (displayName: string) => {
   }
 
   await updateProfile(auth.currentUser, { displayName });
+};
+
+export const resetPassword = async (email: string) => {
+  if (!auth) throw new Error('Auth non initialisé');
+  await sendPasswordResetEmail(auth, email);
 };
 
 export const subscribeToAuthChanges = (callback: (user: User | null) => void) => {

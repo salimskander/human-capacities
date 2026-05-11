@@ -1,10 +1,26 @@
 import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 
+const MIN_LENGTH = 5;
+const MAX_LENGTH = 32;
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
     const firebaseUid = searchParams.get('userId');
+    const checkUsername = searchParams.get('check');
+
+    if (checkUsername !== null) {
+      const trimmed = checkUsername.trim();
+      if (trimmed.length < MIN_LENGTH) {
+        return NextResponse.json({ available: false, reason: 'TOO_SHORT' });
+      }
+      const existing = await prisma.userProfile.findFirst({
+        where: { username: trimmed },
+        select: { firebaseUid: true },
+      });
+      return NextResponse.json({ available: !existing });
+    }
 
     if (!firebaseUid) {
       return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 });
@@ -30,7 +46,28 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'ID utilisateur requis' }, { status: 400 });
     }
 
-    const trimmed = typeof username === 'string' ? username.trim().slice(0, 32) : null;
+    const trimmed = typeof username === 'string' ? username.trim().slice(0, MAX_LENGTH) : null;
+
+    if (trimmed !== null) {
+      if (trimmed.length < MIN_LENGTH) {
+        return NextResponse.json(
+          { error: 'Le pseudo doit contenir au moins 5 caractères.' },
+          { status: 400 }
+        );
+      }
+
+      const existing = await prisma.userProfile.findFirst({
+        where: { username: trimmed, NOT: { firebaseUid } },
+        select: { firebaseUid: true },
+      });
+
+      if (existing) {
+        return NextResponse.json(
+          { error: 'USERNAME_TAKEN' },
+          { status: 409 }
+        );
+      }
+    }
 
     const profile = await prisma.userProfile.upsert({
       where: { firebaseUid },
