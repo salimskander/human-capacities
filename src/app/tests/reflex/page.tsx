@@ -188,13 +188,6 @@ export default function ReflexTest() {
               </p>
             }
             onStart={startTest}
-            stats={
-              globalResults.length > 0 ? (
-                <Line data={prepareChartData()} options={chartOptions} />
-              ) : (
-                <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-              )
-            }
           />
         ) : (
           <div className="text-center flex flex-col items-center justify-center min-h-screen">

@@ -185,13 +185,6 @@ export default function NumberMemoryTest() {
               </p>
             }
             onStart={startGame}
-            stats={
-              globalResults.length > 0 ? (
-                <Line data={prepareChartData()} options={chartOptions} />
-              ) : (
-                <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-              )
-            }
           />
         ) : (
           <div className="flex flex-col items-center justify-center h-full min-h-[100vh] gap-4 pt-16 sm:pt-20">

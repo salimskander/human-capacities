@@ -242,13 +242,6 @@ export default function TypingSpeed() {
               </p>
             }
             onStart={handleStart}
-            stats={
-              globalResults.length > 0 ? (
-                <Line data={prepareChartData()} options={chartOptions} />
-              ) : (
-                <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-              )
-            }
           />
         ) : (
           <div className="w-full pt-20">

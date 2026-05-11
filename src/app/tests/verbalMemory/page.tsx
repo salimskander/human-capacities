@@ -192,13 +192,6 @@ export default function VerbalMemoryTest() {
               </p>
             }
             onStart={startGame}
-            stats={
-              globalResults.length > 0 ? (
-                <Line data={prepareChartData()} options={chartOptions} />
-              ) : (
-                <p className="text-center dark:text-gray-200">Aucune donnée disponible pour le moment.</p>
-              )
-            }
           />
         ) : (
           <>
