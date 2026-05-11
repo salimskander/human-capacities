@@ -8,13 +8,11 @@ import { usePathname } from 'next/navigation';
 
 export default function TopBar() {
   const { currentUser, userLoading } = useAuth();
-  const [showDropdown, setShowDropdown] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const pathname = usePathname();
-  
-  // Fermer les menus lors d'un changement de route
+
+  // Fermer le menu mobile lors d'un changement de route
   useEffect(() => {
-    setShowDropdown(false);
     setShowMobileMenu(false);
   }, [pathname]);
   
@@ -66,68 +64,54 @@ export default function TopBar() {
             </div>
             
             {/* Menu desktop */}
-            <div className="hidden sm:flex items-center gap-4">
-              {!userLoading && !currentUser && (
-                <Link
-                  href="/leaderboard"
-                  className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
-                >
-                  Classement
-                </Link>
-              )}
+            <div className="hidden sm:flex items-center gap-5">
               {userLoading ? (
-                <div className="h-8 w-24 bg-gray-200 dark:bg-gray-700 rounded animate-pulse"></div>
+                <div className="h-8 w-32 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
               ) : currentUser ? (
-                <div className="relative">
-                  <button 
-                    onClick={() => setShowDropdown(!showDropdown)}
-                    className="flex items-center space-x-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white"
+                <>
+                  {/* Classement */}
+                  <Link
+                    href="/leaderboard"
+                    className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
-                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
+                    Classement
+                  </Link>
+                  {/* Avatar + username → profil */}
+                  <Link
+                    href="/profile"
+                    className="flex items-center gap-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white transition-colors"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-semibold flex-shrink-0">
                       {(currentUser.displayName || currentUser.email || 'U').charAt(0).toUpperCase()}
                     </div>
-                    <span className="hidden sm:inline">{currentUser.displayName || currentUser.email}</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                  
-                  {showDropdown && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700">
-                      <Link 
-                        href="/profile" 
-                        className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                        onClick={() => setShowDropdown(false)}
-                      >
-                        Profil
-                      </Link>
-                      <button 
-                        onClick={() => {
-                          logoutUser();
-                          setShowDropdown(false);
-                        }}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                      >
-                        Déconnexion
-                      </button>
-                    </div>
-                  )}
-                </div>
+                    <span className="text-sm font-medium max-w-[140px] truncate">
+                      {currentUser.displayName || currentUser.email}
+                    </span>
+                  </Link>
+                </>
               ) : (
-                <div className="flex space-x-2">
-                  <Link 
-                    href="/login" 
-                    className="px-4 py-2 rounded-md text-sm font-medium bg-transparent border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                <>
+                  <Link
+                    href="/leaderboard"
+                    className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                   >
-                    Connexion
+                    Classement
                   </Link>
-                  <Link 
-                    href="/signup" 
-                    className="px-4 py-2 rounded-md text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
-                  >
-                    Inscription
-                  </Link>
-                </div>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href="/login"
+                      className="px-4 py-2 rounded-lg text-sm font-medium border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    >
+                      Connexion
+                    </Link>
+                    <Link
+                      href="/signup"
+                      className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+                    >
+                      Inscription
+                    </Link>
+                  </div>
+                </>
               )}
             </div>
           </div>

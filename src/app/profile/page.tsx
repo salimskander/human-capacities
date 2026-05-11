@@ -8,7 +8,6 @@ import GameStatsCard from '@/components/GameStatsCard';
 import { useAuth } from '@/contexts/AuthContext';
 import { logoutUser } from '@/firebase';
 import Link from 'next/link';
-import { TOTAL_MAX_POINTS } from '@/lib/points';
 
 interface GameData {
   timestamp: string;
@@ -27,12 +26,6 @@ interface DashboardTestStats {
   progression: { percentChange: number };
 }
 
-interface UserRank {
-  totalPoints: number;
-  rank: number;
-  totalPlayers: number;
-  testPoints: Record<string, number>;
-}
 
 const emptyGamesData: Record<string, GameData[]> = {
   chimpTest: [],
@@ -124,17 +117,6 @@ const TEST_META: Record<
   },
 };
 
-const TEST_LABELS: Record<string, string> = {
-  chimpTest: 'Chimpanzé',
-  typingSpeed: 'Frappe',
-  visualMemory: 'Visuelle',
-  numberMemory: 'Chiffres',
-  verbalMemory: 'Verbale',
-  sequenceMemory: 'Séquence',
-  symbolMemory: 'Symboles',
-  reflex: 'Réflexes',
-};
-
 const formatAverageLabel = (value: number, unit: string) => `${value.toFixed(1)} ${unit}`;
 
 export default function ProfilePage() {
@@ -147,7 +129,6 @@ export default function ProfilePage() {
   const [isResetting, setIsResetting] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [profileStats, setProfileStats] = useState<DashboardTestStats[]>([]);
-  const [userRank, setUserRank] = useState<UserRank | null>(null);
 
   useEffect(() => {
     if (!userLoading && !currentUser) {
@@ -193,21 +174,6 @@ export default function ProfilePage() {
     }
   };
 
-  const fetchUserRank = async () => {
-    if (!currentUser) return;
-    try {
-      const response = await fetch(
-        `/api/user/rank?userId=${encodeURIComponent(currentUser.uid)}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        setUserRank(data);
-      }
-    } catch (error) {
-      console.error('Erreur user rank:', error);
-    }
-  };
-
   useEffect(() => {
     if (userLoading) return;
     if (!currentUser) {
@@ -218,7 +184,6 @@ export default function ProfilePage() {
     }
     fetchAllGameData();
     fetchProfileInsights();
-    fetchUserRank();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser?.uid, userLoading]);
 
@@ -261,7 +226,7 @@ export default function ProfilePage() {
           })
         )
       );
-      await Promise.all([fetchAllGameData(), fetchProfileInsights(), fetchUserRank()]);
+      await Promise.all([fetchAllGameData(), fetchProfileInsights()]);
       setShowResetConfirm(false);
     } catch (error) {
       console.error('Erreur lors de la réinitialisation des performances :', error);
@@ -280,59 +245,8 @@ export default function ProfilePage() {
 
   if (!currentUser) return null;
 
-  const rankPercent =
-    userRank && userRank.totalPlayers > 0
-      ? Math.round((1 - (userRank.rank - 1) / userRank.totalPlayers) * 100)
-      : null;
-
-  const renderRankBanner = () => {
-    if (!userRank || userRank.totalPoints === 0) return null;
-    return (
-      <div className="bg-gradient-to-r from-slate-700 to-slate-900 rounded-xl p-5 text-white mb-6 shadow-lg">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="text-slate-300 text-sm font-medium mb-1">Score global</p>
-            <div className="flex items-baseline gap-2">
-              <span className="text-4xl font-bold">{userRank.totalPoints.toLocaleString()}</span>
-              <span className="text-slate-400 text-sm">/ {TOTAL_MAX_POINTS.toLocaleString()} pts max</span>
-            </div>
-            <div className="mt-1 w-full bg-white/20 rounded-full h-2">
-              <div
-                className="bg-white rounded-full h-2 transition-all"
-                style={{ width: `${Math.min(100, (userRank.totalPoints / TOTAL_MAX_POINTS) * 100)}%` }}
-              />
-            </div>
-          </div>
-          <div className="text-right">
-            <p className="text-slate-300 text-sm font-medium mb-1">Classement mondial</p>
-            <p className="text-3xl font-bold">#{userRank.rank}</p>
-            {rankPercent !== null && (
-              <p className="text-slate-400 text-sm">Top {100 - rankPercent}% des {userRank.totalPlayers} joueurs</p>
-            )}
-          </div>
-        </div>
-        {Object.keys(userRank.testPoints).length > 0 && (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {Object.entries(userRank.testPoints).map(([test, pts]) => (
-              <span key={test} className="bg-white/20 text-white text-xs px-2.5 py-1 rounded-full">
-                {TEST_LABELS[test] ?? test}: {pts} pts
-              </span>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  };
-
   const renderPerformances = () => (
     <>
-      <h2 className="text-2xl font-bold mb-3 text-gray-800 dark:text-white">Vos performances</h2>
-      <p className="text-gray-600 dark:text-gray-300 mb-4">
-        Votre progression et votre comparaison au monde sont affichées sur chaque carte.
-      </p>
-
-      {renderRankBanner()}
-
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
           <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500" />
@@ -376,12 +290,15 @@ export default function ProfilePage() {
   );
 
   const renderSettings = () => (
-    <>
-      <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-white">Réglages</h2>
+    <div className="space-y-6">
+      {/* Profil — photo, pseudo, infos */}
+      <UserProfileHeader />
+
+      {/* Zone dangereuse */}
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-        <h3 className="text-lg font-semibold mb-2 text-red-600 dark:text-red-400">Zone dangereuse</h3>
+        <h3 className="text-base font-semibold mb-1 text-red-600 dark:text-red-400">Zone dangereuse</h3>
         <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-          Cette action supprime définitivement tous vos scores. Elle est irréversible.
+          Supprime définitivement tous tes scores. Action irréversible.
         </p>
         <button
           onClick={() => setShowResetConfirm(true)}
@@ -390,7 +307,7 @@ export default function ProfilePage() {
           Réinitialiser mes performances
         </button>
       </div>
-    </>
+    </div>
   );
 
   const TABS = [
@@ -473,11 +390,8 @@ export default function ProfilePage() {
       {/* Main content — shifts right when sidebar is open */}
       <div className={`transition-[padding-left] duration-300 ${sidebarOpen ? 'pl-52' : 'pl-0'}`}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-          <UserProfileHeader />
-          <div className="mt-6">
-            {activeTab === 'performances' && renderPerformances()}
-            {activeTab === 'reglages' && renderSettings()}
-          </div>
+          {activeTab === 'performances' && renderPerformances()}
+          {activeTab === 'reglages' && renderSettings()}
         </div>
       </div>
 
