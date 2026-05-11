@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from 'firebase/auth';
-import { subscribeToAuthChanges } from '../firebase';
+import { subscribeToAuthChanges, handleGoogleRedirectResult } from '../firebase';
 
 // Type pour le contexte d'authentification
 type AuthContextType = {
@@ -26,12 +26,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   // Souscrire aux changements d'état d'authentification
   useEffect(() => {
+    handleGoogleRedirectResult();
     const unsubscribe = subscribeToAuthChanges((user) => {
       setCurrentUser(user);
       setUserLoading(false);
     });
-
-    // Nettoyer l'abonnement lors du démontage
     return unsubscribe;
   }, []);
 

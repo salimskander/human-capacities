@@ -11,6 +11,8 @@ import {
   onAuthStateChanged,
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
+  getRedirectResult,
   sendPasswordResetEmail,
   User,
   Auth,
@@ -79,8 +81,24 @@ export const signInWithGoogle = async () => {
   try {
     return await signInWithPopup(auth, googleProvider);
   } catch (error) {
-    console.error("Erreur lors de la connexion avec Google :", error);
+    const firebaseError = error as { code?: string };
+    if (
+      firebaseError.code === 'auth/popup-blocked' ||
+      firebaseError.code === 'auth/popup-closed-by-user'
+    ) {
+      await signInWithRedirect(auth, googleProvider);
+      return null;
+    }
     throw error;
+  }
+};
+
+export const handleGoogleRedirectResult = async () => {
+  if (!auth) return null;
+  try {
+    return await getRedirectResult(auth);
+  } catch {
+    return null;
   }
 };
 
