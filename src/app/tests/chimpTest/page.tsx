@@ -36,7 +36,8 @@ function ChimpTestGame({
 
   // Speed tracking (refs to avoid stale closures in callbacks)
   const levelStartRef = useRef<number | null>(null);
-  const speedRef = useRef({ totalMs: 0, totalTiles: 0 });
+  // totalThresholdMs = sum of per-level thresholds (600ms + 160ms per extra tile above 4)
+  const speedRef = useRef({ totalActualMs: 0, totalThresholdMs: 0 });
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => () => { if (timerRef.current) clearInterval(timerRef.current); }, []);
@@ -123,11 +124,13 @@ function ChimpTestGame({
         setUserSequence(newSequence);
 
         if (newSequence.length === numbers.length) {
-          // Level complete — record speed
+          // Level complete — record speed vs threshold for this level
           if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
           if (levelStartRef.current) {
-            speedRef.current.totalMs += Date.now() - levelStartRef.current;
-            speedRef.current.totalTiles += numbers.length;
+            const actualMs = Date.now() - levelStartRef.current;
+            const thresholdMs = 600 + (level - 4) * 160; // level = numTiles here
+            speedRef.current.totalActualMs += actualMs;
+            speedRef.current.totalThresholdMs += thresholdMs;
             levelStartRef.current = null;
           }
           setScore((prev) => prev + level);
@@ -145,8 +148,9 @@ function ChimpTestGame({
         if (strikes >= 1) {
           setTimeout(() => {
             setGameStatus('gameover');
-            const avgMs = speedRef.current.totalTiles > 0
-              ? Math.round(speedRef.current.totalMs / speedRef.current.totalTiles)
+            // avgMsPerTile encodes ratio×150 so points.ts formula stays unchanged
+            const avgMs = speedRef.current.totalThresholdMs > 0
+              ? (speedRef.current.totalActualMs / speedRef.current.totalThresholdMs) * 150
               : 9999;
             onGameOver(level - 3, avgMs);
           }, 500);
