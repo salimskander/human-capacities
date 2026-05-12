@@ -28,13 +28,13 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { score, userId } = await request.json();
+    const { score, avgMsPerTile, userId } = await request.json();
 
     if (typeof score !== 'number') {
       return NextResponse.json({ error: 'Score invalide' }, { status: 400 });
     }
 
-    const points = calculatePoints('chimpTest', { score });
+    const points = calculatePoints('chimpTest', { score, avgMsPerTile: avgMsPerTile ?? null });
 
     const result = await prisma.testResult.create({
       data: { testType: 'chimpTest', score, points, userId: userId || null },

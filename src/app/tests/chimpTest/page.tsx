@@ -1,39 +1,22 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
 import StartModal from '@/components/StartModal';
 import GameOverModal from '@/components/GameOverModal';
 import { useAuth } from '@/contexts/AuthContext';
 import { calculatePoints } from '@/lib/points';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
-
-interface TestResult {
-  score: number;
-  timestamp: string;
-}
-
 type GameStatus = 'waiting' | 'playing' | 'showing' | 'gameover';
 type NumberTile = { position: number; value: number };
+
 
 function ChimpTestGame({
   gameKey,
   onGameOver,
 }: {
   gameKey: number;
-  onGameOver: (score: number) => void;
+  onGameOver: (score: number, avgMsPerTile: number) => void;
 }) {
   const [level, setLevel] = useState(4);
   const [numbers, setNumbers] = useState<NumberTile[]>([]);
@@ -44,11 +27,19 @@ function ChimpTestGame({
   const [gridSize, setGridSize] = useState(4);
   const [numbersVisible, setNumbersVisible] = useState(true);
   const [cellSize, setCellSize] = useState(70);
+  const [levelElapsedMs, setLevelElapsedMs] = useState(0);
 
   const [correctTiles, setCorrectTiles] = useState<number[]>([]);
   const [errorTile, setErrorTile] = useState<number | null>(null);
   const [clickedTile, setClickedTile] = useState<number | null>(null);
   const [canClick, setCanClick] = useState(false);
+
+  // Speed tracking (refs to avoid stale closures in callbacks)
+  const levelStartRef = useRef<number | null>(null);
+  const speedRef = useRef({ totalMs: 0, totalTiles: 0 });
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => () => { if (timerRef.current) clearInterval(timerRef.current); }, []);
 
   // Compute cell size so the grid always fits below the in-game topbar
   useEffect(() => {
@@ -96,6 +87,10 @@ function ChimpTestGame({
     setCorrectTiles([]);
     setErrorTile(null);
     setCanClick(true);
+    // Reset level timer display; timing starts on first tile click
+    if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+    levelStartRef.current = null;
+    setLevelElapsedMs(0);
   }, [generateSequence]);
 
   useEffect(() => {
@@ -113,7 +108,15 @@ function ChimpTestGame({
       const clickedNumber = numbers.find((n) => n.position === position);
       if (!clickedNumber) return;
 
-      if (clickedNumber.value === 1) setNumbersVisible(false);
+      if (clickedNumber.value === 1) {
+        setNumbersVisible(false);
+        // Start level timer on first click
+        levelStartRef.current = Date.now();
+        if (timerRef.current) clearInterval(timerRef.current);
+        timerRef.current = setInterval(() => {
+          setLevelElapsedMs(Date.now() - (levelStartRef.current ?? Date.now()));
+        }, 100);
+      }
 
       const expectedValue = userSequence.length + 1;
 
@@ -123,6 +126,13 @@ function ChimpTestGame({
         setUserSequence(newSequence);
 
         if (newSequence.length === numbers.length) {
+          // Level complete — record speed
+          if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
+          if (levelStartRef.current) {
+            speedRef.current.totalMs += Date.now() - levelStartRef.current;
+            speedRef.current.totalTiles += numbers.length;
+            levelStartRef.current = null;
+          }
           setScore((prev) => prev + level);
           setLevel((prev) => prev + 1);
           setCanClick(false);
@@ -132,11 +142,16 @@ function ChimpTestGame({
         setCanClick(false);
         setErrorTile(position);
         setStrikes((prev) => prev + 1);
+        // Stop timer on error
+        if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
 
         if (strikes >= 1) {
           setTimeout(() => {
             setGameStatus('gameover');
-            onGameOver(level - 3);
+            const avgMs = speedRef.current.totalTiles > 0
+              ? Math.round(speedRef.current.totalMs / speedRef.current.totalTiles)
+              : 9999;
+            onGameOver(level - 3, avgMs);
           }, 500);
         } else {
           setTimeout(() => startNewLevel(), 800);
@@ -161,6 +176,11 @@ function ChimpTestGame({
               </span>
             ))}
           </div>
+          {levelElapsedMs > 0 && (
+            <div className="text-sm font-mono text-yellow-500 dark:text-yellow-400">
+              ⚡ {(levelElapsedMs / 1000).toFixed(1)}s
+            </div>
+          )}
         </div>
       </div>
 
@@ -228,85 +248,31 @@ export default function ChimpTest() {
   const [gameStatus, setGameStatus] = useState<GameStatus>('waiting');
   const [finalScore, setFinalScore] = useState(0);
   const [finalPoints, setFinalPoints] = useState(0);
-  const [globalResults, setGlobalResults] = useState<TestResult[]>([]);
-
-  useEffect(() => {
-    fetchResults();
-  }, [currentUser]);
-
-  const fetchResults = async () => {
-    try {
-      const globalResponse = await fetch('/api/chimpTest?type=global');
-      const globalData = await globalResponse.json();
-      setGlobalResults(globalData);
-    } catch (error) {
-      console.error('Error fetching results:', error);
-    }
-  };
-
-  const prepareChartData = useCallback(() => {
-    const intervals = Array.from({ length: 9 }, (_, i) => i + 4);
-    const counts = new Array(intervals.length).fill(0);
-    globalResults.forEach((result) => {
-      const index = result.score - 4;
-      if (index >= 0 && index < counts.length) counts[index]++;
-    });
-    const total = globalResults.length;
-    const percentages = counts.map((count) => (count / total) * 100 || 0);
-    return {
-      labels: intervals,
-      datasets: [
-        {
-          label: 'Distribution des scores',
-          data: percentages,
-          borderColor: 'rgb(59, 130, 246)',
-          backgroundColor: 'rgba(59, 130, 246, 0.2)',
-          tension: 0.1,
-          fill: true,
-        },
-      ],
-    };
-  }, [globalResults]);
-
-  const chartOptions = {
-    responsive: true,
-    plugins: {
-      legend: { position: 'top' as const },
-      title: { display: true, text: 'Distribution globale des scores du test du chimpanzé' },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: { display: true, text: 'Pourcentage des joueurs (%)' },
-      },
-      x: { title: { display: true, text: 'Niveau atteint' } },
-    },
-  };
 
   const startGame = useCallback(() => {
     setGameKey(Date.now());
     setGameStatus('playing');
   }, []);
 
-  const saveResult = async (score: number) => {
+  const saveResult = async (score: number, avgMsPerTile: number) => {
     try {
       await fetch('/api/chimpTest', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ score, userId: currentUser?.uid || null }),
+        body: JSON.stringify({ score, avgMsPerTile, userId: currentUser?.uid || null }),
       });
-      fetchResults();
     } catch (error) {
       console.error('Error saving result:', error);
     }
   };
 
-  const handleGameOver = useCallback((score: number) => {
+  const handleGameOver = useCallback((score: number, avgMsPerTile: number) => {
     setFinalScore(score);
-    setFinalPoints(calculatePoints('chimpTest', { score }));
+    setFinalPoints(calculatePoints('chimpTest', { score, avgMsPerTile }));
     setGameStatus('gameover');
-    saveResult(score);
-  }, []);
+    saveResult(score, avgMsPerTile);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
 
   const handleRestart = useCallback(() => {
     setGameKey(Date.now());
