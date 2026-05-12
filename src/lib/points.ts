@@ -18,7 +18,7 @@ export function calculatePoints(testType: string, data: PointsInput): number {
       // Inverse-square from 101ms (world record). Below 101ms = suspicious, caller should reject.
       const rt = data.reactionTime ?? 9999;
       if (rt <= 0 || rt < 101) return 0;
-      return Math.min(1000, Math.round(1000 * Math.pow(101 / rt, 2)));
+      return Math.min(1000, Math.round(1000 * Math.sqrt(101 / rt)));
     }
     case 'chimpTest': {
       const score = data.score ?? 0;
