@@ -100,7 +100,7 @@ export default function NumberMemoryTest() {
     setNumbers(newNumbers);
     setIsShowingNumbers(true);
     setUserInput('');
-    const duration = 300 + currentLevel * currentLevel * 200;
+    const duration = Math.min(1100 + 200 * Math.pow(2, currentLevel - 1), 30000);
     setTimeout(() => {
       setIsShowingNumbers(false);
       setTimeout(() => inputRef.current?.focus(), 0);
@@ -168,7 +168,7 @@ export default function NumberMemoryTest() {
         {isShowingNumbers && (
           <div className="fixed top-20 left-0 right-0 z-40">
             <ProgressBar
-              duration={300 + level * level * 200}
+              duration={Math.min(1100 + 200 * Math.pow(2, level - 1), 30000)}
               isActive={isShowingNumbers}
             />
           </div>
