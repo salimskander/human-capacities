@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { Line } from 'react-chartjs-2';
 import {
@@ -78,6 +78,8 @@ export default function SymbolMemoryTest() {
   const [finalScore, setFinalScore] = useState(0);
   const [finalPoints, setFinalPoints] = useState(0);
   const [showDuration, setShowDuration] = useState(getShowDuration(1));
+  const pendingRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const pendingIsMatchRef = useRef(false);
 
   const initializeCards = useCallback((lvl: number) => {
     const numberOfPairs = lvl + 2;
@@ -87,8 +89,9 @@ export default function SymbolMemoryTest() {
   }, []);
 
   const startGame = useCallback(() => {
+    if (pendingRef.current) { clearTimeout(pendingRef.current); pendingRef.current = null; }
     setLevel(1);
-    setLives(3);
+    setLives(2);
     setGameStatus('showing');
     const initialCards = initializeCards(1);
     setCards(initialCards);
@@ -118,22 +121,53 @@ export default function SymbolMemoryTest() {
   const handleCardClick = useCallback(
     (cardId: number) => {
       if (gameStatus !== 'playing') return;
-      if (selectedCards.length === 2) return;
-      if (cards[cardId].isMatched || cards[cardId].isFlipped) return;
 
-      const newCards = cards.map((card) =>
+      // Resolve any pending pair immediately so the user doesn't have to wait
+      let baseCards = cards;
+      let baseSelected = selectedCards;
+      if (selectedCards.length === 2) {
+        if (pendingRef.current) { clearTimeout(pendingRef.current); pendingRef.current = null; }
+        const [id1, id2] = selectedCards;
+        if (pendingIsMatchRef.current) {
+          baseCards = cards.map((card) =>
+            card.id === id1 || card.id === id2 ? { ...card, isMatched: true } : card
+          );
+          setCards(baseCards);
+          const totalMatched = baseCards.filter((c) => c.isMatched).length;
+          if (totalMatched >= baseCards.length) {
+            const nextLevel = level + 1;
+            setLevel(nextLevel);
+            startNextLevel(nextLevel);
+            return;
+          }
+        } else {
+          baseCards = cards.map((card) =>
+            card.id === id1 || card.id === id2 ? { ...card, isFlipped: false } : card
+          );
+          setCards(baseCards);
+        }
+        baseSelected = [];
+        setSelectedCards([]);
+      }
+
+      const clickedCard = baseCards.find((c) => c.id === cardId);
+      if (!clickedCard || clickedCard.isMatched || clickedCard.isFlipped) return;
+
+      const newCards = baseCards.map((card) =>
         card.id === cardId ? { ...card, isFlipped: true } : card
       );
+      const newSelected = [...baseSelected, cardId];
       setCards(newCards);
-      const newSelected = [...selectedCards, cardId];
       setSelectedCards(newSelected);
 
       if (newSelected.length === 2) {
-        const firstCard = newCards[newSelected[0]];
-        const secondCard = newCards[newSelected[1]];
+        const firstCard = newCards.find((c) => c.id === newSelected[0])!;
+        const secondCard = newCards.find((c) => c.id === newSelected[1])!;
 
         if (firstCard.symbol === secondCard.symbol) {
-          setTimeout(() => {
+          pendingIsMatchRef.current = true;
+          pendingRef.current = setTimeout(() => {
+            pendingRef.current = null;
             setCards((c) =>
               c.map((card) =>
                 card.id === newSelected[0] || card.id === newSelected[1]
@@ -142,7 +176,6 @@ export default function SymbolMemoryTest() {
               )
             );
             setSelectedCards([]);
-
             const matched = newCards.filter((c) => c.isMatched).length + 2;
             if (matched >= newCards.length) {
               const nextLevel = level + 1;
@@ -151,7 +184,20 @@ export default function SymbolMemoryTest() {
             }
           }, 500);
         } else {
-          setTimeout(() => {
+          // Deduct life immediately on mismatch detection
+          const newLives = lives - 1;
+          setLives(newLives);
+          if (newLives <= 0) {
+            const score = level - 1;
+            setFinalScore(score);
+            setFinalPoints(calculatePoints('symbolMemory', { score }));
+            setGameStatus('gameover');
+            saveResult(score);
+            return;
+          }
+          pendingIsMatchRef.current = false;
+          pendingRef.current = setTimeout(() => {
+            pendingRef.current = null;
             setCards((c) =>
               c.map((card) =>
                 card.id === newSelected[0] || card.id === newSelected[1]
@@ -160,16 +206,7 @@ export default function SymbolMemoryTest() {
               )
             );
             setSelectedCards([]);
-            const newLives = lives - 1;
-            setLives(newLives);
-            if (newLives <= 0) {
-              const score = level - 1;
-              setFinalScore(score);
-              setFinalPoints(calculatePoints('symbolMemory', { score }));
-              setGameStatus('gameover');
-              saveResult(score);
-            }
-          }, 1000);
+          }, 500);
         }
       }
     },
@@ -177,8 +214,9 @@ export default function SymbolMemoryTest() {
   );
 
   const handleRestart = useCallback(() => {
+    if (pendingRef.current) { clearTimeout(pendingRef.current); pendingRef.current = null; }
     setLevel(1);
-    setLives(3);
+    setLives(2);
     setGameStatus('showing');
     const newCards = initializeCards(1);
     setCards(newCards);
