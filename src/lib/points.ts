@@ -22,10 +22,13 @@ export function calculatePoints(testType: string, data: PointsInput): number {
     case 'chimpTest': {
       const score = data.score ?? 0;
       const avgMs = data.avgMsPerTile ?? 9999;
-      // 700pts from level reached (log curve, max=15 → 1000 theoretical)
+      // 700pts from level reached (log curve, max=15)
       const levelPts = Math.min(700, Math.round(700 * Math.log1p(score) / Math.log1p(15)));
-      // 300pts from speed: <300ms/tile → 300pts, 2000ms/tile → 0pts
-      const speedPts = Math.max(0, Math.min(300, Math.round(300 * (2000 - avgMs) / 1700)));
+      // 300pts from speed: inverse-square decay on avgMs/tile.
+      // Threshold = 150ms/tile → at level 1 (4 tiles) max at 600ms, 601ms → 299pts.
+      // Score scales naturally: level 5 (5 tiles) max at 750ms, etc.
+      const minMsPerTile = 150;
+      const speedPts = Math.round(300 * Math.min(1, Math.pow(minMsPerTile / Math.max(avgMs, 1), 2)));
       return Math.min(1000, levelPts + speedPts);
     }
     case 'numberMemory': {
