@@ -33,8 +33,8 @@ export function calculatePoints(testType: string, data: PointsInput): number {
       return Math.min(1000, levelPts + speedPts);
     }
     case 'numberMemory': {
-      // Max 10 digits = 1000pts
-      return logPts(data.score ?? 0, 10);
+      // Max 20 digits = 1000pts
+      return logPts(data.score ?? 0, 20);
     }
     case 'visualMemory': {
       // Max 14 levels = 1000pts
