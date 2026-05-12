@@ -15,9 +15,10 @@ function logPts(score: number, max: number): number {
 export function calculatePoints(testType: string, data: PointsInput): number {
   switch (testType) {
     case 'reflex': {
-      // Linear: 200ms → 1000pts, 600ms+ → 0pts (already feels exponential to player)
+      // Inverse-square from 101ms (world record). Below 101ms = suspicious, caller should reject.
       const rt = data.reactionTime ?? 9999;
-      return Math.max(0, Math.min(1000, Math.round(1000 * Math.max(0, 600 - rt) / 400)));
+      if (rt <= 0 || rt < 101) return 0;
+      return Math.min(1000, Math.round(1000 * Math.pow(101 / rt, 2)));
     }
     case 'chimpTest': {
       const score = data.score ?? 0;
