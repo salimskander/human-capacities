@@ -23,7 +23,7 @@ import { calculatePoints } from '@/lib/points';
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const SYMBOLS = ['🌟', '🎈', '🎨', '🎭', '🎪', '🎯', '🎲', '🎳', '🎮', '🎸', '🎺', '🏆', '🎁', '🎀'];
-const SHOW_DURATION = 5000;
+const getShowDuration = (lvl: number) => Math.min(5000, 1500 + lvl * 500);
 
 interface TestResult {
   score: number;
@@ -77,6 +77,7 @@ export default function SymbolMemoryTest() {
   const [selectedCards, setSelectedCards] = useState<number[]>([]);
   const [finalScore, setFinalScore] = useState(0);
   const [finalPoints, setFinalPoints] = useState(0);
+  const [showDuration, setShowDuration] = useState(getShowDuration(1));
 
   const initializeCards = useCallback((lvl: number) => {
     const numberOfPairs = lvl + 2;
@@ -91,10 +92,12 @@ export default function SymbolMemoryTest() {
     setGameStatus('showing');
     const initialCards = initializeCards(1);
     setCards(initialCards);
+    const dur = getShowDuration(1);
+    setShowDuration(dur);
     setTimeout(() => {
       setCards((c) => c.map((card) => ({ ...card, isFlipped: false })));
       setGameStatus('playing');
-    }, SHOW_DURATION);
+    }, dur);
   }, [initializeCards]);
 
   const startNextLevel = useCallback(
@@ -102,10 +105,12 @@ export default function SymbolMemoryTest() {
       setGameStatus('showing');
       const newCards = initializeCards(nextLevel);
       setCards(newCards);
+      const dur = getShowDuration(nextLevel);
+      setShowDuration(dur);
       setTimeout(() => {
         setCards((c) => c.map((card) => ({ ...card, isFlipped: false })));
         setGameStatus('playing');
-      }, SHOW_DURATION);
+      }, dur);
     },
     [initializeCards]
   );
@@ -177,10 +182,12 @@ export default function SymbolMemoryTest() {
     setGameStatus('showing');
     const newCards = initializeCards(1);
     setCards(newCards);
+    const dur = getShowDuration(1);
+    setShowDuration(dur);
     setTimeout(() => {
       setCards((c) => c.map((card) => ({ ...card, isFlipped: false })));
       setGameStatus('playing');
-    }, SHOW_DURATION);
+    }, dur);
   }, [initializeCards]);
 
   return (
@@ -224,7 +231,7 @@ export default function SymbolMemoryTest() {
             <div className="container mx-auto px-4 pt-24 pb-6">
               {gameStatus === 'showing' && (
                 <div className="fixed top-20 left-0 right-0 z-40">
-                  <ProgressBar duration={SHOW_DURATION} isActive={gameStatus === 'showing'} />
+                  <ProgressBar duration={showDuration} isActive={gameStatus === 'showing'} />
                 </div>
               )}
 

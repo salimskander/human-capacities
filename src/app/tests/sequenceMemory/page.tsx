@@ -55,15 +55,15 @@ export default function SequenceMemoryTest() {
     const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 
     try {
-      await wait(500);
+      await wait(300);
       for (let i = 0; i < sequenceToShow.length; i++) {
         setActiveIndex(sequenceToShow[i]);
-        await wait(800);
+        await wait(450);
         setActiveIndex(null);
-        if (i < sequenceToShow.length - 1) await wait(200);
+        if (i < sequenceToShow.length - 1) await wait(150);
       }
     } finally {
-      await wait(200);
+      await wait(150);
       setActiveIndex(null);
       setIsShowingSequence(false);
     }
