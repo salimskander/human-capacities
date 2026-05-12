@@ -87,10 +87,13 @@ function ChimpTestGame({
     setCorrectTiles([]);
     setErrorTile(null);
     setCanClick(true);
-    // Reset level timer display; timing starts on first tile click
+    // Start timer immediately when numbers appear
     if (timerRef.current) { clearInterval(timerRef.current); timerRef.current = null; }
-    levelStartRef.current = null;
+    levelStartRef.current = Date.now();
     setLevelElapsedMs(0);
+    timerRef.current = setInterval(() => {
+      setLevelElapsedMs(Date.now() - (levelStartRef.current ?? Date.now()));
+    }, 100);
   }, [generateSequence]);
 
   useEffect(() => {
@@ -110,12 +113,6 @@ function ChimpTestGame({
 
       if (clickedNumber.value === 1) {
         setNumbersVisible(false);
-        // Start level timer on first click
-        levelStartRef.current = Date.now();
-        if (timerRef.current) clearInterval(timerRef.current);
-        timerRef.current = setInterval(() => {
-          setLevelElapsedMs(Date.now() - (levelStartRef.current ?? Date.now()));
-        }, 100);
       }
 
       const expectedValue = userSequence.length + 1;
