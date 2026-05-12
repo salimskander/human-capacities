@@ -69,7 +69,7 @@ export default function SymbolMemoryTest() {
   const { currentUser } = useAuth();
   const { saveResult, globalResults } = useGameResults();
   const [level, setLevel] = useState(1);
-  const [lives, setLives] = useState(3);
+  const [lives, setLives] = useState(2);
   const [cards, setCards] = useState<
     Array<{ id: number; symbol: string; isFlipped: boolean; isMatched: boolean }>
   >([]);
@@ -201,7 +201,7 @@ export default function SymbolMemoryTest() {
             description={
               <p>
                 Mémorisez la position des paires de symboles. Retrouvez toutes les paires pour
-                passer au niveau suivant. Vous avez trois vies !
+                passer au niveau suivant. Vous avez deux vies !
               </p>
             }
             onStart={startGame}
@@ -212,9 +212,9 @@ export default function SymbolMemoryTest() {
               <div className="max-w-screen-xl mx-auto h-full flex items-center justify-center gap-8">
                 <div className="text-2xl font-medium dark:text-white">Niveau {level}</div>
                 <div className="flex gap-1">
-                  {Array.from({ length: 3 }).map((_, i) => (
+                  {Array.from({ length: 2 }).map((_, i) => (
                     <span key={i} className="text-2xl">
-                      {i < 3 - lives ? '🖤' : '❤️'}
+                      {i < 2 - lives ? '🖤' : '❤️'}
                     </span>
                   ))}
                 </div>
